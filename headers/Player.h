@@ -4,8 +4,8 @@
 
 class Player {
 private:
-	std::array <bool> ship_map [10][10];		//карта расстановки кораблей
-	std::array <bool> shot_map [10][10];		//Карта сделанных выстрелов (Карта соперника?)
+	std::array <bool,10> ship_map;		//карта расстановки кораблей
+	std::array <bool,10> shot_map;		//Карта сделанных выстрелов (Карта соперника?)
 	int ship_count;		//Количество оставшихся кораблей
 public:
 	//Конструктор (Производится )
