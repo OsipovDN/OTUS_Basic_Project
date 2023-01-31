@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
 
-poject (project)
+project (project)
 
 add_executable (sea_battle
 	src/main.cpp
@@ -8,9 +8,13 @@ add_executable (sea_battle
 
 target_include_directories(
     sea_battle
-    PRIVATE ${CMAKE_CURRENT_BINARY_DIR}
-    )
+   PRIVATE ${CMAKE_CURRENT_BINARY_DIR}
+   )
 
+target_include_directories(
+    sea_battle 
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/headers
+    )
 
 set_target_properties (sea_battle PROPERTIES
 	CXX_STANDARD 17
