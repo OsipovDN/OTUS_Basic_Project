@@ -113,7 +113,7 @@ public:
 	bool IsHit(int _x, int _y) {
 		bool flag=false;
 		//Проверка попадания если корабль в вертикальном положении
-		for_each(cord.cbegin(), cord.cend(), [&](Cords p)mutable {
+		for_each(cord.cbegin(), cord.cend(), [&](Cords p) {
 			if (p.first == _x && p.second == _y) {
 				hp--;
 				flag = true;
