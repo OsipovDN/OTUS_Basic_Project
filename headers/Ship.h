@@ -79,7 +79,7 @@ private:
 	int deck;	//Количество палуб
 	int hp;	//Убит или нет
 public:
-	Ship(int _x, int _y, int _dir, int _deck):dir(_dir),deck(_deck),hp(_deck) {
+	Ship(int& _x, int& _y, int& _dir, int& _deck):dir(_dir),deck(_deck),hp(_deck) {
 		cord.reserve(hp);
 		if (dir == 1 || dir == 3) {
 			if (dir == 1) {
@@ -106,11 +106,11 @@ public:
 	};
 
 	//Проверка на убит или нет
-	bool Islife() {
+	bool Islife()const noexcept {
 		return hp;
 	}
 	//Проверка попадания
-	bool IsHit(int _x, int _y) {
+	bool IsHit(int _x, int _y)noexcept {
 		bool flag=false;
 		//Проверка попадания если корабль в вертикальном положении
 		for_each(cord.cbegin(), cord.cend(), [&](Cords p) {
@@ -121,6 +121,8 @@ public:
 			});
 			return flag;
 	}
-
+	const std::vector <Cords>& getCord()const {
+		return cord;
+	}
 
 };
