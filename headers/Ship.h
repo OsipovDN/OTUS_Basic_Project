@@ -107,20 +107,20 @@ public:
 
 	//Проверка на убит или нет
 	bool Islife()const noexcept {
-		return hp;
+		return (hp==0)?false: true;
 	}
 	//Проверка попадания
 	bool IsHit(int _x, int _y)noexcept {
-		bool flag=false;
 		//Проверка попадания если корабль в вертикальном положении
 		for_each(cord.cbegin(), cord.cend(), [&](Cords p) {
 			if (p.first == _x && p.second == _y) {
 				hp--;
-				flag = true;
+				return true;
 			}
 			});
-			return flag;
+			return false;
 	}
+
 	const std::vector <Cords>& getCord()const {
 		return cord;
 	}

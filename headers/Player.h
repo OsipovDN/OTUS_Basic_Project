@@ -3,7 +3,10 @@
 //#include <iomanip>
 #include <string>
 #include <array>
+#include <algorithm>
+#include <execution>
 #include <Ship.h>
+
 
 static enum direction{
 	UP=1,
@@ -21,26 +24,34 @@ public:
 	Player(int count) :ship_count(count){
 		navy.reserve(ship_count);
 	}
+	//Размещение корабля на карте
 	void setShip(int& _x, int& _y, int& _dir, int& _deck) {
 		navy.emplace_back(Ship(_x, _y, _dir, _deck));
 	}
-	/*void shipInMap() {
-		std::vector <std::pair<int, int >> temp;
-		for ( const auto& it_navy : navy) {
-			temp =it_navy.getCord();
-			for (const auto& it_temp : temp) {
-				shot_map [(it_temp.first-1)*10+it_temp.second]=true;
-			}
-		}
-	}*/
-	bool shot() {
 
+	//Проверка попадания
+	bool getShot(int& _x,int& _y) {
+		bool flag=false;
+		std::for_each(std::execution::par, navy.begin(), navy.end(), [&](Ship& s) {
+			flag = s.IsHit(_x, _y); 
+			if (!s.Islife())
+				ship_count--;
+			});
+		return flag;
 	}
 
-	//Проверка на наличие кораблей (если ноль- проиграл)
-	//Размещение корабля на карте
 	//Проверка выстрела (повторный выбор одного поля)
-	//int getShipCount ()const;		Возвращает количество оставшихся кораблей
-	//bool getMapCount (int x,int y)	Проверка попадания
-
+	bool setShot(int& _x, int& _y){
+		int count = ((_x - 1) * 10 + _y) - 1;
+		if (!shot_map[count]) {
+			shot_map[count] = true;
+			return true;
+		}
+		return false;
+	}
+	
+	//Проверка наличия кораблей
+	bool ShipCount()const {
+		return ship_count;
+	};
 };
