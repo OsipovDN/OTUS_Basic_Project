@@ -17,7 +17,6 @@ static enum direction{
 
 class Player {
 private:
-	std::array <bool, 100> shot_map{ false };		//Карта сделанных выстрелов (Карта соперника?)
 	std::vector<Ship> navy;
 	int ship_count;		//Количество оставшихся кораблей
 public:
@@ -38,16 +37,6 @@ public:
 				ship_count--;
 			});
 		return flag;
-	}
-
-	//Проверка выстрела (повторный выбор одного поля)
-	bool setShot(int& _x, int& _y){
-		int count = ((_x - 1) * 10 + _y) - 1;
-		if (!shot_map[count]) {
-			shot_map[count] = true;
-			return true;
-		}
-		return false;
 	}
 	
 	//Проверка наличия кораблей
