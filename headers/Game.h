@@ -7,7 +7,18 @@ private:
 	Player plr1;
 	Player plr2;
 	bool gm_over;	//Проверка конца игры
+	std::array <char, 100> map_pl1{};
+	std::array <char, 100> map_pl2{};//Карта сделанных выстрелов (Карта соперника?)
 public:
+	//Проверка выстрела (повторный выбор одного поля)
+	bool setShot(int& _x, int& _y) {
+		int count = ((_x - 1) * 10 + _y) - 1;
+		if (!shot_map[count]) {
+			shot_map[count] = true;
+			return true;
+		}
+		return false;
+	}
 
 	void ManSetShip() {
 		int x = 0;
