@@ -17,6 +17,7 @@ static enum direction{
 
 class Player {
 private:
+	std::array <bool, 100> map_shot{};//Карта сделанных выстрелов (Карта соперника?)
 	std::vector<Ship> navy;
 	int ship_count;		//Количество оставшихся кораблей
 public:
@@ -52,6 +53,36 @@ public:
 				ship_count--;
 			});
 		return flag;
+	}
+
+	//Проверка выстрела (повторный выбор одного поля)
+	bool setShot(Player& plr) {
+		int x=0, y=0;
+		int count=0;
+		std::cout << "Введите координаты (x ,y) через пробел: "
+			<< std::endl;
+		for (;;) {
+			std::cout << "x,y: ";
+			std::cin >> x >> y;
+			count = ((x - 1) * 10 + y) - 1;
+			if (map_shot[count]) {
+				std::cout << "По данной позиции ранее уже был сделан выстрел." <<
+					std::endl;
+				std::cout << "Повторите ввод." << std::endl;
+				continue;
+			}
+			else {
+				if (plr.getShot(x, y)) {
+					map_shot[count] = true;
+					continue;
+				}
+				else 
+					break;
+			}
+		}
+		map_shot[count] = true;
+		return true;
+		return false;
 	}
 	
 	//Проверка наличия кораблей

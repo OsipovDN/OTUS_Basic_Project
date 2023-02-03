@@ -43,14 +43,24 @@ public:
 		return (hp==0)?false: true;
 	}
 	//Проверка попадания
-	bool IsHit(int _x, int _y)noexcept {
+	bool IsHit(const int& _x, const int& _y)noexcept  {
+		bool flag=false;
 		for_each(cord.cbegin(), cord.cend(), [&](Cords p) {
 			if (p.first == _x && p.second == _y) {
 				hp--;
-				return true;
+				flag=true;
 			}
 			});
-			return false;
+		if (this->Islife()) {
+			std::cout << "Попал!" << std::endl;
+			return flag;
+		}
+		else{
+			std::cout << "Убит!" << std::endl;
+			return flag;
+		}
+		std::cout << "Промах!" << std::endl;
+			return flag;
 	}
 
 	const std::vector <Cords>& getCord()const {return cord;}
