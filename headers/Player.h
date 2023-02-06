@@ -17,7 +17,7 @@ static enum direction{
 
 class Player {
 private:
-	std::array <bool, 100> map_shot{};//Карта сделанных выстрелов (Карта соперника?)
+	std::array <char, 100> map_shot{};//Карта сделанных выстрелов (Карта соперника?)
 	std::vector<Ship> navy;
 	int ship_count;		//Количество оставшихся кораблей
 public:
@@ -65,7 +65,7 @@ public:
 			std::cout << "x,y: ";
 			std::cin >> x >> y;
 			count = ((x - 1) * 10 + y) - 1;
-			if (map_shot[count]) {
+			if (map_shot[count]!=' ') {
 				std::cout << "По данной позиции ранее уже был сделан выстрел." <<
 					std::endl;
 				std::cout << "Повторите ввод." << std::endl;
@@ -73,15 +73,14 @@ public:
 			}
 			else {
 				if (plr.getShot(x, y)) {
-					map_shot[count] = true;
+					map_shot[count] = 'X';
 					continue;
 				}
 				else 
 					break;
 			}
 		}
-		map_shot[count] = true;
-		return true;
+		map_shot[count] = '+';
 		return false;
 	}
 	
