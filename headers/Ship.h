@@ -12,7 +12,7 @@ private:
 	int dir;	//Направление расположения
 	int hp;	//Убит или нет
 public:
-	Ship(int& _x, int& _y, int& _dir, int& _deck):dir(_dir),hp(_deck) {
+	Ship(int _x, int _y, int _dir, int _deck):dir(_dir),hp(_deck) {
 		cord.reserve(hp);
 		if (dir == 1 || dir == 3) {
 			if (dir == 1) {
@@ -36,6 +36,7 @@ public:
 		}
 		std::for_each(cord.cbegin(), cord.cend(), [](const Cords& p) {
 			std::cout << p.first << " " << p.second << std::endl; });
+		std::cout<< std::endl;
 	};
 
 	//Проверка на убит или нет

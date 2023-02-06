@@ -8,12 +8,12 @@
 #include <Ship.h>
 
 
-static enum direction{
-	UP=1,
-	RIGHT,
-	DOWN,
-	LEFT
-};
+//static enum direction{
+//	UP=1,
+//	RIGHT,
+//	DOWN,
+//	LEFT
+//} dir;
 
 class Player {
 private:
@@ -24,10 +24,16 @@ public:
 	Player(int count) :ship_count(count){
 		navy.reserve(ship_count);
 	}
+
 	//Размещение корабля на карте
-	//!!!!!!!
-	void setShip(int& _x, int& _y, int& _dir, int& _deck) {
+	bool setShip(int _x, int _y, int _dir, int _deck) {
+		bool flag = intersecShip(_x, _y, _dir, _deck);
+		if (flag) {
+			std::cout << "Есть пересечение с лругим кораблем! Попробуйте снова." << std::endl;
+			return false;
+		}
 		navy.emplace_back(Ship(_x, _y, _dir, _deck));
+		return true;
 	}
 	//Массив периметра корабля
 	/*std::vector <std::pair<int, int>>&& shipPer(int& _x, int& _y, int& _dir, int& _deck) {
@@ -38,14 +44,15 @@ public:
 	//Проверка пересечения кораблей
 	bool intersecShip(int& _x, int& _y, int& _dir, int& _deck) {
 		bool flag = false;
-		Ship temp(int& _x, int& _y, int& _dir, int& _deck);
-		auto temp_vec = temp.getCord();
-		std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship& s) {
+		Ship temp{ _x,_y,_dir,_deck };
+		auto temp_vec=temp.getCord();
+		std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s) {
 			auto compar = s.getCord();
-			for (auto it : temp_vec) {
-				for (auto it_compar : compar)
-					if (it->first == it_compar->first && it->second == it_compar->second)
-						flag == true;
+			for (const auto it : temp_vec) {
+				for (const auto it_compar : compar) {
+					if (it.first == it_compar.first && it.second == it_compar.second)
+						flag = true;
+				}
 			}
 			});
 		return flag;
@@ -54,7 +61,7 @@ public:
 	//Проверка попадания
 	bool getShot(int& _x,int& _y) {
 		bool flag=false;
-		std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship& s) {
+		std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s)mutable {
 			flag = s.IsHit(_x, _y); 
 			if (!s.Islife())
 				ship_count--;

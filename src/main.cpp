@@ -4,7 +4,7 @@
 //int argc, char* argv[]
 int main () {
 
-	Ship A(7, 5, 1, 4);
+	/*Ship A(6, 5, 1, 4);
 	std::cout << std::endl;
 	Ship B(7, 5, 2, 3);
 	std::cout << std::endl;
@@ -13,7 +13,15 @@ int main () {
 	Ship D(7, 5, 4, 1);
 	std::cout << A.IsHit(4, 5) << std::endl;
 	std::cout << B.IsHit(8, 5) << std::endl;
-	std::cout << B.IsHit(7, 3) << std::endl;
+	std::cout << B.IsHit(7, 3) << std::endl;*/
+
+	Player Pl1{10};
+	bool flag1 = false;
+	bool flag2 = false;
+	flag1 = Pl1.setShip(4, 2, 3, 4);
+	flag2 = Pl1.setShip(6, 4, 4, 3);
+	std::cout << flag1 << std::endl;
+	std::cout << flag2 << std::endl;
 
 	return 0;
 }
