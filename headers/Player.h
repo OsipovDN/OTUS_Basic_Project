@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-//#include <iomanip>
 #include <string>
+#include <vector>
 #include <array>
 #include <algorithm>
 #include <execution>
@@ -29,19 +29,26 @@ public:
 	void setShip(int& _x, int& _y, int& _dir, int& _deck) {
 		navy.emplace_back(Ship(_x, _y, _dir, _deck));
 	}
+	//Массив периметра корабля
+	/*std::vector <std::pair<int, int>>&& shipPer(int& _x, int& _y, int& _dir, int& _deck) {
+		Ship temp(int& _x, int& _y, int& _dir, int& _deck);
+		auto temp_vec = temp.getCord();	
+	}*/
+
 	//Проверка пересечения кораблей
 	bool intersecShip(int& _x, int& _y, int& _dir, int& _deck) {
-		if (_dir == 1 || _dir == 3) {
-			if (_dir == 1) {
-				
+		bool flag = false;
+		Ship temp(int& _x, int& _y, int& _dir, int& _deck);
+		auto temp_vec = temp.getCord();
+		std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship& s) {
+			auto compar = s.getCord();
+			for (auto it : temp_vec) {
+				for (auto it_compar : compar)
+					if (it->first == it_compar->first && it->second == it_compar->second)
+						flag == true;
 			}
-			else {}
-		}
-		else {
-			if (_dir == 2) {
-
-			}
-		}
+			});
+		return flag;
 	}
 
 	//Проверка попадания
