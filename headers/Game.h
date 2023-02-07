@@ -88,9 +88,6 @@ public:
 		}
 	}
 	
-	
-
-	
 	//Проверка выхода за границу поля
 	bool testCords(int& _x, int& _y, int& _dir, int& _deck) {
 		if (_x <= 0 || _y <= 0 || _x > pol || _y > pol)

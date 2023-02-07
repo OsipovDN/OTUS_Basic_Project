@@ -30,7 +30,7 @@ Ship::Ship(int _x, int _y, int _dir, int _deck) :hp(_deck) {
 };
 
 bool Ship::Islife()const noexcept {
-	return (hp == 0) ? false : true;
+	return hp != 0;
 }
 bool Ship::IsHit(const int& _x, const int& _y) {
 	bool flag = false;
