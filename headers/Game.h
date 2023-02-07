@@ -1,15 +1,23 @@
 #pragma once
 #include "Player.h"
-#include "Ship.h"
+
+//static enum direction{
+//	UP=1,
+//	RIGHT,
+//	DOWN,
+//	LEFT
+//} dir;
 
 class Game {
 private:
-	Player plr1;
-	Player plr2;
-	bool gm_over;	//ѕроверка конца игры
+	std::unique_ptr<Player> plr1;
+	std::unique_ptr<Player> plr2;
+	bool gm_over=false;	//ѕроверка конца игры
 public:
-	
-
+	// онструктор
+	explicit Game(int s=10) :plr1(std::make_unique<Player>(s)), 
+		plr2(std::make_unique<Player>(s)) {};
+	//—пособ расстановки 
 	void ManSetShip() {
 		int x = 0;
 		int y = 0;
@@ -30,14 +38,11 @@ public:
 			}
 		}
 	}
-	/* онструктор(определение способа расстановки кораблей,
-	// (авто или ручной режим), расстановка кораблей противника)*/
-
-	//выстрел
 	
-	//ѕроверка выхода за границу пол€ и пересечени€ при расстановке
-	//ѕроверка выхода за границу пол€ при выстреле
-	//ѕроверка повторного выстрела
+	// (авто или ручной режим), расстановка кораблей противника)
+
+	
+	//ѕроверка выхода за границу пол€
 	//ѕроверка наличи€ кораблей
 	//–асстановка кораблей
 
