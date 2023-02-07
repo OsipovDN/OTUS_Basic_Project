@@ -17,11 +17,12 @@ private:
 	std::unique_ptr<Player> plr1;
 	std::unique_ptr<Player> plr2;
 	bool gm_over=false;	//Проверка конца игры
+	int pol;
 public:
 	//Конструктор
-	explicit Game(int s=10) :plr1(std::make_unique<Player>(s)), 
-		plr2(std::make_unique<Player>(s)) {};
-	//Ручной способ расстановки
+	explicit Game(int s = 10) :plr1(std::make_unique<Player>(s)),
+		plr2(std::make_unique<Player>(s)), pol = s {};
+	//Ручная расстановка кораблей
 	void manSetShip() {
 		int x = 0;
 		int y = 0;
@@ -34,19 +35,34 @@ public:
 					<< std::endl;
 				std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): " << std::endl;
 				std::cout << "x,y,dir: ";
-				std::cin >> x >> y >> d;
+				do {
+					std::cin >> x >> y >> d;
+				} while (testCords(x, y, d, i));
 				plr1->setShip(x, y, d, i);
 			}
 		}
 	}
+	// Автоматическая расстановка кораблей
 	void autoSetShip() {
-	
+		
 	}
 	
-	// (авто или ручной режим), расстановка кораблей противника)
+	
 
 	
 	//Проверка выхода за границу поля
+	bool testCords(int _x, int _y, int _dir, int _deck) {
+		if (_x <= 0 || _y <= 0 || _x > pol || _y > pol)
+			return true;
+		if (_dir == 1)
+			return ((_x - _deck) <= 0);
+		else if (_dir == 2)
+			return ((_y + _deck) > pol);
+		else if (_dir == 3)
+			return ((_x - _deck) > pol);
+		else 
+			return ((_y - _deck) <= 0);
+	}
 	//Проверка наличия кораблей
 	//Расстановка кораблей
 
