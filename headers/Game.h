@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <string>
+#include <vector>
 #include <memory>
 #include "Player.h"
 
@@ -19,26 +21,26 @@ public:
 	//Конструктор
 	explicit Game(int s=10) :plr1(std::make_unique<Player>(s)), 
 		plr2(std::make_unique<Player>(s)) {};
-	//Способ расстановки 
-	void ManSetShip() {
+	//Ручной способ расстановки
+	void manSetShip() {
 		int x = 0;
 		int y = 0;
-		std::string d;
+		int d = 0;
 		std::cout << "Ручной ввод расположения кораблей:"
 			<< std::endl;
 		for (int i = 4; i > 0; --i) {
 			for (int j = 4; j >= i; --j) {
-				std::cout << "Введите " << j << "-й " << i << "-й корабль: "
+				std::cout << "Введите координаты и направление " << j << "-х палубного корабля"
 					<< std::endl;
-				std::cout << "x= ";
-				std::cin >> x;
-				std::cout << "y= ";
-				std::cin >> y;
-				std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): ";
-
-				navy.emplace_back(Ship(x, y, std::stoi(d), i));
+				std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): " << std::endl;
+				std::cout << "x,y,dir: ";
+				std::cin >> x >> y >> d;
+				plr1->setShip(x, y, d, i);
 			}
 		}
+	}
+	void autoSetShip() {
+	
 	}
 	
 	// (авто или ручной режим), расстановка кораблей противника)
