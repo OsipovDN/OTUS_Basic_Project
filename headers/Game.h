@@ -1,10 +1,11 @@
 #pragma once
 #include <iostream>
+
 #include <string>
 #include <vector>
 #include <memory>
+#include <stdlib.h>
 #include <ctime>
-#include <rand>
 #include "Player.h"
 
 //static enum direction{
@@ -16,25 +17,28 @@
 
 class Game {
 private:
+	
 	std::unique_ptr<Player> plr1;
 	std::unique_ptr<Player> plr2;
-	bool gm_over=false;	//Проверка конца игры
-	bool input_mode;	//true-ручной, false- автоматический
 	int pol;
+	bool gm_over=false;	//Проверка конца игры
+	bool input_mode=false;	//true-ручной, false- автоматический
+	
 
 public:
-	//Конструктор
-	explicit Game(bool m,int s = 10) :plr1(std::make_unique<Player>(s)),
-		plr2(std::make_unique<Player>(s)),input_mode(m), pol (s) {
+	//Конструктор (задает способ расстановки и размер поля)
+	Game(bool m, int p=10) :plr1(std::make_unique<Player>(10)),
+		plr2(std::make_unique<Player>(10)), pol(p), input_mode(m){
 		if (input_mode) {
 			manSetShip();
-			autoSetShip(plr1);
+			plr1 = autoSetShip(std::move(plr1));
 		}
 		else {
-			autoSetShip(plr1);
-			autoSetShip(plr2);
+			plr1 = autoSetShip(std::move(plr1));
+			plr2 = autoSetShip(std::move(plr2));
 		}
 	};
+	
 	//Ручная расстановка кораблей
 	void manSetShip() {
 		int x = 0;
@@ -66,8 +70,8 @@ public:
 		}
 	}
 	// Автоматическая расстановка кораблей
-	void autoSetShip(Player& pl) {
-		std::srand(std::time(nullptr));
+	std::unique_ptr<Player>&& autoSetShip(std::unique_ptr<Player>&& pl) {
+		std::srand(static_cast <unsigned int>(std::time(nullptr)));
 		int x = 0;
 		int y = 0;
 		int d = 0;
@@ -86,8 +90,8 @@ public:
 				}
 			}
 		}
+		return std::move(pl);
 	}
-	
 	//Проверка выхода за границу поля
 	bool testCords(int& _x, int& _y, int& _dir, int& _deck) {
 		if (_x <= 0 || _y <= 0 || _x > pol || _y > pol)
@@ -102,7 +106,19 @@ public:
 			return ((_y - _deck) <= 0);
 	}
 	//Проверка наличия кораблей
-	//Расстановка кораблей
+	bool isOver() {
+		if (!plr1->ShipCount()){
+			std::cout << "Игрок 2 выиграл!" << std::endl;
+			return true;
+		}
+		if (!plr2->ShipCount()) {
+			std::cout << "Игрок 1 выиграл!" << std::endl;
+			return true;
+		}
+		return false;
+	}
+
+
 
 
 };

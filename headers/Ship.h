@@ -13,6 +13,6 @@ public:
 	bool Islife()const noexcept;
 	//Проверка попадания
 	bool IsHit(const int& _x, const int& _y);
-
+	//Возврат координат корабля
 	std::vector <Cords> getCord()const noexcept {return cord;}
 };

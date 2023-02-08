@@ -5,7 +5,7 @@
 #include <execution>
 
 
-explicit Player::Player(int count) :ship_count(count) {
+Player::Player(int count) :ship_count(count) {
 	navy.reserve(ship_count);
 }
 
@@ -43,7 +43,7 @@ bool Player::getShot(int& _x, int& _y) {
 	return flag;
 }
 
-bool Player::setShot(Player& plr) {
+void Player::setShot(Player& plr) {
 	int x = 0, y = 0;
 	int count = 0;
 	std::cout << "¬ведите координаты (x ,y) через пробел: "
@@ -69,5 +69,4 @@ bool Player::setShot(Player& plr) {
 			}
 		}
 	}
-	return false;
 }

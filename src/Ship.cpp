@@ -24,9 +24,7 @@ Ship::Ship(int _x, int _y, int _dir, int _deck) :hp(_deck) {
 				cord.emplace_back(std::make_pair(_x, i));
 		}
 	}
-	std::for_each(cord.cbegin(), cord.cend(), [](const Cords& p) {
-		std::cout << p.first << " " << p.second << std::endl; });
-	std::cout << std::endl;
+	
 };
 
 bool Ship::Islife()const noexcept {
@@ -40,14 +38,18 @@ bool Ship::IsHit(const int& _x, const int& _y) {
 			flag = true;
 		}
 		});
-	if (this->Islife()) {
-		std::cout << "Попал!" << std::endl;
-		return flag;
+	if (flag) {
+		if (this->Islife()) {
+			std::cout << "Попал!" << std::endl;
+			return flag;
+		}
+		else {
+			std::cout << "Убит!" << std::endl;
+			return flag;
+		}
 	}
 	else {
-		std::cout << "Убит!" << std::endl;
+		std::cout << "Промах!" << std::endl;
 		return flag;
 	}
-	std::cout << "Промах!" << std::endl;
-	return flag;
 }

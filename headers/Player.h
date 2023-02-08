@@ -1,5 +1,8 @@
 #pragma once
+#include "Ship.h"
+#include <iostream>
 #include <vector>
+#include <algorithm>
 #include <array>
 
 
@@ -16,8 +19,8 @@ public:
 	bool intersecShip(int& _x, int& _y, int& _dir, int& _deck) noexcept;
 	//Проверка попадания
 	bool getShot(int& _x, int& _y);
-	//Проверка выстрела (повторный выбор одного поля)
-	bool setShot(Player& plr);
+	//Проверка выстрела
+	void setShot(Player& plr);
 	//Проверка наличия кораблей
 	bool ShipCount()const {return ship_count;};
 
@@ -26,4 +29,20 @@ public:
 		Ship temp(int& _x, int& _y, int& _dir, int& _deck);
 		auto temp_vec = temp.getCord();
 	}*/
+
+	//Для проверки работы
+	/*void print() {
+		std::for_each(this->navy.cbegin(), this->navy.cend(), [](const Ship& p) {
+			std::vector <std::pair<int, int>> obj = p.getCord();
+			for (auto& it : obj) {
+				std::cout << it.first << " " << it.second << std::endl;
+			}
+			std::cout << std::endl;
+			});
+		std::cout << std::endl;
+	}*/
 };
+
+	
+
+	
