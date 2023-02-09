@@ -3,19 +3,15 @@ cmake_minimum_required (VERSION 3.8)
 project (project)
 
 add_executable (sea_battle
-	src/main.cpp
-    src/Ship.cpp
-    src/Player.cpp
- )
-
-target_include_directories(
-    sea_battle
-   PRIVATE ${CMAKE_CURRENT_BINARY_DIR}
-   )
+	main.cpp
+    Game/src/Game.cpp
+    Game/src/Player.cpp
+    Game/src/Ship.cpp
+)
 
 target_include_directories(
     sea_battle 
-    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/headers
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Game/headers
     )
 
 set_target_properties (sea_battle PROPERTIES

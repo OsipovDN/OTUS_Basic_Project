@@ -31,7 +31,7 @@ public:
 	}*/
 
 	//Для проверки работы
-	/*void print() {
+	void print() {
 		std::for_each(this->navy.cbegin(), this->navy.cend(), [](const Ship& p) {
 			std::vector <std::pair<int, int>> obj = p.getCord();
 			for (auto& it : obj) {
@@ -40,7 +40,7 @@ public:
 			std::cout << std::endl;
 			});
 		std::cout << std::endl;
-	}*/
+	}
 };
 
 	
