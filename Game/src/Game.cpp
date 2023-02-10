@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <ctime>
 
-Game::Game(bool m, int p) :plr1(std::make_unique<Player>(10)),
 plr2(std::make_unique<Player>(10)), pol(p), input_mode(m) {
 	std::srand(static_cast <unsigned int>(std::time(0)));
 	if (input_mode) {
@@ -53,7 +52,6 @@ void Game::manSetShip() {
 };
 
 std::unique_ptr<Player>&& Game::autoSetShip(std::unique_ptr<Player>&& pl) {
-	
 	int x = 0;
 	int y = 0;
 	int d = 0;
