@@ -4,10 +4,10 @@ project (project)
 
 add_executable (sea_battle
 	main.cpp
-    Game/src/Game.cpp
-    Game/src/Player.cpp
     Game/src/Ship.cpp
-)
+    Game/src/Player.cpp
+    Game/src/Game.cpp
+    )
 
 target_include_directories(
     sea_battle 
