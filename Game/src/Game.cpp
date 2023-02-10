@@ -1,12 +1,12 @@
 
 #include "Game.h"
 #include <iostream>
-#include <random>
 #include <vector>
 #include <memory>
 #include <stdlib.h>
 #include <ctime>
 
+Game::Game(bool m, int p):
 plr2(std::make_unique<Player>(10)), pol(p), input_mode(m) {
 	std::srand(static_cast <unsigned int>(std::time(0)));
 	if (input_mode) {
