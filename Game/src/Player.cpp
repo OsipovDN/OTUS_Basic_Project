@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <execution>
 
-
 Player::Player(int count) :ship_count(count) {
 	navy.reserve(ship_count);
 }

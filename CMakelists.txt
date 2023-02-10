@@ -3,10 +3,10 @@ cmake_minimum_required (VERSION 3.8)
 project (project)
 
 add_executable (sea_battle
-	main.cpp
-    Game/src/Ship.cpp
-    Game/src/Player.cpp
+	main.cpp  
     Game/src/Game.cpp
+    Game/src/Player.cpp
+    Game/src/Ship.cpp
     )
 
 target_include_directories(
