@@ -16,8 +16,6 @@ plr2(std::make_unique<Player>(10)), pol(p), input_mode(m) {
 		plr1 = autoSetShip(std::move(plr1));
 		plr2 = autoSetShip(std::move(plr2));
 	}
-	plr1->print();
-	plr2->print();
 };
 
 void Game::manSetShip() {
@@ -28,7 +26,7 @@ void Game::manSetShip() {
 		<< std::endl;
 	for (int i = 4; i > 0; --i) {
 		for (int j = 4; j >= i; --j) {
-			std::cout << "Введите координаты и направление " << j << "-х палубного корабля"
+			std::cout << "Введите координаты и направление " << i << "-х палубного корабля"
 				<< std::endl;
 			std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): " << std::endl;
 			for (;;) {
@@ -84,6 +82,10 @@ bool Game::testCords(int& _x, int& _y, int& _dir, int& _deck) {
 		return ((_x - _deck) > pol);
 	else
 		return ((_y - _deck) <= 0);
+};
+
+void Game::play(Player& pl) {
+	plr1->setShot(pl);
 };
 
 bool Game::isOver() {
