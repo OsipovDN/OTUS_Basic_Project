@@ -43,14 +43,16 @@ public:
 	}
 
 	void map() {
-		int s = 1;
+		int s = 0;
 		for (auto it_map : map_shot) {
-			if (s == 10) {
+			if (s == 9) {
 				std::cout << it_map << std::endl;
-				s = 1;
+				s = 0;
 			}
-			else 
+			else {
 				std::cout << it_map << " ";
+				s++;
+			}
 		}
 	}
 

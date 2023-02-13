@@ -16,6 +16,8 @@ plr2(std::make_unique<Player>(10)), pol(p), input_mode(m) {
 		plr1 = autoSetShip(std::move(plr1));
 		plr2 = autoSetShip(std::move(plr2));
 	}
+	plr1->print();
+	plr2->print();
 };
 
 void Game::manSetShip() {
@@ -87,8 +89,10 @@ bool Game::testCords(int& _x, int& _y, int& _dir, int& _deck) {
 
 
 void Game::play() {
-	plr1->setShot(*plr2);
-	plr2->setShot(*plr1);
+	for (;;) {
+		plr1->setShot(*plr2);
+		plr2->setShot(*plr1);
+	}
 };
 
 bool Game::isOver() {

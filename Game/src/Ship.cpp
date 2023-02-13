@@ -32,7 +32,7 @@ bool Ship::Islife()const noexcept {
 }
 bool Ship::IsHit(const int& _x, const int& _y) {
 	bool flag = false;
-	std::for_each(cord.cbegin(), cord.cend(), [&](Cords p) {
+	std::for_each(cord.cbegin(), cord.cend(), [&](Cords p)mutable {
 		if (p.first == _x && p.second == _y) {
 			hp--;
 			flag = true;
@@ -49,7 +49,7 @@ bool Ship::IsHit(const int& _x, const int& _y) {
 			return flag;
 		}
 	}
-	else {
+	else {plr1->print();
 		std::cout << "Промах!" << std::endl;
 		return flag;
 	}*/

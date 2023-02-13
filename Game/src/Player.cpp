@@ -5,6 +5,9 @@
 #include <execution>
 
 Player::Player(int count) :ship_count(count) {
+	for (auto& it_map : map_shot) {
+		it_map = static_cast <char>(149);
+	}
 	navy.reserve(ship_count);
 }
 
@@ -60,12 +63,13 @@ void Player::setShot(Player& plr) {
 	int x = 0, y = 0;
 	int count = 0;
 	for (;;) {
+		plr.map();
 		std::cout << "Введите координаты (x ,y) через пробел: "
 			<< std::endl;
 		std::cout << "x,y: ";
 		std::cin >> x >> y;
 		count = ((x - 1) * 10 + y) - 1;
-		if (map_shot[count] != ' ') {
+		if (map_shot[count] != static_cast<char>(149)) {
 			std::cout << "По данной позиции ранее уже был сделан выстрел." <<
 				std::endl;
 			std::cout << "Повторите ввод." << std::endl;
