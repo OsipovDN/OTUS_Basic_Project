@@ -38,7 +38,8 @@ bool Ship::IsHit(const int& _x, const int& _y) {
 			flag = true;
 		}
 		});
-	if (flag) {
+	return flag;
+	/*if (flag) {
 		if (this->Islife()) {
 			std::cout << "Попал!" << std::endl;
 			return flag;
@@ -51,5 +52,5 @@ bool Ship::IsHit(const int& _x, const int& _y) {
 	else {
 		std::cout << "Промах!" << std::endl;
 		return flag;
-	}
+	}*/
 }

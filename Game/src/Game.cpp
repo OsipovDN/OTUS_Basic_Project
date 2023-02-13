@@ -26,6 +26,7 @@ void Game::manSetShip() {
 		<< std::endl;
 	for (int i = 4; i > 0; --i) {
 		for (int j = 4; j >= i; --j) {
+			plr1->map();
 			std::cout << "Введите координаты и направление " << i << "-х палубного корабля"
 				<< std::endl;
 			std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): " << std::endl;

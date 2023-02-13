@@ -34,12 +34,26 @@ bool Player::intersecShip(int& _x, int& _y, int& _dir, int& _deck) noexcept {
 
 bool Player::getShot(int& _x, int& _y) {
 	bool flag = false;
+	int temp = ship_count;
 	std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s)mutable {
 		flag = s.IsHit(_x, _y);
 		if (!s.Islife())
 			ship_count--;
 		});
-	return flag;
+	if (flag) {
+		if (temp== ship_count) {
+			std::cout << "Попал!" << std::endl;
+			return flag;
+		}
+		else {
+			std::cout << "Убит!" << std::endl;
+			return flag;
+		}
+	}
+	else {
+		std::cout << "Промах!" << std::endl;
+		return flag;
+	}
 }
 
 void Player::setShot(Player& plr) {
