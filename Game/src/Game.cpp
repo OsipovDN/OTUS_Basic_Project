@@ -84,8 +84,10 @@ bool Game::testCords(int& _x, int& _y, int& _dir, int& _deck) {
 		return ((_y - _deck) <= 0);
 };
 
-void Game::play(Player& pl) {
-	plr1->setShot(pl);
+
+void Game::play() {
+	plr1->setShot(*plr2);
+	plr2->setShot(*plr1);
 };
 
 bool Game::isOver() {

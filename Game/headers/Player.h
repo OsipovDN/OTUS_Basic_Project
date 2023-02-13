@@ -41,6 +41,19 @@ public:
 			});
 		std::cout << std::endl;
 	}
+
+	void map() {
+		int s = 1;
+		for (auto it_map : map_shot) {
+			if (s == 10) {
+				std::cout << it_map << std::endl;
+				s = 1;
+			}
+			else 
+				std::cout << it_map << " ";
+		}
+	}
+
 };
 
 	

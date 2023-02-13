@@ -27,7 +27,7 @@ public:
 	std::unique_ptr<Player>&& autoSetShip(std::unique_ptr<Player>&& pl);
 	//Проверка выхода за границу поля
 	bool testCords(int& _x, int& _y, int& _dir, int& _deck);
-	void play(Player& pl);
+	void play();
 	//Проверка наличия кораблей
 	bool isOver();
 };
