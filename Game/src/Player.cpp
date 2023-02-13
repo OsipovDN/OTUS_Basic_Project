@@ -10,7 +10,7 @@ Player::Player(int count) :ship_count(count) {
 
 bool Player::setShip(int _x, int _y, int _dir, int _deck) {
 	bool flag = intersecShip(_x, _y, _dir, _deck);
-	if (!flag) 
+	if (!flag)
 		return false;
 	navy.emplace_back(Ship(_x, _y, _dir, _deck));
 	return true;

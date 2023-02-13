@@ -22,7 +22,7 @@ public:
 	//Проверка выстрела
 	void setShot(Player& plr);
 	//Проверка наличия кораблей
-	bool ShipCount()const {return ship_count;};
+	bool ShipCount()const { return ship_count; };
 
 	//Массив периметра корабля
 	/*std::vector <std::pair<int, int>>&& shipPer(int& _x, int& _y, int& _dir, int& _deck) {

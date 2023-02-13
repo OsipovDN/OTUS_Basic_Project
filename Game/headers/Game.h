@@ -10,17 +10,17 @@
 
 class Game {
 private:
-	
+
 	std::unique_ptr<Player> plr1;
 	std::unique_ptr<Player> plr2;
 	int pol;		//Размер игрового поля
-	bool gm_over=false;	//Проверка конца игры
-	bool input_mode=false;	//Способ расстановки кораблей
+	bool gm_over = false;	//Проверка конца игры
+	bool input_mode = false;	//Способ расстановки кораблей
 							//true-ручной, false- автоматический
-	
+
 public:
 	//Конструктор (задает способ расстановки и размер поля)
-	Game(bool m=false, int p=10);
+	Game(bool m = false, int p = 10);
 	//Ручная расстановка кораблей
 	void manSetShip();
 	// Автоматическая расстановка кораблей
@@ -30,3 +30,4 @@ public:
 	//Проверка наличия кораблей
 	bool isOver();
 };
+
