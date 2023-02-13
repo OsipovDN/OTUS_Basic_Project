@@ -45,9 +45,9 @@ bool Player::getShot(int& _x, int& _y) {
 void Player::setShot(Player& plr) {
 	int x = 0, y = 0;
 	int count = 0;
-	std::cout << "¬ведите координаты (x ,y) через пробел: "
-		<< std::endl;
 	for (;;) {
+		std::cout << "¬ведите координаты (x ,y) через пробел: "
+			<< std::endl;
 		std::cout << "x,y: ";
 		std::cin >> x >> y;
 		count = ((x - 1) * 10 + y) - 1;
