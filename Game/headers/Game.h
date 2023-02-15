@@ -35,8 +35,8 @@ public:
 
 	void mapPol() {
 		int s = 1;
-		auto temp_map_pl1 = plr1->getMap();
-		auto temp_map_pl2 = plr2->getMap();
+		auto *temp_map_pl1 = plr1->getMap();
+		auto *temp_map_pl2 = plr2->getMap();
 		std::cout << "\tÈãğîê 1" << "\t\t\t\tÈãğîê 2" << std::endl;
 		for (int i = 0; i < 2; ++i) {
 			std::cout<<"   ";
@@ -56,8 +56,8 @@ public:
 				s++;
 			}
 		}*/
-		auto it_start1 = temp_map_pl1.cbegin();
-		auto it_start2 = temp_map_pl2.cbegin();
+		auto it_start1 = temp_map_pl1->cbegin();
+		auto it_start2 = temp_map_pl2->cbegin();
 		do {
 			if (s==10)
 				std::cout << s << " ";
@@ -74,7 +74,7 @@ public:
 			it_start1 += 10;
 			std::cout << "\n";
 			s++;
-		} while (it_start1 != temp_map_pl1.cend()||it_start2!=temp_map_pl2.cend());
+		} while (it_start1 != temp_map_pl1->cend()||it_start2!=temp_map_pl2->cend());
 	}
 };
 

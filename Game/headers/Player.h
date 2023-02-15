@@ -33,8 +33,8 @@ public:
 	//Для проверки работы
 	void print();
 
-	const auto& getMap() {
-		return map_shot;
+	std::array<char,100>* getMap() {
+		return &map_shot;
 
 	}
 };

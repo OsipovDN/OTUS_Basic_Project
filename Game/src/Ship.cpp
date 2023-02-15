@@ -28,7 +28,8 @@ Ship::Ship(int _x, int _y, int _dir, int _deck) :hp(_deck) {
 };
 
 bool Ship::Islife()const noexcept {
-	return (hp!=0)?true:false;
+	std::cout << hp << std::endl;
+	return hp;
 }
 bool Ship::IsHit(const int& _x, const int& _y) {
 	bool flag = false;
