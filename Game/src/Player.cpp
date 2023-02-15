@@ -38,12 +38,11 @@ bool Player::intersecShip(int& _x, int& _y, int& _dir, int& _deck) noexcept {
 bool Player::getShot(int& _x, int& _y) {
 	bool flag = false;
 	int temp = ship_count;
-	std::for_each(navy.begin(), navy.end(), [&](Ship s)mutable {
+	std::for_each(navy.cbegin(), navy.cend(), [&](Ship s)mutable {
 		if (s.IsHit(_x, _y))
 			flag = true;
 		if (!s.Islife())
 			ship_count--;
-		}
 		});
 	std::cout << flag << " " <<temp<<" " << ship_count << std::endl;
 	if (flag) {
