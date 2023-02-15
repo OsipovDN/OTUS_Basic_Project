@@ -20,9 +20,9 @@ public:
 	//Проверка попадания
 	bool getShot(int& _x, int& _y);
 	//Проверка выстрела
-	void setShot(Player& plr);
+	std::unique_ptr<Player>&& setShot(std::unique_ptr<Player>&& plr);
 	//Проверка наличия кораблей
-	bool ShipCount()const { return ship_count; };
+	int ShipCount()const { return ship_count; };
 
 	//Массив периметра корабля
 	/*std::vector <std::pair<int, int>>&& shipPer(int& _x, int& _y, int& _dir, int& _deck) {

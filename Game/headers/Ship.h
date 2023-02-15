@@ -15,4 +15,5 @@ public:
 	bool IsHit(const int& _x, const int& _y);
 	//Возврат координат корабля
 	std::vector <Cords> getCord()const noexcept { return cord; }
+	int hps() { return hp; }
 };

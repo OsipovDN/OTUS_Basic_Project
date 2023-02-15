@@ -38,13 +38,13 @@ bool Player::intersecShip(int& _x, int& _y, int& _dir, int& _deck) noexcept {
 bool Player::getShot(int& _x, int& _y) {
 	bool flag = false;
 	int temp = ship_count;
-	std::for_each(navy.cbegin(), navy.cend(), [&](Ship s)mutable {
+	std::for_each(navy.begin(), navy.end(), [&](Ship s)mutable {
 		if (s.IsHit(_x, _y))
 			flag = true;
 		if (!s.Islife())
 			ship_count--;
 		});
-	std::cout << flag << " " <<temp<<" " << ship_count << std::endl;
+	std::cout << std::endl;
 	if (flag) {
 		if (temp== ship_count) {
 			std::cout << "Попал!" << std::endl;
@@ -59,9 +59,10 @@ bool Player::getShot(int& _x, int& _y) {
 		std::cout << "Промах!" << std::endl;
 		return flag;
 	}
+	
 }
 
-void Player::setShot(Player& plr) {
+std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr ) {
 	int x = 0, y = 0;
 	int count = 0;
 		for (;;) {
@@ -79,10 +80,11 @@ void Player::setShot(Player& plr) {
 			else
 				break;
 		}
-		if (plr.getShot(x, y)) 
+		if (plr->getShot(x, y)) 
 			map_shot[count] = 'X';
 		else 
 			map_shot[count] = '+';
+		return std::move(plr);
 }
 
 void Player::print() {

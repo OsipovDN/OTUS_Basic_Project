@@ -46,16 +46,6 @@ public:
 			std::cout << "\t";
 		}
 		std::cout << std::endl;;
-		/*for (auto it_map : temp_map_pl1) {
-			if (s == 9) {
-				std::cout << it_map << std::endl;
-				s = 0;
-			}
-			else {
-				std::cout << it_map << " ";
-				s++;
-			}
-		}*/
 		auto it_start1 = temp_map_pl1->cbegin();
 		auto it_start2 = temp_map_pl2->cbegin();
 		do {
