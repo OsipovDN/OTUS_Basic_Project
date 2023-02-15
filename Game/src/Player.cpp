@@ -62,28 +62,50 @@ bool Player::getShot(int& _x, int& _y) {
 void Player::setShot(Player& plr) {
 	int x = 0, y = 0;
 	int count = 0;
-	for (;;) {
-		plr.map();
-		std::cout << "Введите координаты (x ,y) через пробел: "
-			<< std::endl;
-		std::cout << "x,y: ";
-		std::cin >> x >> y;
-		count = ((x - 1) * 10 + y) - 1;
-		if (map_shot[count] != static_cast<char>(149)) {
-			std::cout << "По данной позиции ранее уже был сделан выстрел." <<
-				std::endl;
-			std::cout << "Повторите ввод." << std::endl;
-			continue;
-		}
-		else {
-			if (plr.getShot(x, y)) {
-				map_shot[count] = 'X';
+		for (;;) {
+			std::cout << "Введите координаты (x ,y) через пробел: "
+				<< std::endl;
+			std::cout << "x,y: ";
+			std::cin >> x >> y;
+			count = ((y - 1) * 10 + x) - 1;
+			if (map_shot[count] != static_cast<char>(149)) {
+				std::cout << "По данной позиции ранее уже был сделан выстрел." <<
+					std::endl;
+				std::cout << "Повторите ввод." << std::endl;
 				continue;
 			}
-			else {
-				map_shot[count] = '+';
+			else
 				break;
-			}
 		}
-	}
+		if (plr.getShot(x, y)) 
+			map_shot[count] = 'X';
+		else 
+			map_shot[count] = '+';
 }
+
+void Player::print() {
+	std::for_each(this->navy.cbegin(), this->navy.cend(), [](const Ship& p) {
+		std::vector <std::pair<int, int>> obj = p.getCord();
+		for (auto& it : obj) {
+			std::cout << it.first << " " << it.second << std::endl;
+		}
+		std::cout << std::endl;
+		});
+	std::cout << std::endl;
+}
+
+//void Player::map() {
+//	int s = 0;
+//	for (auto it_map : map_shot) {
+//		if (s == 9) {
+//			std::cout << it_map << std::endl;
+//			s = 0;
+//		}
+//		else {
+//			std::cout << it_map << " ";
+//			s++;
+//		}
+//	}
+//}
+
+

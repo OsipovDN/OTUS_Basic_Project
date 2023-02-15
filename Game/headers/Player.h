@@ -31,31 +31,12 @@ public:
 	}*/
 
 	//Для проверки работы
-	void print() {
-		std::for_each(this->navy.cbegin(), this->navy.cend(), [](const Ship& p) {
-			std::vector <std::pair<int, int>> obj = p.getCord();
-			for (auto& it : obj) {
-				std::cout << it.first << " " << it.second << std::endl;
-			}
-			std::cout << std::endl;
-			});
-		std::cout << std::endl;
-	}
+	void print();
 
-	void map() {
-		int s = 0;
-		for (auto it_map : map_shot) {
-			if (s == 9) {
-				std::cout << it_map << std::endl;
-				s = 0;
-			}
-			else {
-				std::cout << it_map << " ";
-				s++;
-			}
-		}
-	}
+	const auto& getMap() {
+		return map_shot;
 
+	}
 };
 
 	
