@@ -82,7 +82,7 @@ bool Game::testCords(int& _x, int& _y, int& _dir, int& _deck) {
 	else if (_dir == 2)
 		return ((_y + _deck) > pol);
 	else if (_dir == 3)
-		return ((_x - _deck) > pol);
+		return ((_x + _deck) > pol);
 	else
 		return ((_y - _deck) <= 0);
 };

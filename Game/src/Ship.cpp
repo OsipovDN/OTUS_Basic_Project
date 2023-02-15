@@ -28,29 +28,15 @@ Ship::Ship(int _x, int _y, int _dir, int _deck) :hp(_deck) {
 };
 
 bool Ship::Islife()const noexcept {
-	return hp != 0;
+	return (hp!=0)?true:false;
 }
 bool Ship::IsHit(const int& _x, const int& _y) {
 	bool flag = false;
 	std::for_each(cord.cbegin(), cord.cend(), [&](Cords p)mutable {
 		if (p.first == _x && p.second == _y) {
-			hp--;
 			flag = true;
+			hp--;
 		}
 		});
 	return flag;
-	/*if (flag) {
-		if (this->Islife()) {
-			std::cout << "Попал!" << std::endl;
-			return flag;
-		}
-		else {
-			std::cout << "Убит!" << std::endl;
-			return flag;
-		}
-	}
-	else {plr1->print();
-		std::cout << "Промах!" << std::endl;
-		return flag;
-	}*/
 }
