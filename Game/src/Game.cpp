@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "Game.h"
+#include "Menu.h"
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -10,49 +10,39 @@
 
 Game::Game(int p) :plr1(std::make_unique<Player>(10)),
 plr2(std::make_unique<Player>(10)), pol(p) {
+	Menu menu;
 	int val;
 	std::srand(static_cast <unsigned int>(std::time(0)));
-	val = mainMenu();
-	//Ввод количества игроков
-	for (;;) {
-		std::cout << "Выбирете количество игроков" << std::endl;
-		std::cout << "Один игрок-1\nДва игрока-2\nВыход-0\n-> ";
-		std::cin >> val;
-		if (val != 1 && val != 2 && val != 0) {
-			std::cout.flush();
-			std::cout << "Некорректный ввод. Попробуйте еще раз!\n";
-			continue;
-		}
-		else
-			break;
-	}
-	if (val == 0)
+	val = menu.mainMenu();
+	if (val == 3)
 		exit(1);
-	if (val == 2)
+
+	//Ввод количества игроков
+	val = menu.setPlrVal();
+	if (val==1)
+		multplr = false;
+	else
 		multplr = true;
 	//Ввод способа расстановки
-	
-		std::cout.flush();
-		std::cout << "Игрок 1\n";
-		std::cout << "Введите способ расстановки флота (1- ручной,2- автоматический)\n-> ";
-		std::cin >> val;
-		if (val == 1)
-			setNavy(plr1,true);
-		else
-			setNavy(plr1, false);
-		if (multplr) {
-			std::cout.flush();
-			std::cout << "Игрок 2\n";
-			std::cout << "Введите способ расстановки флота (1- ручной,2- автоматический)\n-> ";
-			std::cin >> val;
-			if (val == 1)
-				setNavy(plr2, true);
-			else
-				setNavy(plr2, false);
+	if (multplr) {
+		for (int i = 1; i <= 2; ++i) {
+			bool flag = menu.placement(i);
+			if (i == 1) {
+				setNavy(plr1, flag);
+				system("cls");
+			}
+			else{
+				setNavy(plr2, flag); 
+				system("cls");
+			}
 		}
-		else
+	}
+	else {
+		bool flag = menu.placement(1);
+			setNavy(plr1, flag);
 			setNavy(plr2, false);
-
+			system("cls");
+	}
 	/*if (input_navy) {
 		manSetShip();
 		plr1 = autoSetShip(std::move(plr1));
