@@ -30,7 +30,7 @@ int main() {
 	std::cout << flag2 << std::endl;*/
 
 	//Њроверка автоматической расстановки кораблей
-	Game Game{ false };
+	Game Game{};
 	Game.play();
 
 
