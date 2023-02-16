@@ -1,5 +1,10 @@
 #pragma once
 #include "Player.h"
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <Windows.h>
+
 
 //static enum direction{
 //	UP=1,
@@ -33,7 +38,7 @@ public:
 	//Проверка наличия кораблей
 	bool isOver();
 
-	void mapPol() {
+	void mapPol( ) {
 		int s = 1;
 		auto *temp_map_pl1 = plr1->getMap();
 		auto *temp_map_pl2 = plr2->getMap();
@@ -48,19 +53,35 @@ public:
 		std::cout << std::endl;;
 		auto it_start1 = temp_map_pl1->cbegin();
 		auto it_start2 = temp_map_pl2->cbegin();
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		do {
 			if (s==10)
 				std::cout << s << " ";
 			else
 				std::cout << s << "  ";
-			std::for_each(it_start2, it_start2 + pol, [](const char pos) {std::cout << pos << " "; });
+			std::for_each(it_start2, it_start2 + pol, [&](const char pos) {
+				if (pos == 'X') {
+					SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+					std::cout << pos << " ";
+					SetConsoleTextAttribute(hConsole, 15);
+				}
+				else
+					std::cout << pos << " ";
+				});
 			it_start2 += 10;
 			std::cout << "\t\t";
 			if (s == 10)
 				std::cout << s << " ";
 			else
 				std::cout << s << "  ";
-			std::for_each(it_start1, it_start1 + pol, [](const char pos) {std::cout << pos << " "; });
+			std::for_each(it_start1, it_start1 + pol, [&](const char pos) {
+				if (pos == 'X') {
+					SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+					std::cout << pos << " ";
+					SetConsoleTextAttribute(hConsole, 15);
+				}
+				else
+					std::cout << pos << " "; });
 			it_start1 += 10;
 			std::cout << "\n";
 			s++;

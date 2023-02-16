@@ -79,7 +79,7 @@ std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr ) {
 			else
 				break;
 		}
-		if (plr->getShot(x, y)) 
+		if (plr->getShot(x, y))
 			map_shot[count] = 'X';
 		else 
 			map_shot[count] = '+';

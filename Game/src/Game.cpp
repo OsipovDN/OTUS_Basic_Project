@@ -90,12 +90,12 @@ bool Game::testCords(int& _x, int& _y, int& _dir, int& _deck) {
 
 void Game::play() {
 	for (;;) {
+		
 		mapPol();
 		std::cout << "Ход игрока 1:\n";
 		plr2=plr1->setShot(std::move(plr2));
 		mapPol();
 		std::cout << "Ход игрока 2:\n";
-		//plr2->setShot(*plr1);
 		plr1 = plr2->setShot(std::move(plr1));
 	}
 };
