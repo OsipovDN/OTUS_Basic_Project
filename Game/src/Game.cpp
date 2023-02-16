@@ -6,9 +6,9 @@
 #include <ctime>
 
 Game::Game(bool m, int p) :plr1(std::make_unique<Player>(10)),
-plr2(std::make_unique<Player>(10)), pol(p), input_mode(m) {
+plr2(std::make_unique<Player>(10)), pol(p), input_navy(m) {
 	std::srand(static_cast <unsigned int>(std::time(0)));
-	if (input_mode) {
+	if (input_navy) {
 		manSetShip();
 		plr1 = autoSetShip(std::move(plr1));
 	}
@@ -28,7 +28,6 @@ void Game::manSetShip() {
 		<< std::endl;
 	for (int i = 4; i > 0; --i) {
 		for (int j = 4; j >= i; --j) {
-			/*plr1->map();*/
 			std::cout << "Введите координаты и направление " << i << "-х палубного корабля"
 				<< std::endl;
 			std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): " << std::endl;
@@ -61,7 +60,6 @@ std::unique_ptr<Player>&& Game::autoSetShip(std::unique_ptr<Player>&& pl) {
 				x = std::rand() % 10 + 1;
 				y = std::rand() % 10 + 1;
 				d = std::rand() % 4 + 1;
-
 				if (testCords(x, y, d, i))
 					continue;
 				if (!pl->setShip(x, y, d, i))
@@ -90,7 +88,6 @@ bool Game::testCords(int& _x, int& _y, int& _dir, int& _deck) {
 
 void Game::play() {
 	for (;;) {
-		
 		mapPol();
 		std::cout << "Ход игрока 1:\n";
 		plr2=plr1->setShot(std::move(plr2));

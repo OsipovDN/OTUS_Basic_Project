@@ -20,7 +20,7 @@ private:
 	std::unique_ptr<Player> plr2;
 	int pol;		//Размер игрового поля
 	bool gm_over = false;	//Проверка конца игры
-	bool input_mode = false;	//Способ расстановки кораблей
+	bool input_navy = false;	//Способ расстановки кораблей
 							//true-ручной, false- автоматический
 
 public:
