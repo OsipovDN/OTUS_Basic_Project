@@ -6,22 +6,22 @@ Ship::Ship(int _x, int _y, int _dir, int _deck) :hp(_deck) {
 	cord.reserve(hp);
 	if (_dir == 1 || _dir == 3) {
 		if (_dir == 1) {
-			for (int i = _x; i > (_x - _deck); --i)
-				cord.emplace_back(std::make_pair(i, _y));
+			for (int i = _y; i > (_y - _deck); --i)
+				cord.emplace_back(std::make_pair(_x,i ));
 		}
 		else {
-			for (int i = _x; i < (_x + _deck); ++i)
-				cord.emplace_back(std::make_pair(i, _y));
+			for (int i = _y; i < (_y + _deck); ++i)
+				cord.emplace_back(std::make_pair(_x, i));
 		}
 	}
 	else {
 		if (_dir == 2) {
-			for (int i = _y; i < (_y + _deck); ++i)
-				cord.emplace_back(std::make_pair(_x, i));
+			for (int i = _x; i < (_x + _deck); ++i)
+				cord.emplace_back(std::make_pair(i, _y));
 		}
 		else {
-			for (int i = _y; i > (_y - _deck); --i)
-				cord.emplace_back(std::make_pair(_x, i));
+			for (int i = _x; i > (_x - _deck); --i)
+				cord.emplace_back(std::make_pair(i, _y));
 		}
 	}
 
