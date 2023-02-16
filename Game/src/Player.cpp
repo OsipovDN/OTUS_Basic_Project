@@ -35,6 +35,31 @@ bool Player::intersecShip(int& _x, int& _y, int& _dir, int& _deck) noexcept {
 	return flag;
 }
 
+std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr) {
+	int x = 0, y = 0;
+	int count = 0;
+	for (;;) {
+		std::cout << "Введите координаты (x ,y) через пробел: "
+			<< std::endl;
+		std::cout << "x,y: ";
+		std::cin >> x >> y;
+		count = ((y - 1) * 10 + x) - 1;
+		if (map_shot[count] != static_cast<char>(149)) {
+			std::cout << "По данной позиции ранее уже был сделан выстрел." <<
+				std::endl;
+			std::cout << "Повторите ввод." << std::endl;
+			continue;
+		}
+		else
+			break;
+	}
+	if (plr->getShot(x, y))
+		map_shot[count] = 'X';
+	else
+		map_shot[count] = '+';
+	return std::move(plr);
+}
+
 bool Player::getShot(int& _x, int& _y) {
 	bool flag = false;
 	int temp = ship_count;
@@ -59,31 +84,6 @@ bool Player::getShot(int& _x, int& _y) {
 		return flag;
 	}
 	
-}
-
-std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr ) {
-	int x = 0, y = 0;
-	int count = 0;
-		for (;;) {
-			std::cout << "Введите координаты (x ,y) через пробел: "
-				<< std::endl;
-			std::cout << "x,y: ";
-			std::cin >> x >> y;
-			count = ((y - 1) * 10 + x) - 1;
-			if (map_shot[count] != static_cast<char>(149)) {
-				std::cout << "По данной позиции ранее уже был сделан выстрел." <<
-					std::endl;
-				std::cout << "Повторите ввод." << std::endl;
-				continue;
-			}
-			else
-				break;
-		}
-		if (plr->getShot(x, y))
-			map_shot[count] = 'X';
-		else 
-			map_shot[count] = '+';
-		return std::move(plr);
 }
 
 void Player::print() {

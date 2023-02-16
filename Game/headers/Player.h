@@ -17,12 +17,16 @@ public:
 	bool setShip(int _x, int _y, int _dir, int _deck);
 	//Проверка пересечения кораблей
 	bool intersecShip(int& _x, int& _y, int& _dir, int& _deck) noexcept;
-	//Проверка попадания
-	bool getShot(int& _x, int& _y);
 	//Проверка выстрела
 	std::unique_ptr<Player>&& setShot(std::unique_ptr<Player>&& plr);
+	//Проверка попадания
+	bool getShot(int& _x, int& _y);
 	//Проверка наличия кораблей
 	int ShipCount()const { return ship_count; };
+	//Передача карты игрока для печати
+	std::array<char, 100>* getMap() { return &map_shot; }
+	//Для проверки работы
+	void print();
 
 	//Массив периметра корабля
 	/*std::vector <std::pair<int, int>>&& shipPer(int& _x, int& _y, int& _dir, int& _deck) {
@@ -30,13 +34,9 @@ public:
 		auto temp_vec = temp.getCord();
 	}*/
 
-	//Для проверки работы
-	void print();
+	
 
-	std::array<char,100>* getMap() {
-		return &map_shot;
-
-	}
+	
 };
 
 	
