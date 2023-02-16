@@ -2,26 +2,28 @@
 #include <algorithm>
 #include <iostream>
 
-Ship::Ship(int _x, int _y, int _dir, int _deck) :hp(_deck) {
+
+
+Ship::Ship(Cords crd, int _dir, int _deck) :hp(_deck) {
 	cord.reserve(hp);
-	if (_dir == 1 || _dir == 3) {
-		if (_dir == 1) {
-			for (int i = _y; i > (_y - _deck); --i)
-				cord.emplace_back(std::make_pair(_x,i ));
+	if (_dir == UP || _dir == DOWN) {
+		if (_dir == UP) {
+			for (int i = crd.second; i > (crd.second - _deck); --i)
+				cord.emplace_back(std::make_pair(crd.first,i ));
 		}
 		else {
-			for (int i = _y; i < (_y + _deck); ++i)
-				cord.emplace_back(std::make_pair(_x, i));
+			for (int i = crd.second; i < (crd.second + _deck); ++i)
+				cord.emplace_back(std::make_pair(crd.first, i));
 		}
 	}
 	else {
-		if (_dir == 2) {
-			for (int i = _x; i < (_x + _deck); ++i)
-				cord.emplace_back(std::make_pair(i, _y));
+		if (_dir == RIGHT) {
+			for (int i = crd.first; i < (crd.first + _deck); ++i)
+				cord.emplace_back(std::make_pair(i, crd.second));
 		}
 		else {
-			for (int i = _x; i > (_x - _deck); --i)
-				cord.emplace_back(std::make_pair(i, _y));
+			for (int i = crd.first; i > (crd.first - _deck); --i)
+				cord.emplace_back(std::make_pair(i, crd.second));
 		}
 	}
 
@@ -30,10 +32,10 @@ Ship::Ship(int _x, int _y, int _dir, int _deck) :hp(_deck) {
 bool Ship::Islife()const noexcept {
 	return hp;
 }
-bool Ship::IsHit(const int& _x, const int& _y) {
+bool Ship::IsHit(const Cords& crd) {
 	bool flag = false;
 	std::for_each(cord.cbegin(), cord.cend(), [&](Cords p)mutable {
-		if (p.first == _x && p.second == _y) {
+		if (p.first == crd.first && p.second == crd.second) {
 			flag = true;
 			hp--;
 		}

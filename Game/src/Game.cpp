@@ -1,11 +1,8 @@
 #include "Game.h"
-#include "Menu.h"
 #include <iostream>
 #include <vector>
 #include <memory>
-#include <stdlib.h>
 #include <ctime>
-#include <conio.h>
 #include <Windows.h>
 
 Game::Game(int p) :plr1(std::make_unique<Player>(10)),
@@ -43,14 +40,6 @@ plr2(std::make_unique<Player>(10)), pol(p) {
 			setNavy(plr2, false);
 			system("cls");
 	}
-	/*if (input_navy) {
-		manSetShip();
-		plr1 = autoSetShip(std::move(plr1));
-	}
-	else {
-		plr1 = autoSetShip(std::move(plr1));
-		plr2 = autoSetShip(std::move(plr2));
-	}*/
 	std::srand(static_cast <unsigned int>(time(nullptr)));
 	plr1->print();
 	plr2->print();
@@ -67,71 +56,22 @@ void Game::play() {
 	}
 };
 
-//void Game::manSetShip() {
-//	int x = 0;
-//	int y = 0;
-//	int d = 0;
-//	std::cout << "Ручной ввод расположения кораблей:"
-//		<< std::endl;
-//	for (int i = 4; i > 0; --i) {
-//		for (int j = 4; j >= i; --j) {
-//			std::cout << "Введите координаты и направление " << i
-//				<< "-х палубного корабля"<< std::endl;
-//			std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): " 
-//				<< std::endl;
-//			for (;;) {
-//				std::cout << "x,y,dir: ";
-//				std::cin >> x >> y >> d;
-//				if (testCords(x, y, d, i)) {
-//					std::cout << "Выход за пределы поля! Попробуйте снова" 
-//						<< std::endl;
-//					continue;
-//				}
-//				if (!plr1->setShip(x, y, d, i)) {
-//					std::cout << "Есть пересечение с лругим кораблем! Попробуйте снова."
-//						<< std::endl;
-//					continue;
-//				}
-//				else
-//					break;
-//			}
-//		}
-//	}
-//};
+int Game::autoSet(int p) {
+	int val = std::rand() % p + 1;
+	return val;
+}
 
-/*td::unique_ptr<Player>&& Game::autoSetShip(std::unique_ptr<Player>&& pl) {
-	int x = 0;
-	int y = 0;
-	int d = 0;
-	for (int i = 4; i > 0; --i) {
-		for (int j = 4; j >= i; --j) {
-			for (;;) {
-				x = autoSet(pol);
-				y = autoSet(pol);
-				d = autoSet(4);
-				if (testCords(x, y, d, i))
-					continue;
-				if (!pl->setShip(x, y, d, i))
-					continue;
-				else
-					break;
-			}
-		}
-	}
-	return std::move(pl);
-};*/
-
-bool Game::testCords(int& _x, int& _y, int& _dir, int& _deck) {
-	if (_x <= 0 || _y <= 0 || _x > pol || _y > pol)
+bool Game::testCords(Cords& crd, int& _dir, int& _deck) {
+	if (crd.first <= 0 || crd.second <= 0 || crd.first > pol || crd.second > pol)
 		return true;
 	if (_dir == 1)
-		return ((_x - _deck) <= 0);
+		return ((crd.first - _deck) <= 0);
 	else if (_dir == 2)
-		return ((_y + _deck) > pol);
+		return ((crd.second + _deck) > pol);
 	else if (_dir == 3)
-		return ((_x + _deck) > pol);
+		return ((crd.first + _deck) > pol);
 	else
-		return ((_y - _deck) <= 0);
+		return ((crd.second - _deck) <= 0);
 };
 
 void Game::mapPol() {
@@ -196,8 +136,7 @@ bool Game::isOver() {
 };
 
 void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
-	int x = 0;
-	int y = 0;
+	Cords crd;
 	int d = 0;
 	if (st) {
 		std::cout << "Ручной ввод расположения кораблей:"
@@ -210,13 +149,13 @@ void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 					<< std::endl;
 				for (;;) {
 					std::cout << "x,y,dir: ";
-					std::cin >> x >> y >> d;
-					if (testCords(x, y, d, i)) {
+					std::cin >> crd.first >> crd.second>> d;
+					if (testCords(crd, d, i)) {
 						std::cout << "Выход за пределы поля! Попробуйте снова"
 							<< std::endl;
 						continue;
 					}
-					if (!plr1->setShip(x, y, d, i)) {
+					if (!plr1->setShip(crd, d, i)) {
 						std::cout << "Есть пересечение с лругим кораблем! Попробуйте снова."
 							<< std::endl;
 						continue;
@@ -231,12 +170,12 @@ void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 		for (int i = 4; i > 0; --i) {
 			for (int j = 4; j >= i; --j) {
 				for (;;) {
-					x = autoSet(pol);
-					y = autoSet(pol);
+					crd.first = autoSet(pol);
+					crd.second = autoSet(pol);
 					d = autoSet(4);
-					if (testCords(x, y, d, i))
+					if (testCords(crd, d, i))
 						continue;
-					if (!pl->setShip(x, y, d, i))
+					if (!pl->setShip(crd, d, i))
 						continue;
 					else
 						break;

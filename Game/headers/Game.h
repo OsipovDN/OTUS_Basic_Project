@@ -1,15 +1,11 @@
 #pragma once
 #include "Player.h"
-
-//static enum direction{
-//	UP=1,
-//	RIGHT,
-//	DOWN,
-//	LEFT
-//} dir;
+#include "Menu.h"
 
 class Game {
+
 private:
+	using Cords = std::pair<int, int>;
 	std::unique_ptr<Player> plr1;
 	std::unique_ptr<Player> plr2;
 	int pol;		//Размер игрового поля
@@ -24,21 +20,14 @@ public:
 	//Запуск игры
 	void play();
 	//Автоматический расчет координат
-	int autoSet(int p) {
-		int val = std::rand() % p + 1;
-		return val;
-	}
-	//Ручная расстановка кораблей
-	//void manSetShip();
-	// Автоматическая расстановка кораблей
-	//std::unique_ptr<Player>&& autoSetShip(std::unique_ptr<Player>&& pl);
+	int autoSet(int p);
 	//Проверка выхода за границу поля
-	bool testCords(int& _x, int& _y, int& _dir, int& _deck);
-	//Вывод карты ироков на экран
+	bool testCords(Cords& crd, int& _dir, int& _deck);
+	//Вывод  ироков на экран
 	void mapPol();
 	//Проверка наличия кораблей
 	bool isOver();
-
+	//Расстановка флота
 	void setNavy(std::unique_ptr<Player>& pl, bool st);
 };
 

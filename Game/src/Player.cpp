@@ -11,17 +11,17 @@ Player::Player(int count) :ship_count(count) {
 	navy.reserve(ship_count);
 }
 
-bool Player::setShip(int _x, int _y, int _dir, int _deck) {
-	bool flag = intersecShip(_x, _y, _dir, _deck);
+bool Player::setShip(Cords crd, int _dir, int _deck) {
+	bool flag = intersecShip(crd, _dir, _deck);
 	if (!flag)
 		return false;
-	navy.emplace_back(Ship(_x, _y, _dir, _deck));
+	navy.emplace_back(Ship(crd, _dir, _deck));
 	return true;
 }
 
-bool Player::intersecShip(int& _x, int& _y, int& _dir, int& _deck) noexcept {
+bool Player::intersecShip(Cords& crd, int& _dir, int& _deck) noexcept {
 	bool flag = true;
-	Ship temp{ _x,_y,_dir,_deck };
+	Ship temp{ crd,_dir,_deck };
 	auto temp_vec = temp.getCord();
 	std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s) {
 		auto compar = s.getCord();
@@ -36,14 +36,14 @@ bool Player::intersecShip(int& _x, int& _y, int& _dir, int& _deck) noexcept {
 }
 
 std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr) {
-	int x = 0, y = 0;
+	Cords crd;
 	int count = 0;
 	for (;;) {
 		std::cout << "¬ведите координаты (x ,y) через пробел: "
 			<< std::endl;
 		std::cout << "x,y: ";
-		std::cin >> x >> y;
-		count = ((y - 1) * 10 + x) - 1;
+		std::cin >> crd.first >> crd.second;
+		count = ((crd.second - 1) * 10 + crd.first) - 1;
 		if (map_shot[count] != static_cast<char>(149)) {
 			std::cout << "ѕо данной позиции ранее уже был сделан выстрел." <<
 				std::endl;
@@ -53,18 +53,18 @@ std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr) {
 		else
 			break;
 	}
-	if (plr->getShot(x, y))
+	if (plr->getShot(crd))
 		map_shot[count] = 'X';
 	else
 		map_shot[count] = '+';
 	return std::move(plr);
 }
 
-bool Player::getShot(int& _x, int& _y) {
+bool Player::getShot(Cords& crd) {
 	bool flag = false;
 	int temp = ship_count;
 	std::for_each(navy.begin(), navy.end(), [&](Ship& s)mutable {
-		if (s.IsHit(_x, _y))
+		if (s.IsHit(crd))
 			flag = true;
 		if (!s.Islife())
 			ship_count--;
@@ -88,7 +88,7 @@ bool Player::getShot(int& _x, int& _y) {
 
 void Player::print() {
 	std::for_each(this->navy.cbegin(), this->navy.cend(), [](const Ship& p) {
-		std::vector <std::pair<int, int>> obj = p.getCord();
+		std::vector <Cords> obj = p.getCord();
 		for (auto& it : obj) {
 			std::cout << it.first << " " << it.second << std::endl;
 		}
