@@ -39,14 +39,16 @@ void Game::manSetShip() {
 		<< std::endl;
 	for (int i = 4; i > 0; --i) {
 		for (int j = 4; j >= i; --j) {
-			std::cout << "Введите координаты и направление " << i << "-х палубного корабля"
+			std::cout << "Введите координаты и направление " << i
+				<< "-х палубного корабля"<< std::endl;
+			std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): " 
 				<< std::endl;
-			std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): " << std::endl;
 			for (;;) {
 				std::cout << "x,y,dir: ";
 				std::cin >> x >> y >> d;
 				if (testCords(x, y, d, i)) {
-					std::cout << "Выход за пределы поля! Попробуйте снова" << std::endl;
+					std::cout << "Выход за пределы поля! Попробуйте снова" 
+						<< std::endl;
 					continue;
 				}
 				if (!plr1->setShip(x, y, d, i)) {
