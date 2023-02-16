@@ -60,13 +60,12 @@ public:
 			else
 				std::cout << s << "  ";
 			std::for_each(it_start2, it_start2 + pol, [&](const char pos) {
-				if (pos == 'X') {
+				if (pos == 'X') 
 					SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-					std::cout << pos << " ";
-					SetConsoleTextAttribute(hConsole, 15);
-				}
-				else
-					std::cout << pos << " ";
+				else if (pos == '+')
+					SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
+				std::cout << pos << " ";
+				SetConsoleTextAttribute(hConsole, 15);
 				});
 			it_start2 += 10;
 			std::cout << "\t\t";
@@ -75,13 +74,13 @@ public:
 			else
 				std::cout << s << "  ";
 			std::for_each(it_start1, it_start1 + pol, [&](const char pos) {
-				if (pos == 'X') {
+				if (pos == 'X')
 					SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-					std::cout << pos << " ";
-					SetConsoleTextAttribute(hConsole, 15);
-				}
-				else
-					std::cout << pos << " "; });
+				else if (pos == '+')
+					SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
+				std::cout << pos << " ";
+				SetConsoleTextAttribute(hConsole, 15);
+				});
 			it_start1 += 10;
 			std::cout << "\n";
 			s++;
