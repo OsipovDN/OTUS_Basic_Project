@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Game.h"
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -11,6 +12,7 @@ Game::Game(int p) :plr1(std::make_unique<Player>(10)),
 plr2(std::make_unique<Player>(10)), pol(p) {
 	int val;
 	std::srand(static_cast <unsigned int>(std::time(0)));
+	val = mainMenu();
 	//Ввод количества игроков
 	for (;;) {
 		std::cout << "Выбирете количество игроков" << std::endl;
