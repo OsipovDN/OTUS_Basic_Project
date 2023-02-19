@@ -16,13 +16,13 @@ private:
 
 public:
 	//Конструктор (задает способ расстановки и размер поля)
-	Game(int p = 10); 
+	Game(); 
 	//Запуск игры
 	void play();
 	//Автоматический расчет координат
 	int autoSet(int p);
 	//Проверка выхода за границу поля
-	bool testCords(Cords& crd, int& _dir, int& _deck);
+	bool outOfBounds(Cords& crd, int& _dir, int& _deck);
 	//Вывод  ироков на экран
 	void mapPol();
 	//Проверка наличия кораблей

@@ -9,23 +9,27 @@
 class Player {
 private:
 	using Cords = std::pair<int, int>;
-	std::array <char, 100> map_shot{};//Карта сделанных выстрелов (Карта соперника?)
+	std::vector <char> map_shot;//Карта сделанных выстрелов (Карта соперника?)
 	std::vector<Ship> navy;
-	int ship_count;		//Количество оставшихся кораблей
+	int ship_count=10;		//Количество оставшихся кораблей
+	bool move=false;
 public:
-	explicit Player(int count);
+	explicit Player(size_t pol_count);
 	//Размещение корабля на карте
 	bool setShip(Cords c, int _dir, int _deck);
 	//Проверка пересечения кораблей
 	bool isIntersecShip(Cords& c, int& _dir, int& _deck) noexcept;
 	//Проверка выстрела
-	std::unique_ptr<Player>&& setShot(std::unique_ptr<Player>&& plr);
+	std::unique_ptr<Player>&& setShot(std::unique_ptr<Player>&& plr, int& pol_count);
 	//Проверка попадания
 	bool getShot(Cords& crd);
 	//Проверка наличия кораблей
 	int ShipCount()const { return ship_count; };
 	//Передача карты игрока для печати
-	std::array<char, 100>* getMap() { return &map_shot; }
+	std::vector<char>& getMap() { return map_shot; }
+	//Проверка свободных клеток для хода
+	//Проверка хода
+	bool isMove() { return move; }
 	//Для проверки работы
 	void print();
 

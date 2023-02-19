@@ -35,7 +35,7 @@ bool Ship::Islife()const noexcept {
 }
 bool Ship::IsHit(const Cords& crd) {
 	bool flag = false;
-	std::for_each(std::execution::par,cord.cbegin(), cord.cend(), [&](Cords p)mutable {
+	std::for_each(cord.cbegin(), cord.cend(), [&](Cords p)mutable {
 		if (p.first == crd.first && p.second == crd.second) {
 			flag = true;
 			hp--;

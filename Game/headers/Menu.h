@@ -3,12 +3,12 @@
 
 class Menu {
 private:
-	bool mult_plr;	//true- два игрока, false-один игрок
-	bool auto_set_pl1;	//true- автоматическа€ расстановка, false- ручна€
-	bool auto_set_pl2;	//true- автоматическа€ расстановка, false- ручна€
+	//bool mult_plr;	//true- два игрока, false-один игрок
+	//bool auto_set_pl1;	//true- автоматическа€ расстановка, false- ручна€
+	//bool auto_set_pl2;	//true- автоматическа€ расстановка, false- ручна€
 
 public:
-	Menu() {};
+	Menu() =default;
 	int mainMenu() {
 		int val;
 		system("cls");
@@ -43,6 +43,24 @@ public:
 		}
 		return val;
 	};
+
+	int setPolVal() {
+		int val;
+		system("cls");
+		for (;;) {
+			std::cout << "\t¬ведите размер игрового пол€ (val x val)(min=10/max=30)." << std::endl;
+			std::cout << "val-> ";
+			std::cin >> val;
+			if (val < 10 || val > 30 && !isdigit(val)) {
+				system("cls");
+				std::cout << "¬ведено некорректное значение. ѕопробуйте еще раз!\n";
+				continue;
+			}
+			else 
+				break;
+		}
+		return val;
+	}
 
 	bool placement(int pl) {
 		int val;

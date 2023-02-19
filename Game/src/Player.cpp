@@ -4,11 +4,13 @@
 #include <algorithm>
 #include <execution>
 
-Player::Player(int count) :ship_count(count) {
-	for (auto& it_map : map_shot) {
-		it_map = static_cast <char>(149);
-	}
+Player::Player(size_t pol) {
+	size_t pol_size = pol * pol;
+	map_shot.reserve(pol_size);
 	navy.reserve(ship_count);
+	for (size_t i = 0; i < pol_size;++i) {
+		map_shot.emplace_back(static_cast <char>(149));
+	}
 }
 
 bool Player::setShip(Cords crd, int _dir, int _deck) {
@@ -23,7 +25,7 @@ bool Player::isIntersecShip(Cords& crd, int& _dir, int& _deck) noexcept {
 	bool flag = true;
 	Ship temp{ crd,_dir,_deck };
 	auto temp_vec = temp.getCord();
-	std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s) {
+	std::for_each(navy.cbegin(), navy.cend(), [&](Ship s) {
 		auto compar = s.getCord();
 		for (const auto it : temp_vec) {
 			for (const auto it_compar : compar) {
@@ -35,15 +37,21 @@ bool Player::isIntersecShip(Cords& crd, int& _dir, int& _deck) noexcept {
 	return flag;
 }
 
-std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr) {
+std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr,int& pol_count) {
 	Cords crd;
 	int count = 0;
 	for (;;) {
+		//Проверка сделанного хода
 		std::cout << "Введите координаты (x ,y) через пробел: "
 			<< std::endl;
 		std::cout << "x,y: ";
 		std::cin >> crd.first >> crd.second;
-		count = ((crd.second - 1) * 10 + crd.first) - 1;
+		if (crd.first <= 0 || crd.second <= 0 || crd.first > pol_count || crd.second > pol_count) {
+			std::cout << "Выход за пределы поля! Попробуйте снова"
+				<< std::endl;
+			continue;
+		}
+		count = ((crd.second - 1) * static_cast<int>(pol_count) + crd.first) - 1;
 		if (map_shot[count] != static_cast<char>(149)) {
 			std::cout << "По данной позиции ранее уже был сделан выстрел." <<
 				std::endl;
@@ -53,13 +61,17 @@ std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr) {
 		else
 			break;
 	}
-	if (plr->getShot(crd))
+	if (plr->getShot(crd)) {
 		map_shot[count] = 'X';
-	else
+		move = true;
+	}
+	else {
 		map_shot[count] = '+';
+		move = false;
+	}
 	return std::move(plr);
 }
-
+//ДОРАБОТАТЬ
 bool Player::getShot(Cords& crd) {
 	bool flag = false;
 	int temp = ship_count;
