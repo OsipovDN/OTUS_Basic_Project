@@ -76,10 +76,11 @@ bool Player::getShot(Cords& crd) {
 	bool flag = false;
 	int temp = ship_count;
 	std::for_each(navy.begin(), navy.end(), [&](Ship& s)mutable {
-		if (s.IsHit(crd))
+		if (s.IsHit(crd)) {
 			flag = true;
-		if (!s.Islife())
-			ship_count--;
+			if (!s.Islife())
+				ship_count--;
+		}
 		});
 	if (flag) {
 		if (temp== ship_count) {
