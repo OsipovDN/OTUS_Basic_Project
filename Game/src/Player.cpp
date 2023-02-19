@@ -8,7 +8,7 @@ Player::Player(size_t pol) {
 	size_t pol_size = pol * pol;
 	map_shot.reserve(pol_size);
 	navy.reserve(ship_count);
-	for (size_t i = 0; i < pol_size;++i) {
+	for (size_t i = 0; i < pol_size; ++i) {
 		map_shot.emplace_back(static_cast <char>(149));
 	}
 }
@@ -37,30 +37,9 @@ bool Player::isIntersecShip(Cords& crd, int& _dir, int& _deck) noexcept {
 	return flag;
 }
 
-std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr,int& pol_count) {
-	Cords crd;
+std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr, Cords& crd, int& pol) {
 	int count = 0;
-	for (;;) {
-		//Проверка сделанного хода
-		std::cout << "Введите координаты (x ,y) через пробел: "
-			<< std::endl;
-		std::cout << "x,y: ";
-		std::cin >> crd.first >> crd.second;
-		if (crd.first <= 0 || crd.second <= 0 || crd.first > pol_count || crd.second > pol_count) {
-			std::cout << "Выход за пределы поля! Попробуйте снова"
-				<< std::endl;
-			continue;
-		}
-		count = ((crd.second - 1) * static_cast<int>(pol_count) + crd.first) - 1;
-		if (map_shot[count] != static_cast<char>(149)) {
-			std::cout << "По данной позиции ранее уже был сделан выстрел." <<
-				std::endl;
-			std::cout << "Повторите ввод." << std::endl;
-			continue;
-		}
-		else
-			break;
-	}
+	count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
 	if (plr->getShot(crd)) {
 		map_shot[count] = 'X';
 		move = true;
@@ -83,7 +62,7 @@ bool Player::getShot(Cords& crd) {
 		}
 		});
 	if (flag) {
-		if (temp== ship_count) {
+		if (temp == ship_count) {
 			std::cout << "Попал!" << std::endl;
 			return flag;
 		}
@@ -96,11 +75,19 @@ bool Player::getShot(Cords& crd) {
 		std::cout << "Промах!" << std::endl;
 		return flag;
 	}
-	
+
+}
+
+bool Player::isRepeat(Cords& crd, int pol) {
+	int pos = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
+	if (map_shot[pos] == 'X' || map_shot[pos] == '+')
+		return true;
+	else
+		return false;
 }
 
 void Player::print() {
-	std::for_each(navy.cbegin(),navy.cend(), [](const Ship& p) {
+	std::for_each(navy.cbegin(), navy.cend(), [](const Ship& p) {
 		std::vector <Cords> obj = p.getCord();
 		for (auto& it : obj) {
 			std::cout << it.first << " " << it.second << std::endl;

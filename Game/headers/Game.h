@@ -29,5 +29,33 @@ public:
 	bool isOver();
 	//Расстановка флота
 	void setNavy(std::unique_ptr<Player>& pl, bool st);
+	//Ввод координат
+	Cords&& setMove(const std::unique_ptr<Player>& pl)const {
+		Cords crd;
+		int count = 0;
+		for (;;) {
+			//Проверка сделанного хода
+			std::cout << "Введите координаты (x ,y) через пробел: "
+				<< std::endl;
+			std::cout << "x,y: ";
+			std::cin >> crd.first >> crd.second;
+			if (crd.first <= 0 || crd.second <= 0 || crd.first > pol || crd.second > pol) {
+				system("cls");
+				std::cout << "Выход за пределы поля! Попробуйте снова"
+					<< std::endl;
+				continue;
+			}
+			count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
+			if (pl->isRepeat(crd,pol)) {
+				system("cls");
+				std::cout << "По данной позиции ранее уже был сделан выстрел." <<
+					std::endl;
+				std::cout << "Повторите ввод." << std::endl;
+				continue;
+			}
+			else
+				return std::move (crd);
+		}
+	}
 };
 

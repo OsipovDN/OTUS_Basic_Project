@@ -5,6 +5,7 @@
 #include <ctime>
 #include <Windows.h>
 
+//using Cords = std::pair<int, int>;
 Game::Game() {
 	Menu menu;
 	int val;
@@ -49,32 +50,50 @@ Game::Game() {
 };
 
 void Game::play() {
-	do{
-		do{
+	Cords gen_cord;
+	do {
+		do {
 			mapPol();
 			std::cout << "Ход игрока 1:\n";
-			plr2 = plr1->setShot(std::move(plr2), pol);
+			gen_cord = setMove(plr1);
+			plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);
 			if (!plr2->ShipCount()) {
 				std::cout << "Игрок 1 выиграл!!!\n";
 				break;
 			}
-		}while (plr1->isMove());
-		do{
-			mapPol();
-			std::cout << "Ход игрока 2:\n";
-			plr1 = plr2->setShot(std::move(plr1), pol);
-			if (!plr1->ShipCount()) {
-				std::cout << "Игрок 2 выиграл!!!\n";
-				break;
-			}
-		}while (plr2->isMove());
+		} while (plr1->isMove());
+		if (multplr) {
+			do {
+				mapPol();
+				std::cout << "Ход игрока 2:\n";
+				gen_cord = setMove(plr2);
+				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
+				if (!plr1->ShipCount()) {
+					std::cout << "Игрок 2 выиграл!!!\n";
+					break;
+				}
+			} while (plr2->isMove());
+		}
+		else {
+			gen_cord.first = autoSet(pol);
+			gen_cord.second = autoSet(pol);
+			do {
+				mapPol();
+				std::cout << "Ход игрока 2:\n";
+				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
+				if (!plr1->ShipCount()) {
+					std::cout << "Игрок 2 выиграл!!!\n";
+					break;
+				}
+			} while (plr2->isMove());
+		}
 	} while (true);
 };
 
 int Game::autoSet(int p) {
 	int val = std::rand() % p + 1;
 	return val;
-}
+};
 
 bool Game::outOfBounds(Cords& crd, int& _dir, int& _deck) {
 	if (crd.first <= 0 || crd.second <= 0 || crd.first > pol || crd.second > pol)
@@ -86,7 +105,7 @@ bool Game::outOfBounds(Cords& crd, int& _dir, int& _deck) {
 	else if (_dir == 3)
 		return ((crd.second + _deck) > pol);
 	else
-		return ((crd.first- _deck) <= 0);
+		return ((crd.first - _deck) <= 0);
 };
 
 void Game::mapPol() {
