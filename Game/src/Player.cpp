@@ -71,7 +71,7 @@ std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr,int& pol
 	}
 	return std::move(plr);
 }
-//ÄÎĞÀÁÎÒÀÒÜ
+
 bool Player::getShot(Cords& crd) {
 	bool flag = false;
 	int temp = ship_count;
