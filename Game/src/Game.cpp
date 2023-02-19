@@ -155,7 +155,7 @@ void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 							<< std::endl;
 						continue;
 					}
-					if (!plr1->setShip(crd, d, i)) {
+					if (pl->setShip(crd, d, i)) {
 						std::cout << "Есть пересечение с лругим кораблем! Попробуйте снова."
 							<< std::endl;
 						continue;

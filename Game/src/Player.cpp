@@ -12,14 +12,14 @@ Player::Player(int count) :ship_count(count) {
 }
 
 bool Player::setShip(Cords crd, int _dir, int _deck) {
-	bool flag = intersecShip(crd, _dir, _deck);
+	bool flag = isIntersecShip(crd, _dir, _deck);
 	if (!flag)
 		return false;
 	navy.emplace_back(Ship(crd, _dir, _deck));
 	return true;
 }
 
-bool Player::intersecShip(Cords& crd, int& _dir, int& _deck) noexcept {
+bool Player::isIntersecShip(Cords& crd, int& _dir, int& _deck) noexcept {
 	bool flag = true;
 	Ship temp{ crd,_dir,_deck };
 	auto temp_vec = temp.getCord();
@@ -87,7 +87,7 @@ bool Player::getShot(Cords& crd) {
 }
 
 void Player::print() {
-	std::for_each(this->navy.cbegin(), this->navy.cend(), [](const Ship& p) {
+	std::for_each(navy.cbegin(),navy.cend(), [](const Ship& p) {
 		std::vector <Cords> obj = p.getCord();
 		for (auto& it : obj) {
 			std::cout << it.first << " " << it.second << std::endl;

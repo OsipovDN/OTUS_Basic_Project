@@ -17,7 +17,7 @@ public:
 	//Размещение корабля на карте
 	bool setShip(Cords c, int _dir, int _deck);
 	//Проверка пересечения кораблей
-	bool intersecShip(Cords& c, int& _dir, int& _deck) noexcept;
+	bool isIntersecShip(Cords& c, int& _dir, int& _deck) noexcept;
 	//Проверка выстрела
 	std::unique_ptr<Player>&& setShot(std::unique_ptr<Player>&& plr);
 	//Проверка попадания
