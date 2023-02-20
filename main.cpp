@@ -1,6 +1,4 @@
 #include <iostream>
-//#include "Player.h"
-//#include "Ship.h"
 #include "Game.h"
 
 //int argc, char* argv[]

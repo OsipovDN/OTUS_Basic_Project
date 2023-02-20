@@ -1,33 +1,33 @@
 #include "Game.h"
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <memory>
 #include <ctime>
 #include <Windows.h>
 
 //using Cords = std::pair<int, int>;
-Game::Game() {
-	Menu menu;
+Game::Game() :menu(std::make_unique<Menu>()) {
 	int val;
 	std::srand(static_cast <unsigned int>(std::time(0)));
 	//Вход в главное меню
-	val = menu.mainMenu();
+	val = menu->mainMenu();
 	if (val == 3)
 		exit(1);
 	//Ввод количества игроков
-	val = menu.setPlrVal();
+	val = menu->setPlrVal();
 	if (val == 1)
 		multplr = false;
 	else
 		multplr = true;
 	//Ввод размера игрового поля
-	pol = menu.setPolVal();
+	pol = menu->setPolVal();
 	plr1 = std::make_unique<Player>(pol);
 	plr2 = std::make_unique<Player>(pol);
 	//Ввод способа расстановки
 	if (multplr) {
 		for (int i = 1; i <= 2; ++i) {
-			bool flag = menu.placement(i);
+			bool flag = menu->placement(i);
 			if (i == 1) {
 				setNavy(plr1, flag);
 				system("cls");
@@ -39,7 +39,7 @@ Game::Game() {
 		}
 	}
 	else {
-		bool flag = menu.placement(1);
+		bool flag = menu->placement(1);
 		setNavy(plr1, flag);
 		setNavy(plr2, false);
 		system("cls");
@@ -90,7 +90,85 @@ void Game::play() {
 	} while (true);
 };
 
-int Game::autoSet(int p)const {
+void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
+	Cords crd;
+	int d = 0;
+	if (st) {
+		std::cout << "Ручной ввод расположения кораблей:"
+			<< std::endl;
+		for (int i = 4; i > 0; --i) {
+			for (int j = 4; j >= i; --j) {
+				std::cout << "Введите координаты " << i
+					<< "-х палубного корабля" << std::endl;
+				for (;;) {
+					crd = setMove(pl);
+					std::cout << "Введите направление (1-вверх,2-вправо,3-вниз,4-влево): "
+						<< std::endl;
+					std::cin >> d;
+					if (outOfBounds(crd, d, i)) {
+						std::cout << "Выход за пределы поля! Попробуйте снова"
+							<< std::endl;
+						continue;
+					}
+					if (pl->setShip(crd, d, i)) {
+						std::cout << "Есть пересечение с лругим кораблем! Попробуйте снова."
+							<< std::endl;
+						continue;
+					}
+					else
+						break;
+				}
+			}
+		}
+	}
+	else {
+		for (int i = 4; i > 0; --i) {
+			for (int j = 4; j >= i; --j) {
+				for (;;) {
+					crd.first = autoSet(pol);
+					crd.second = autoSet(pol);
+					d = autoSet(4);
+					if (outOfBounds(crd, d, i))
+						continue;
+					if (!pl->setShip(crd, d, i))
+						continue;
+					else
+						break;
+				}
+			}
+		}
+	}
+};
+
+Game::Cords&& Game::setMove(const std::unique_ptr<Player>& pl)const {
+	Cords crd;
+	int count = 0;
+	for (;;) {
+		//Проверка сделанного хода
+		std::cout << "Введите координаты (x ,y) через пробел: "
+			<< std::endl;
+		std::cout << "x,y: ";
+		std::cin >> crd.first >> crd.second;
+		if (crd.first <= 0 || crd.second <= 0 || crd.first > pol || crd.second > pol) {
+			system("cls");
+			std::cout << "Выход за пределы поля! Попробуйте снова"
+				<< std::endl;
+			continue;
+		}
+		count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
+		if (pl->isRepeat(crd, pol)) {
+			system("cls");
+			std::cout << "По данной позиции ранее уже был сделан выстрел." <<
+				std::endl;
+			std::cout << "Повторите ввод." << std::endl;
+			continue;
+		}
+		else
+			return std::move(crd);
+	}
+};
+
+inline int Game::autoSet(int p)const {
 	int val = std::rand() % p + 1;
 	return val;
 };
@@ -170,52 +248,5 @@ bool Game::isOver() {
 	return false;
 };
 
-void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
-	Cords crd;
-	int d = 0;
-	if (st) {
-		std::cout << "Ручной ввод расположения кораблей:"
-			<< std::endl;
-		for (int i = 4; i > 0; --i) {
-			for (int j = 4; j >= i; --j) {
-				std::cout << "Введите координаты " << i
-					<< "-х палубного корабля" << std::endl;
-				for (;;) {
-					crd = setMove(pl);
-					std::cout << "Введите направление (1-вверх,2-вправо,3-вниз,4-влево): "
-						<< std::endl;
-					std::cin >> d;
-					if (outOfBounds(crd, d, i)) {
-						std::cout << "Выход за пределы поля! Попробуйте снова"
-							<< std::endl;
-						continue;
-					}
-					if (pl->setShip(crd, d, i)) {
-						std::cout << "Есть пересечение с лругим кораблем! Попробуйте снова."
-							<< std::endl;
-						continue;
-						}
-					else
-						break;
-				}
-			}
-		}
-	}
-	else {
-		for (int i = 4; i > 0; --i) {
-			for (int j = 4; j >= i; --j) {
-				for (;;) {
-					crd.first = autoSet(pol);
-					crd.second = autoSet(pol);
-					d = autoSet(4);
-					if (outOfBounds(crd, d, i))
-						continue;
-					if (!pl->setShip(crd, d, i))
-						continue;
-					else
-						break;
-				}
-			}
-		}
-	}
-};
+
+

@@ -12,17 +12,15 @@ class Ship {
 private:
 
 	using Cords = std::pair<int, int>;
-	std::vector <Cords> cord{};	//Массив координат корабля
+	std::vector <Cords> cord;	//Массив координат корабля
 	int hp;	//Убит или нет
 
 public:
-	Ship(const Cords& crd, const int& _dir,const int& _deck);
-	//Проверка на убит или нет
-	bool Islife()const noexcept;
+	Ship(const Cords& crd, const int& _dir, const int& _deck);
 	//Проверка попадания
-	bool IsHit( Cords& crd)noexcept;
+	bool IsHit(Cords& crd)noexcept;
+	//Проверка на убит или нет
+	bool Islife()const noexcept { return hp; };
 	//Возврат координат корабля
 	std::vector <Cords> getCord()const noexcept { return cord; }
-	//Возвращает количество жизней
-	int hps()const noexcept { return hp; }
 };
