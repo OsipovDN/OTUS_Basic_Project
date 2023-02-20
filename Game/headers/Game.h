@@ -20,7 +20,7 @@ public:
 	//Запуск игры
 	void play();
 	//Автоматический расчет координат
-	int autoSet(int p);
+	inline int autoSet(int p)const;
 	//Проверка выхода за границу поля
 	bool outOfBounds(Cords& crd, int& _dir, int& _deck);
 	//Вывод  ироков на экран

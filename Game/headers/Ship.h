@@ -16,13 +16,13 @@ private:
 	int hp;	//Убит или нет
 
 public:
-	Ship(Cords crd, int _dir, int _deck);
+	Ship(const Cords& crd, const int& _dir,const int& _deck);
 	//Проверка на убит или нет
 	bool Islife()const noexcept;
 	//Проверка попадания
-	bool IsHit(const Cords& crd);
+	bool IsHit( Cords& crd)noexcept;
 	//Возврат координат корабля
 	std::vector <Cords> getCord()const noexcept { return cord; }
 	//Возвращает количество жизней
-	int hps() { return hp; }
+	int hps()const noexcept { return hp; }
 };

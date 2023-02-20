@@ -5,7 +5,7 @@
 
 
 
-Ship::Ship(Cords crd, int _dir, int _deck) :hp(_deck) {
+Ship::Ship(const Cords& crd, const int& _dir, const int& _deck) :hp(_deck) {
 	cord.reserve(hp);
 	if (_dir == UP || _dir == DOWN) {
 		if (_dir == UP) {
@@ -33,9 +33,9 @@ Ship::Ship(Cords crd, int _dir, int _deck) :hp(_deck) {
 bool Ship::Islife()const noexcept {
 	return hp;
 }
-bool Ship::IsHit(const Cords& crd) {
+bool Ship::IsHit(Cords& crd)noexcept {
 	bool flag = false;
-	std::for_each(cord.cbegin(), cord.cend(), [&](Cords p)mutable {
+	std::for_each(std::execution::par,cord.cbegin(), cord.cend(), [&](Cords p)mutable {
 		if (p.first == crd.first && p.second == crd.second) {
 			flag = true;
 			hp--;

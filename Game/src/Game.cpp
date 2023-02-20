@@ -90,7 +90,7 @@ void Game::play() {
 	} while (true);
 };
 
-int Game::autoSet(int p) {
+int Game::autoSet(int p)const {
 	int val = std::rand() % p + 1;
 	return val;
 };
@@ -178,13 +178,13 @@ void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 			<< std::endl;
 		for (int i = 4; i > 0; --i) {
 			for (int j = 4; j >= i; --j) {
-				std::cout << "Введите координаты и направление " << i
+				std::cout << "Введите координаты " << i
 					<< "-х палубного корабля" << std::endl;
-				std::cout << "Направление (1-вверх,2-вправо,3-вниз,4-влево): "
-					<< std::endl;
 				for (;;) {
-					std::cout << "x,y,dir: ";
-					std::cin >> crd.first >> crd.second >> d;
+					crd = setMove(pl);
+					std::cout << "Введите направление (1-вверх,2-вправо,3-вниз,4-влево): "
+						<< std::endl;
+					std::cin >> d;
 					if (outOfBounds(crd, d, i)) {
 						std::cout << "Выход за пределы поля! Попробуйте снова"
 							<< std::endl;
@@ -194,7 +194,7 @@ void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 						std::cout << "Есть пересечение с лругим кораблем! Попробуйте снова."
 							<< std::endl;
 						continue;
-					}
+						}
 					else
 						break;
 				}

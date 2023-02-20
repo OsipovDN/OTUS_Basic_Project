@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <execution>
 
-Player::Player(size_t pol) {
-	size_t pol_size = pol * pol;
+Player::Player(const size_t& pol_count) {
+	size_t pol_size = pol_count * pol_count;
 	map_shot.reserve(pol_size);
 	navy.reserve(ship_count);
 	for (size_t i = 0; i < pol_size; ++i) {
@@ -13,7 +13,7 @@ Player::Player(size_t pol) {
 	}
 }
 
-bool Player::setShip(Cords crd, int _dir, int _deck) {
+bool Player::setShip(const Cords& crd, const int& _dir, const int& _deck)noexcept {
 	bool flag = isIntersecShip(crd, _dir, _deck);
 	if (!flag)
 		return false;
@@ -21,11 +21,11 @@ bool Player::setShip(Cords crd, int _dir, int _deck) {
 	return true;
 }
 
-bool Player::isIntersecShip(Cords& crd, int& _dir, int& _deck) noexcept {
+bool Player::isIntersecShip(const Cords& crd, const int& _dir, const int& _deck)const noexcept {
 	bool flag = true;
 	Ship temp{ crd,_dir,_deck };
 	auto temp_vec = temp.getCord();
-	std::for_each(navy.cbegin(), navy.cend(), [&](Ship s) {
+	std::for_each(std::execution::par,navy.cbegin(), navy.cend(), [&](Ship s) {
 		auto compar = s.getCord();
 		for (const auto it : temp_vec) {
 			for (const auto it_compar : compar) {
@@ -37,7 +37,7 @@ bool Player::isIntersecShip(Cords& crd, int& _dir, int& _deck) noexcept {
 	return flag;
 }
 
-std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr, Cords& crd, int& pol) {
+std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr, Cords& crd, const int& pol)noexcept {
 	int count = 0;
 	count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
 	if (plr->getShot(crd)) {
@@ -54,7 +54,7 @@ std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr, Cords& 
 bool Player::getShot(Cords& crd) {
 	bool flag = false;
 	int temp = ship_count;
-	std::for_each(navy.begin(), navy.end(), [&](Ship& s)mutable {
+	std::for_each(std::execution::par,navy.begin(), navy.end(), [&](Ship& s)mutable {
 		if (s.IsHit(crd)) {
 			flag = true;
 			if (!s.Islife())
@@ -78,7 +78,7 @@ bool Player::getShot(Cords& crd) {
 
 }
 
-bool Player::isRepeat(Cords& crd, int pol) {
+bool Player::isRepeat(Cords& crd, int pol)const noexcept {
 	int pos = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
 	if (map_shot[pos] == 'X' || map_shot[pos] == '+')
 		return true;
@@ -86,7 +86,7 @@ bool Player::isRepeat(Cords& crd, int pol) {
 		return false;
 }
 
-void Player::print() {
+void Player::print()const {
 	std::for_each(navy.cbegin(), navy.cend(), [](const Ship& p) {
 		std::vector <Cords> obj = p.getCord();
 		for (auto& it : obj) {
