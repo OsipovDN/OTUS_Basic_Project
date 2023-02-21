@@ -1,7 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Menu.h"
-#include <Windows.h>
+//#include <Windows.h>
 
 class Game {
 private:
@@ -13,6 +13,7 @@ private:
 	int pol;				//Размер игрового поля
 	//bool gm_over = false;	//Проверка конца игры
 	bool multplr = false;		//true-два игрока, false- один игрок
+	
 
 public:
 	//Конструктор (задает способ расстановки и размер поля)
@@ -30,6 +31,7 @@ public:
 	//Вывод  ироков на экран
 	void mapPol();
 	//Задает цвет клетке
-	std::vector<char>::const_iterator colorOutput(HANDLE& h, std::vector<char>::const_iterator it_begin);
+	std::vector<char>::const_iterator colorOutput(std::vector<char>::const_iterator it_begin);
+	
 };
 

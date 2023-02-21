@@ -28,21 +28,17 @@ Game::Game() :menu(std::make_unique<Menu>()) {
 	if (multplr) {
 		for (int i = 1; i <= 2; ++i) {
 			bool flag = menu->placement(i);
-			if (i == 1) {
+			if (i == 1) 
 				setNavy(plr1, flag);
-				system("cls");
-			}
-			else {
+			else 
 				setNavy(plr2, flag);
-				system("cls");
-			}
 		}
 	}
 	else {
 		bool flag = menu->placement(1);
 		setNavy(plr1, flag);
 		setNavy(plr2, false);
-		system("cls");
+		menu->clrscr();
 	}
 	std::srand(static_cast <unsigned int>(time(nullptr)));
 	plr1->print();
@@ -202,32 +198,31 @@ void Game::mapPol() {
 	std::cout << std::endl;;
 	auto it_start1 = temp_map_pl1.cbegin();
 	auto it_start2 = temp_map_pl2.cbegin();
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	do {
 		if (s >= 10)
 			std::cout << s << " ";
 		else
 			std::cout << s << "  ";
-		it_start2=colorOutput(hConsole, it_start2);
+		it_start2=colorOutput(it_start2);
 		std::cout << "\t\t";
 		if (s >= 10)
 			std::cout << s << " ";
 		else
 			std::cout << s << "  ";
-		it_start1=colorOutput(hConsole, it_start1);
+		it_start1=colorOutput(it_start1);
 		std::cout << "\n";
 		s++;
 	} while (it_start1 != temp_map_pl1.cend() || it_start2 != temp_map_pl2.cend());
 };
 
-std::vector<char>::const_iterator Game::colorOutput(HANDLE& h, std::vector<char>::const_iterator it_begin) {
+std::vector<char>::const_iterator Game::colorOutput(std::vector<char>::const_iterator it_begin) {
 	std::for_each(it_begin, it_begin + pol, [&](const char pos) {
 		if (pos == 'X')
-			SetConsoleTextAttribute(h, FOREGROUND_RED);
-		else if (pos == '+')
-			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+			menu->chengeColor(FOREGROUND_RED);
+		else if (pos == '+') 
+			menu->chengeColor(FOREGROUND_GREEN);
 		std::cout << pos << " ";
-		SetConsoleTextAttribute(h, 15);
+		menu->chengeColor(15);
 		});
 	return it_begin + pol;
 };
