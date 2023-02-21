@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <memory>
 #include <ctime>
-#include <Windows.h>
+
 
 //using Cords = std::pair<int, int>;
 Game::Game() :menu(std::make_unique<Menu>()) {
@@ -202,52 +202,38 @@ void Game::mapPol() {
 	std::cout << std::endl;;
 	auto it_start1 = temp_map_pl1.cbegin();
 	auto it_start2 = temp_map_pl2.cbegin();
-
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	do {
 		if (s >= 10)
 			std::cout << s << " ";
 		else
 			std::cout << s << "  ";
-		std::for_each(it_start2, it_start2 + pol, [&](const char pos) {
-			if (pos == 'X')
-				SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-			else if (pos == '+')
-				SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
-			std::cout << pos << " ";
-			SetConsoleTextAttribute(hConsole, 15);
-			});
-		it_start2 += pol;
+		it_start2=colorOutput(hConsole, it_start2);
 		std::cout << "\t\t";
 		if (s >= 10)
 			std::cout << s << " ";
 		else
 			std::cout << s << "  ";
-		std::for_each(it_start1, it_start1 + pol, [&](const char pos) {
-			if (pos == 'X')
-				SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-			else if (pos == '+')
-				SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
-			std::cout << pos << " ";
-			SetConsoleTextAttribute(hConsole, 15);
-			});
-		it_start1 += pol;
+		it_start1=colorOutput(hConsole, it_start1);
 		std::cout << "\n";
 		s++;
 	} while (it_start1 != temp_map_pl1.cend() || it_start2 != temp_map_pl2.cend());
 };
 
-bool Game::isOver() {
-	if (!plr1->ShipCount()) {
-		std::cout << "Игрок 2 выиграл!" << std::endl;
-		return true;
-	}
-	if (!plr2->ShipCount()) {
-		std::cout << "Игрок 1 выиграл!" << std::endl;
-		return true;
-	}
-	return false;
+std::vector<char>::const_iterator Game::colorOutput(HANDLE& h, std::vector<char>::const_iterator it_begin) {
+	std::for_each(it_begin, it_begin + pol, [&](const char pos) {
+		if (pos == 'X')
+			SetConsoleTextAttribute(h, FOREGROUND_RED);
+		else if (pos == '+')
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		std::cout << pos << " ";
+		SetConsoleTextAttribute(h, 15);
+		});
+	return it_begin + pol;
 };
+
+
+
 
 
 

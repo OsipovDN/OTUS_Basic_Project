@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Menu.h"
+#include <Windows.h>
 
 class Game {
 private:
@@ -10,7 +11,7 @@ private:
 	std::unique_ptr<Player> plr2;
 	std::unique_ptr<Menu> menu;
 	int pol;				//Размер игрового поля
-	bool gm_over = false;	//Проверка конца игры
+	//bool gm_over = false;	//Проверка конца игры
 	bool multplr = false;		//true-два игрока, false- один игрок
 
 public:
@@ -28,9 +29,7 @@ public:
 	bool outOfBounds(Cords& crd, int& _dir, int& _deck);
 	//Вывод  ироков на экран
 	void mapPol();
-	//Проверка наличия кораблей
-	bool isOver();
-
-
+	//Задает цвет клетке
+	std::vector<char>::const_iterator colorOutput(HANDLE& h, std::vector<char>::const_iterator it_begin);
 };
 
