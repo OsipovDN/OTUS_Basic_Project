@@ -7,7 +7,7 @@ add_executable (sea_battle
     Game/src/Game.cpp
     Game/src/Player.cpp
     Game/src/Ship.cpp
-    )
+    Game/src/Menu.cpp)
 
 target_include_directories(
     sea_battle 
