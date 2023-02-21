@@ -57,35 +57,37 @@ void Game::play() {
 			std::cout << "Ход игрока 1:\n";
 			gen_cord = setMove(plr1);
 			plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);
-			if (!plr2->ShipCount()) {
-				std::cout << "Игрок 1 выиграл!!!\n";
-				break;
-			}
-		} while (plr1->isMove());
+			
+		} while (plr1->isMove()&& plr2->ShipCount());
+		if (!plr2->ShipCount()) {
+			std::cout << "Игрок 1 выиграл!!!\n";
+			break;
+		}
 		if (multplr) {
 			do {
 				mapPol();
 				std::cout << "Ход игрока 2:\n";
 				gen_cord = setMove(plr2);
 				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
-				if (!plr1->ShipCount()) {
-					std::cout << "Игрок 2 выиграл!!!\n";
-					break;
-				}
-			} while (plr2->isMove());
+				
+			} while (plr2->isMove()&& plr1->ShipCount());
+			if (!plr1->ShipCount()) {
+				std::cout << "Игрок 2 выиграл!!!\n";
+				break;
+			}
 		}
-		else {
-			gen_cord.first = autoSet(pol);
-			gen_cord.second = autoSet(pol);
+		else {	
 			do {
+				gen_cord.first = autoSet(pol);
+				gen_cord.second = autoSet(pol);
 				mapPol();
 				std::cout << "Ход игрока 2:\n";
 				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
-				if (!plr1->ShipCount()) {
-					std::cout << "Игрок 2 выиграл!!!\n";
-					break;
-				}
-			} while (plr2->isMove());
+			} while (plr2->isMove() && plr1->ShipCount());
+			if (!plr1->ShipCount()) {
+				std::cout << "Игрок 2 выиграл!!!\n";
+				break;
+			}
 		}
 	} while (true);
 };
@@ -150,21 +152,20 @@ Game::Cords&& Game::setMove(const std::unique_ptr<Player>& pl)const {
 		std::cout << "x,y: ";
 		std::cin >> crd.first >> crd.second;
 		if (crd.first <= 0 || crd.second <= 0 || crd.first > pol || crd.second > pol) {
-			system("cls");
 			std::cout << "Выход за пределы поля! Попробуйте снова"
 				<< std::endl;
 			continue;
 		}
 		count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
 		if (pl->isRepeat(crd, pol)) {
-			system("cls");
 			std::cout << "По данной позиции ранее уже был сделан выстрел." <<
 				std::endl;
 			std::cout << "Повторите ввод." << std::endl;
 			continue;
 		}
-		else
+		else {
 			return std::move(crd);
+		}
 	}
 };
 
