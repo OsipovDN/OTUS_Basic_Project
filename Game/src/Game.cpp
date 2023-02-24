@@ -218,9 +218,9 @@ void Game::mapPol() {
 std::vector<char>::const_iterator Game::colorOutput(std::vector<char>::const_iterator it_begin) {
 	std::for_each(it_begin, it_begin + pol, [&](const char pos) {
 		if (pos == 'X')
-			menu->chengeColor(FOREGROUND_RED);
+			menu->chengeColor(4);
 		else if (pos == '+') 
-			menu->chengeColor(FOREGROUND_GREEN);
+			menu->chengeColor(10);
 		std::cout << pos << " ";
 		menu->chengeColor(15);
 		});
