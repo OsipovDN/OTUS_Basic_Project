@@ -7,11 +7,10 @@
 
 class Menu {
 private:
+
 #ifdef _WIN32 
 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 #endif
-
-	
 
 public:
 	Menu() = default;
