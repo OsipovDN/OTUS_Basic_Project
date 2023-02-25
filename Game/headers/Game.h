@@ -10,7 +10,7 @@ private:
 	std::unique_ptr<Player> plr1;
 	std::unique_ptr<Player> plr2;
 	std::unique_ptr<Menu> menu;
-	int pol;				//Размер игрового поля
+	int pol=10;				//Размер игрового поля
 	//bool gm_over = false;	//Проверка конца игры
 	bool multplr = false;		//true-два игрока, false- один игрок
 	
@@ -20,6 +20,8 @@ public:
 	Game();
 	//Запуск игры
 	void play();
+	//Задает количество игроков
+	void numberOfPlayers();
 	//Задает размер игрового поля
 	void sizeOfTheField();
 	//Режим расстановки кораблей

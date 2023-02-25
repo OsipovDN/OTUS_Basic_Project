@@ -16,8 +16,8 @@ private:
 public:
 	Menu() = default;
 	int mainMenu();
-	int setPlrVal();
-	int setPolVal();
+	void setPlrVal(int& v);
+	void setPolVal(int& p);
 	bool placement(int pl);
 	void clrscr();
 	//HANDLE& getHandle() {return console;}

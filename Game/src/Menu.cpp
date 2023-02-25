@@ -21,15 +21,14 @@ int Menu::mainMenu() {
 	return val;
 };
 
-int Menu::setPlrVal() {
-	int val;
+void Menu::setPlrVal(int& v) {
 	clrscr();
 	for (;;) {
 		std::cout << "\tNumber of players:" << std::endl;
 		std::cout << "1. One\n2. Multiplayer\n-> ";
-		val = std::getchar() - '0';
+		v = std::getchar() - '0';
 		std::cin.ignore();
-		if (val != 1 && val != 2 ) {
+		if (v != 1 && v != 2 ) {
 			clrscr();
 			std::cout << "An incorrect value was entered. Try again!\n";
 			continue;
@@ -37,27 +36,23 @@ int Menu::setPlrVal() {
 		else
 			break;
 	}
-	return val;
 };
 
-int Menu::setPolVal() {
-	int val;
+void Menu::setPolVal(int& p) {
 	clrscr();
 	for (;;) {
 		std::cout << "\tEnter the size of the playing field (val x val)(min=10/max=30)." << std::endl;
 		std::cout << "Size map-> ";
-		std::cin >> val;
+		std::cin >> p;
 		std::cin.ignore();
-		if (val < 10 || val > 30) {
+		if (p < 10 || p > 30) {
 			clrscr();
-			std::cout << val << std::endl;
 			std::cout << "An incorrect value was entered. Try again!\n";
 			continue;
 		}
 		else
 			break;
 	}
-	return val;
 };
 
 bool Menu::placement(int pl) {

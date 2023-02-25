@@ -15,11 +15,8 @@ Game::Game() :menu(std::make_unique<Menu>()) {
 	if (val == 3)
 		exit(1);
 	//¬вод количества игроков
-	val = menu->setPlrVal();
-	if (val == 1)
-		multplr = false;
-	else
-		multplr = true;
+	numberOfPlayers();
+	
 	//¬вод размера игрового пол€
 	sizeOfTheField();
 	//¬вод способа расстановки
@@ -76,8 +73,17 @@ void Game::play() {
 	} while (true);
 };
 
+void Game::numberOfPlayers() {
+	int val;
+	menu->setPlrVal(val);
+	if (val == 1)
+		multplr = false;
+	else
+		multplr = true;
+};
+
 void Game::sizeOfTheField() {
-	pol = menu->setPolVal();
+	menu->setPolVal(pol);
 	plr1 = std::make_unique<Player>(pol);
 	plr2 = std::make_unique<Player>(pol);
 };
