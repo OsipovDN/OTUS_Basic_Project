@@ -8,21 +8,19 @@
 
 //using Cords = std::pair<int, int>;
 Game::Game() :menu(std::make_unique<Menu>()) {
-	int val;
-	std::srand(static_cast <unsigned int>(std::time(0)));
+	std::srand(static_cast <unsigned int>(time(nullptr)));
 	//¬ход в главное меню
+	int val;
 	val = menu->mainMenu();
 	if (val == 3)
 		exit(1);
 	//¬вод количества игроков
 	numberOfPlayers();
-	
 	//¬вод размера игрового пол€
 	sizeOfTheField();
 	//¬вод способа расстановки
 	placementMode();
 	
-	std::srand(static_cast <unsigned int>(time(nullptr)));
 	plr1->print();
 	plr2->print();
 };
@@ -121,6 +119,14 @@ void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 					std::cout << "Enter the direction (1-up, 2-right,3-down, 4-left): "
 						<< std::endl;
 					std::cin >> d;
+					if (std::cin.fail()) {
+						std::cin.clear();
+						std::cin.sync();
+						std::cin.ignore();
+						menu->clrscr();
+						std::cout << "An incorrect value was entered. Try again!\n";
+						continue;
+					}
 					if (outOfBounds(crd, d, i)) {
 						std::cout << "Going off the field! Try again"
 							<< std::endl;
@@ -165,6 +171,14 @@ Game::Cords&& Game::setMove(const std::unique_ptr<Player>& pl)const {
 			<< std::endl;
 		std::cout << "x,y: ";
 		std::cin >> crd.first >> crd.second;
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.sync();
+			std::cin.ignore();
+			menu->clrscr();
+			std::cout << "An incorrect value was entered. Try again!\n";
+			continue;
+		}
 		if (crd.first <= 0 || crd.second <= 0 || crd.first > pol || crd.second > pol) {
 			std::cout << "Going off the field! Try again"
 				<< std::endl;
