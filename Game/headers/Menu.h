@@ -1,6 +1,8 @@
 #pragma once
 #ifdef _WIN32
 #include <Windows.h>
+#else
+#include<cstdio>
 #endif
 
 class Menu {
@@ -23,7 +25,7 @@ public:
 #ifdef _WIN32
 		SetConsoleTextAttribute(console, static_cast <WORD>(atr));
 #else
-		if (atr==9)
+		if (atr==4)
 			printf("\x1b[31m");
 		else if (atr==10)
 			printf("\x1b[32m");

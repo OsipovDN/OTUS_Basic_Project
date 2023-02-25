@@ -21,25 +21,10 @@ Game::Game() :menu(std::make_unique<Menu>()) {
 	else
 		multplr = true;
 	//Ввод размера игрового поля
-	pol = menu->setPolVal();
-	plr1 = std::make_unique<Player>(pol);
-	plr2 = std::make_unique<Player>(pol);
+	sizeOfTheField();
 	//Ввод способа расстановки
-	if (multplr) {
-		for (int i = 1; i <= 2; ++i) {
-			bool flag = menu->placement(i);
-			if (i == 1) 
-				setNavy(plr1, flag);
-			else 
-				setNavy(plr2, flag);
-		}
-	}
-	else {
-		bool flag = menu->placement(1);
-		setNavy(plr1, flag);
-		setNavy(plr2, false);
-		menu->clrscr();
-	}
+	placementMode();
+	
 	std::srand(static_cast <unsigned int>(time(nullptr)));
 	plr1->print();
 	plr2->print();
@@ -50,25 +35,27 @@ void Game::play() {
 	do {
 		do {
 			mapPol();
-			std::cout << "Ход игрока 1:\n";
+			std::cout << "Player 1's move:\n";
 			gen_cord = setMove(plr1);
+			menu->clrscr();
 			plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);
 			
 		} while (plr1->isMove()&& plr2->ShipCount());
 		if (!plr2->ShipCount()) {
-			std::cout << "Игрок 1 выиграл!!!\n";
+			std::cout << "PLAYER 1 WON!!!\n";
 			break;
 		}
 		if (multplr) {
 			do {
 				mapPol();
-				std::cout << "Ход игрока 2:\n";
+				std::cout << "Player 2's move:\n";
 				gen_cord = setMove(plr2);
+				menu->clrscr();
 				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
 				
 			} while (plr2->isMove()&& plr1->ShipCount());
 			if (!plr1->ShipCount()) {
-				std::cout << "Игрок 2 выиграл!!!\n";
+				std::cout << "PLAYER 2 WON!!!\n";
 				break;
 			}
 		}
@@ -77,39 +64,64 @@ void Game::play() {
 				gen_cord.first = autoSet(pol);
 				gen_cord.second = autoSet(pol);
 				mapPol();
-				std::cout << "Ход игрока 2:\n";
+				std::cout << "Player 2's move:\n";
+				menu->clrscr();
 				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
 			} while (plr2->isMove() && plr1->ShipCount());
 			if (!plr1->ShipCount()) {
-				std::cout << "Игрок 2 выиграл!!!\n";
+				std::cout << "PLAYER 2 WON!!!\n";
 				break;
 			}
 		}
 	} while (true);
 };
 
+void Game::sizeOfTheField() {
+	pol = menu->setPolVal();
+	plr1 = std::make_unique<Player>(pol);
+	plr2 = std::make_unique<Player>(pol);
+};
+
+void Game::placementMode() {
+	if (multplr) {
+		for (int i = 1; i <= 2; ++i) {
+			bool flag = menu->placement(i);
+			if (i == 1)
+				setNavy(plr1, flag);
+			else
+				setNavy(plr2, flag);
+		}
+	}
+	else {
+		bool flag = menu->placement(1);
+		setNavy(plr1, flag);
+		setNavy(plr2, false);
+		menu->clrscr();
+	}
+};
+
 void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 	Cords crd;
 	int d = 0;
 	if (st) {
-		std::cout << "Ручной ввод расположения кораблей:"
+		std::cout << "Manual entry of the location of ships:"
 			<< std::endl;
 		for (int i = 4; i > 0; --i) {
 			for (int j = 4; j >= i; --j) {
-				std::cout << "Введите координаты " << i
-					<< "-х палубного корабля" << std::endl;
+				std::cout << "Enter the coordinates " << i
+					<< "-х deck ship" << std::endl;
 				for (;;) {
 					crd = setMove(pl);
-					std::cout << "Введите направление (1-вверх,2-вправо,3-вниз,4-влево): "
+					std::cout << "Enter the direction (1-up, 2-right,3-down, 4-left): "
 						<< std::endl;
 					std::cin >> d;
 					if (outOfBounds(crd, d, i)) {
-						std::cout << "Выход за пределы поля! Попробуйте снова"
+						std::cout << "Going off the field! Try again"
 							<< std::endl;
 						continue;
 					}
 					if (pl->setShip(crd, d, i)) {
-						std::cout << "Есть пересечение с лругим кораблем! Попробуйте снова."
+						std::cout << "There is an intersection with another ship! Try again."
 							<< std::endl;
 						continue;
 					}
@@ -143,20 +155,20 @@ Game::Cords&& Game::setMove(const std::unique_ptr<Player>& pl)const {
 	int count = 0;
 	for (;;) {
 		//Проверка сделанного хода
-		std::cout << "Введите координаты (x ,y) через пробел: "
+		std::cout << "Enter the coordinates (x ,y) separated by a space: "
 			<< std::endl;
 		std::cout << "x,y: ";
 		std::cin >> crd.first >> crd.second;
 		if (crd.first <= 0 || crd.second <= 0 || crd.first > pol || crd.second > pol) {
-			std::cout << "Выход за пределы поля! Попробуйте снова"
+			std::cout << "Going off the field! Try again"
 				<< std::endl;
 			continue;
 		}
 		count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
 		if (pl->isRepeat(crd, pol)) {
-			std::cout << "По данной позиции ранее уже был сделан выстрел." <<
+			std::cout << "A shot has already been fired at this position." <<
 				std::endl;
-			std::cout << "Повторите ввод." << std::endl;
+			std::cout << "Try again." << std::endl;
 			continue;
 		}
 		else {
@@ -187,7 +199,7 @@ void Game::mapPol() {
 	int s = 1;
 	auto temp_map_pl1 = plr1->getMap();
 	auto temp_map_pl2 = plr2->getMap();
-	std::cout << "\tИгрок 1" << "\t\t\t\tИгрок 2" << std::endl;
+	std::cout << "\tPlayer 1" << "\t\t\t\tPlayer 2" << std::endl;
 	for (int i = 0; i < 2; ++i) {
 		std::cout << "   ";
 		for (int j = 1; j <= pol; ++j) {

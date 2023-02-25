@@ -47,18 +47,18 @@ bool Player::getShot(Cords& crd) {
 		});
 	if (flag) {
 		if (temp == ship_count) {
-			system("cls");
+			//system("cls");
 			std::cout << "Попал!" << std::endl;
 			return flag;
 		}
 		else {
-			system("cls");
+			//system("cls");
 			std::cout << "Убит!" << std::endl;
 			return flag;
 		}
 	}
 	else {
-		system("cls");
+		//system("cls");
 		std::cout << "Промах!" << std::endl;
 		return flag;
 	}

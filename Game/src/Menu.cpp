@@ -5,12 +5,13 @@ int Menu::mainMenu() {
 	int val;
 	clrscr();
 	for (;;) {
-		std::cout << "\tГлавное меню" << std::endl;
-		std::cout << "1. Играть\n3. Выход\n-> ";
-		std::cin >> val;
+		std::cout << "\tMain Menu" << std::endl;
+		std::cout << "1. Play\n3. Exit\n-> ";
+		val=std::getchar()-'0';
+		std::cin.ignore();
 		if (val != 1 && val != 3) {
 			clrscr();
-			std::cout << "Введено некорректное значение. Попробуйте еще раз!\n";
+			std::cout << "An incorrect value was entered. Try again!\n";
 			continue;
 		}
 		else
@@ -24,12 +25,13 @@ int Menu::setPlrVal() {
 	int val;
 	clrscr();
 	for (;;) {
-		std::cout << "\tКоличество игроков:" << std::endl;
-		std::cout << "1. Один\n2. Два\n-> ";
-		std::cin >> val;
-		if (val != 1 && val != 2) {
+		std::cout << "\tNumber of players:" << std::endl;
+		std::cout << "1. One\n2. Multiplayer\n-> ";
+		val = std::getchar() - '0';
+		std::cin.ignore();
+		if (val != 1 && val != 2 ) {
 			clrscr();
-			std::cout << "Введено некорректное значение. Попробуйте еще раз!\n";
+			std::cout << "An incorrect value was entered. Try again!\n";
 			continue;
 		}
 		else
@@ -42,12 +44,14 @@ int Menu::setPolVal() {
 	int val;
 	clrscr();
 	for (;;) {
-		std::cout << "\tВведите размер игрового поля (val x val)(min=10/max=30)." << std::endl;
-		std::cout << "val-> ";
+		std::cout << "\tEnter the size of the playing field (val x val)(min=10/max=30)." << std::endl;
+		std::cout << "Size map-> ";
 		std::cin >> val;
-		if (val < 10 || val > 30 && !isdigit(val)) {
+		std::cin.ignore();
+		if (val < 10 || val > 30) {
 			clrscr();
-			std::cout << "Введено некорректное значение. Попробуйте еще раз!\n";
+			std::cout << val << std::endl;
+			std::cout << "An incorrect value was entered. Try again!\n";
 			continue;
 		}
 		else
@@ -60,13 +64,14 @@ bool Menu::placement(int pl) {
 	int val;
 	clrscr();
 	for (;;) {
-		std::cout << "Игрок " << pl << std::endl;
-		std::cout << "\tВведите способ расстановки флота" << std::endl;
-		std::cout << "1. Ручной\n2. Автоматический\n-> ";
-		std::cin >> val;
+		std::cout << "Player " << pl << std::endl;
+		std::cout << "\tEnter the placement method" << std::endl;
+		std::cout << "1. Manual\n2. Auto\n-> ";
+		val = std::getchar() - '0';
+		std::cin.ignore();
 		if (val != 1 && val != 2) {
 			clrscr();
-			std::cout << "Введено некорректное значение. Попробуйте еще раз!";
+			std::cout << "An incorrect value was entered. Try again!\n";
 			continue;
 		}
 		else
@@ -88,7 +93,8 @@ void Menu::clrscr() {
 	FillConsoleOutputAttribute(console, s.wAttributes, cells, tl, &written);
 	SetConsoleCursorPosition(console, tl);
 #else
-	std::cout << "\033[2J\033[1; 1H";
+	//std::cout << "\033[2J\033[1; 1H";
+	system("clear");
 #endif
 };
 
