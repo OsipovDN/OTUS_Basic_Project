@@ -24,9 +24,14 @@ struct ShipFixture : public testing::Test {
 };
 
 
-TEST_F(ShipFixture, InitializationShipObject) {
+TEST(Ship, InitializationShipObject) {
+    std::pair <int, int> cords{ 5,4 };
+    const int dir = 1;
+    const int dec = 3;
+    std::vector<std::pair<int, int>> expect_cords{ {5,4},{5,3},{5,2} };
 
-    std::vector<std::pair<int, int>>res = obj->getCord();    
+    Ship obj (cords, dir, dec);
+    std::vector<std::pair<int, int>>res = obj.getCord();    
 
 	EXPECT_EQ(res, expect_cords);
 
