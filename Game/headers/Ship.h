@@ -18,9 +18,9 @@ private:
 public:
 	Ship(const Cords& crd, const int& _dir, const int& _deck);
 	//Проверка попадания
-	bool IsHit(Cords& crd)noexcept;
+	bool isHit(Cords& crd)noexcept;
 	//Проверка на убит или нет
-	bool Islife()const noexcept { return hp; };
+	bool isLife()const noexcept { return hp; };
 	//Возврат координат корабля
 	std::vector <Cords> getCord()const noexcept { return cord; }
 };

@@ -14,14 +14,14 @@ Game::Game() :menu(std::make_unique<Menu>()) {
 	int val;
 	val = menu->mainMenu();
 	if (val == 3)
-		exit(1);
+		EXIT_SUCCESS;
 	//¬вод количества игроков
 	numberOfPlayers();
 	//¬вод размера игрового пол€
 	sizeOfTheField();
 	//¬вод способа расстановки
 	placementMode();
-	
+
 	plr1->print();
 	plr2->print();
 };
@@ -35,8 +35,8 @@ void Game::play() {
 			gen_cord = setMove(plr1);
 			menu->clrscr();
 			plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);
-			
-		} while (plr1->isMove()&& plr2->ShipCount());
+
+		} while (plr1->isMove() && plr2->ShipCount());
 		if (!plr2->ShipCount()) {
 			std::cout << "PLAYER 1 WON!!!\n";
 			break;
@@ -48,14 +48,14 @@ void Game::play() {
 				gen_cord = setMove(plr2);
 				menu->clrscr();
 				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
-				
-			} while (plr2->isMove()&& plr1->ShipCount());
+
+			} while (plr2->isMove() && plr1->ShipCount());
 			if (!plr1->ShipCount()) {
 				std::cout << "PLAYER 2 WON!!!\n";
 				break;
 			}
 		}
-		else {	
+		else {
 			do {
 				gen_cord.first = autoSet(pol);
 				gen_cord.second = autoSet(pol);
@@ -120,7 +120,7 @@ void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 					std::cout << "Enter the direction (1-up, 2-right,3-down, 4-left): "
 						<< std::endl;
 					std::cin >> d;
-					if (std::cin.fail()) {
+					if (std::cin.fail() || d <= 0 || d > 4) {
 						std::cin.clear();
 						std::cin.sync();
 						std::cin.ignore();
@@ -220,7 +220,7 @@ void Game::mapPol() {
 	int s = 1;
 	auto temp_map_pl1 = plr1->getMap();
 	auto temp_map_pl2 = plr2->getMap();
-	std::cout <<std::setw(pol/2) << "\tPlayer 1" << std::setw(pol / 2) << "\tPlayer 2" << std::endl;
+	std::cout << std::setw(pol / 2) << "\tPlayer 1" << std::setw(pol / 2) << "\tPlayer 2" << std::endl;
 	for (int i = 0; i < 2; ++i) {
 		std::cout << std::setw(3);
 		for (int j = 1; j <= pol; ++j) {
@@ -236,13 +236,13 @@ void Game::mapPol() {
 			std::cout << s << "";
 		else
 			std::cout << s << std::setw(2);
-		it_start2=colorOutput(it_start2);
+		it_start2 = colorOutput(it_start2);
 		std::cout << std::setw(4); //"\t\t";
 		if (s >= 10)
 			std::cout << s << " ";
 		else
 			std::cout << s << std::setw(2);
-		it_start1=colorOutput(it_start1);
+		it_start1 = colorOutput(it_start1);
 		std::cout << "\n";
 		s++;
 	} while (it_start1 != temp_map_pl1.cend() || it_start2 != temp_map_pl2.cend());
@@ -252,7 +252,7 @@ std::vector<char>::const_iterator Game::colorOutput(std::vector<char>::const_ite
 	std::for_each(it_begin, it_begin + pol, [&](const char pos) {
 		if (pos == 'X')
 			menu->chengeColor(4);
-		else if (pos == '+') 
+		else if (pos == '+')
 			menu->chengeColor(10);
 		std::cout << pos << " ";
 		menu->chengeColor(15);
