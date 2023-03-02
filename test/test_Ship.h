@@ -24,7 +24,7 @@ struct ShipFixture : public testing::Test {
 };
 
 
-TEST_F(ShipFixture, InitializationObject) {
+TEST_F(ShipFixture, InitializationShipObject) {
 
     std::vector<std::pair<int, int>>res = obj->getCord();    
 
