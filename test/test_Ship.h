@@ -1,7 +1,6 @@
 #pragma once
 #include "Ship.h"
 #include <gtest/gtest.h>
-#include <iostream>
 #include <memory>
 #include <vector>
 
