@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include <gtest/gtest.h>
+#include <iostream>
 #include <memory>
 #include <vector>
 
@@ -57,6 +58,27 @@ TEST_F(PlayerFixture, testSetShipMeth) {
 		shot_flag = obj->getShot(c);
 		EXPECT_TRUE(shot_flag);
 	}
+}
+
+TEST_F(PlayerFixture, testGetShotMethod) {
+	bool shot_flag;
+	std::pair <int, int > test_cords;
+
+	obj->setShip(cords, dir, dec);
+
+	shot_flag = obj->getShot(cords);
+	ASSERT_TRUE(shot_flag);
+	for (int i = 4; i <= 6; ++i) {
+		for (int j = 2; j <= 4; ++j) {
+			test_cords = { i, j };
+			shot_flag = obj->getShot(test_cords);
+			if (i == 5)
+				ASSERT_TRUE(shot_flag);
+			else
+				ASSERT_FALSE(shot_flag);
+		}
+	}
+
 }
 
 

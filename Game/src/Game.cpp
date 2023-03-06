@@ -24,9 +24,6 @@ Game::Game() :menu(std::make_unique<Menu>()) {
 
 	plr1->print();
 	plr2->print();
-	int val1 = plr1->ShipCount();
-	int val2 = plr2->ShipCount();
-	std::cout << val1 << " " << val2 << std::endl;
 };
 
 void Game::play() {
@@ -218,7 +215,7 @@ char Game::setShot(const std::unique_ptr<Player>& pl1, const std::unique_ptr<Pla
 	}
 };
 
-inline int Game::autoSet(int& p)const {
+inline int Game::autoSet(int p)const {
 	int val = std::rand() % p + 1;
 	return val;
 };
