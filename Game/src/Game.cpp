@@ -24,6 +24,9 @@ Game::Game() :menu(std::make_unique<Menu>()) {
 
 	plr1->print();
 	plr2->print();
+	int val1 = plr1->ShipCount();
+	int val2 = plr2->ShipCount();
+	std::cout << val1 << " " << val2 << std::endl;
 };
 
 void Game::play() {
@@ -31,10 +34,10 @@ void Game::play() {
 	char pos;
 	do {
 		do {
-			menu->clrscr();
 			mapPol();
 			std::cout << "Player 1's move:\n";
 			gen_cord = setMove(plr1);
+			menu->clrscr();
 			/*plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);*/
 			pos = setShot(plr1, plr2, gen_cord);
 			plr1->setPoint(gen_cord, pol, pos);
@@ -46,10 +49,10 @@ void Game::play() {
 		}
 		if (multplr) {
 			do {
-				menu->clrscr();
 				mapPol();
 				std::cout << "Player 2's move:\n";
 				gen_cord = setMove(plr1);
+				menu->clrscr();
 				//plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
 				pos = setShot(plr1, plr2, gen_cord);
 				plr2->setPoint(gen_cord, pol, pos);
@@ -63,10 +66,10 @@ void Game::play() {
 			do {
 				gen_cord.first = autoSet(pol);
 				gen_cord.second = autoSet(pol);
-				menu->clrscr();
 				mapPol();
 				//std::cout << "Player 2's move:\n";
 				//plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
+				menu->clrscr();
 				pos = setShot(plr2, plr1, gen_cord);
 				plr2->setPoint(gen_cord, pol, pos);
 			} while (plr2->isMove() && plr1->ShipCount());

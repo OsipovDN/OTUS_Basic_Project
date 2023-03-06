@@ -88,13 +88,14 @@ bool Menu::placement(int pl) {
 
 void Menu::clrscr() {
 #ifdef _WIN32
-	COORD tl = { 0,0 };
+	/*COORD tl = { 0,0 };
 	CONSOLE_SCREEN_BUFFER_INFO s;
 	GetConsoleScreenBufferInfo(console, &s);
 	DWORD written, cells = s.dwSize.X * s.dwSize.Y;
 	FillConsoleOutputCharacter(console, ' ', cells, tl, &written);
 	FillConsoleOutputAttribute(console, s.wAttributes, cells, tl, &written);
-	SetConsoleCursorPosition(console, tl);
+	SetConsoleCursorPosition(console, tl);*/
+	system("cls");
 #else
 	//std::cout << "\033[2J\033[1; 1H";
 	system("clear");
