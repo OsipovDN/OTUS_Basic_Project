@@ -31,10 +31,12 @@ public:
 	void setNavy(std::unique_ptr<Player>& pl, bool st);
 	//Ввод координат
 	Cords&& setMove(const std::unique_ptr<Player>& pl)const;
+	//Сделать выстрел
+	char setShot(const std::unique_ptr<Player>& pl1, const std::unique_ptr<Player>& pl2, Cords& crd)noexcept;
 	//Автоматический расчет координат
-	inline int autoSet(int p)const;
+	inline int autoSet(int& p)const;
 	//Проверка выхода за границу поля
-	bool outOfBounds(Cords& crd, int& _dir, int& _deck);
+	bool outOfBounds(Cords& crd, int& _dir, int& _deck)const noexcept;
 	//Вывод ироков на экран
 	void mapPol();
 	//Задает цвет клетке
@@ -43,21 +45,7 @@ public:
 
 
 	
-
-	char setShot(const std::unique_ptr<Player>& pl1, const std::unique_ptr<Player>& pl2, Cords& crd)noexcept {
-		bool flag;
-		flag = pl2->getShot(crd);
-		if (flag) {
-			pl1->moveStat(true);
-			pl2->moveStat(false);
-			return 'X';
-		}
-		else {
-			pl1->moveStat(false);
-			pl2->moveStat(true);
-			return '+';
-		}
-	}
+	
 
 };
 

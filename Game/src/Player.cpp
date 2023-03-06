@@ -21,20 +21,6 @@ bool Player::setShip(const Cords& crd, const int& _dir, const int& _deck)noexcep
 	return true;
 };
 
-//std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr, Cords& crd, const int& pol)noexcept {
-//	int count = 0;
-//	count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
-//	if (plr->getShot(crd)) {
-//		map_shot[count] = 'X';
-//		move = true;
-//	}
-//	else {
-//		map_shot[count] = '+';
-//		move = false;
-//	}
-//	return std::move(plr);
-//};
-
 bool Player::getShot(Cords& crd) {
 	bool flag = false;
 	int temp = ship_count;
@@ -85,6 +71,12 @@ bool Player::isRepeat(Cords& crd, int pol)const noexcept {
 	else
 		return false;
 };
+
+void Player::setPoint(Cords& crd, size_t pol, char& point)noexcept {
+	int count = 0;
+	count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
+	map_shot[count] = point;
+}
 
 void Player::print()const {
 	std::for_each(navy.cbegin(), navy.cend(), [](const Ship& p) {

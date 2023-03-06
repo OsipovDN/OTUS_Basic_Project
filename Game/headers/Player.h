@@ -13,35 +13,32 @@ public:
 	explicit Player(const size_t& pol_count);
 	//Размещение корабля на карте
 	bool setShip(const Cords& c, const int& _dir, const int& _deck)noexcept;
-	//Проверка выстрела
-	//std::unique_ptr<Player>&& setShot(std::unique_ptr<Player>&& plr, Cords& cord, const int& pol_count)noexcept;
 	//Проверка попадания
 	bool getShot(Cords& crd);
 	//Проверка пересечения кораблей
 	bool isIntersecShip(const Cords& c, const int& _dir, const int& _deck)const noexcept;
 	//Проверка повторного хода
 	bool isRepeat(Cords& crd, int pol)const noexcept;
+	//Задает метку на карте для каждого игрока
+	void setPoint(Cords& crd, size_t pol, char& point)noexcept;
 	//Возвращает количество кораблей
 	int ShipCount() const noexcept { return ship_count; };
 	//Передача карты игрока для печати
-	std::vector<char>& getMap() { return map_shot; }
+	std::vector<char>& getMap()noexcept { return map_shot; }
 	//Проверка хода
 	bool isMove()const noexcept { return move; }
+	//Возвращает вектор с коодинатами всех кораблей
+	std::vector<Ship> getNavy()const noexcept { return navy; }
+	//Задает статус хода
+	void moveStat(bool m)noexcept { move = m; }
 	//Для проверки работы
 	void print()const;
 
 
+	
+	
 
-
-	std::vector<Ship> getNavy() { return navy; }
-
-	void setPoint(Cords& crd, size_t pol, char point) {
-		int count = 0;
-		count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
-		map_shot[count] = point;
-	}
-
-	void moveStat(bool m) { move = m; }
+	
 };
 
 

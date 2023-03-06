@@ -38,7 +38,6 @@ void Game::play() {
 			std::cout << "Player 1's move:\n";
 			gen_cord = setMove(plr1);
 			menu->clrscr();
-			/*plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);*/
 			pos = setShot(plr1, plr2, gen_cord);
 			plr1->setPoint(gen_cord, pol, pos);
 
@@ -53,7 +52,6 @@ void Game::play() {
 				std::cout << "Player 2's move:\n";
 				gen_cord = setMove(plr1);
 				menu->clrscr();
-				//plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
 				pos = setShot(plr1, plr2, gen_cord);
 				plr2->setPoint(gen_cord, pol, pos);
 			} while (plr2->isMove() && plr1->ShipCount());
@@ -67,8 +65,6 @@ void Game::play() {
 				gen_cord.first = autoSet(pol);
 				gen_cord.second = autoSet(pol);
 				mapPol();
-				//std::cout << "Player 2's move:\n";
-				//plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
 				menu->clrscr();
 				pos = setShot(plr2, plr1, gen_cord);
 				plr2->setPoint(gen_cord, pol, pos);
@@ -80,52 +76,6 @@ void Game::play() {
 		}
 	} while (true);
 };
-
-//void Game::play() {
-//	Cords gen_cord;
-//	do {
-//		do {
-//			mapPol();
-//			std::cout << "Player 1's move:\n";
-//			gen_cord = setMove(plr1);
-//			menu->clrscr();
-//			plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);
-//
-//		} while (plr1->isMove() && plr2->ShipCount());
-//		if (!plr2->ShipCount()) {
-//			std::cout << "PLAYER 1 WON!!!\n";
-//			break;
-//		}
-//		if (multplr) {
-//			do {
-//				mapPol();
-//				std::cout << "Player 2's move:\n";
-//				gen_cord = setMove(plr2);
-//				menu->clrscr();
-//				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
-//
-//			} while (plr2->isMove() && plr1->ShipCount());
-//			if (!plr1->ShipCount()) {
-//				std::cout << "PLAYER 2 WON!!!\n";
-//				break;
-//			}
-//		}
-//		else {
-//			do {
-//				gen_cord.first = autoSet(pol);
-//				gen_cord.second = autoSet(pol);
-//				mapPol();
-//				std::cout << "Player 2's move:\n";
-//				menu->clrscr();
-//				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
-//			} while (plr2->isMove() && plr1->ShipCount());
-//			if (!plr1->ShipCount()) {
-//				std::cout << "PLAYER 2 WON!!!\n";
-//				break;
-//			}
-//		}
-//	} while (true);
-//};
 
 void Game::numberOfPlayers() {
 	int val;
@@ -253,12 +203,27 @@ Game::Cords&& Game::setMove(const std::unique_ptr<Player>& pl)const {
 	}
 };
 
-inline int Game::autoSet(int p)const {
+char Game::setShot(const std::unique_ptr<Player>& pl1, const std::unique_ptr<Player>& pl2, Cords& crd)noexcept {
+	bool flag;
+	flag = pl2->getShot(crd);
+	if (flag) {
+		pl1->moveStat(true);
+		pl2->moveStat(false);
+		return 'X';
+	}
+	else {
+		pl1->moveStat(false);
+		pl2->moveStat(true);
+		return '+';
+	}
+};
+
+inline int Game::autoSet(int& p)const {
 	int val = std::rand() % p + 1;
 	return val;
 };
 
-bool Game::outOfBounds(Cords& crd, int& _dir, int& _deck) {
+bool Game::outOfBounds(Cords& crd, int& _dir, int& _deck)const noexcept {
 	if (crd.first <= 0 || crd.second <= 0 || crd.first > pol || crd.second > pol)
 		return true;
 	if (_dir == 1)
