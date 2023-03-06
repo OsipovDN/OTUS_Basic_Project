@@ -26,51 +26,51 @@ Game::Game() :menu(std::make_unique<Menu>()) {
 	plr2->print();
 };
 
-void Game::play() {
-	Cords gen_cord;
-	do {
-		do {
-			mapPol();
-			std::cout << "Player 1's move:\n";
-			gen_cord = setMove(plr1);
-			menu->clrscr();
-			plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);
-
-		} while (plr1->isMove() && plr2->ShipCount());
-		if (!plr2->ShipCount()) {
-			std::cout << "PLAYER 1 WON!!!\n";
-			break;
-		}
-		if (multplr) {
-			do {
-				mapPol();
-				std::cout << "Player 2's move:\n";
-				gen_cord = setMove(plr2);
-				menu->clrscr();
-				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
-
-			} while (plr2->isMove() && plr1->ShipCount());
-			if (!plr1->ShipCount()) {
-				std::cout << "PLAYER 2 WON!!!\n";
-				break;
-			}
-		}
-		else {
-			do {
-				gen_cord.first = autoSet(pol);
-				gen_cord.second = autoSet(pol);
-				mapPol();
-				std::cout << "Player 2's move:\n";
-				menu->clrscr();
-				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
-			} while (plr2->isMove() && plr1->ShipCount());
-			if (!plr1->ShipCount()) {
-				std::cout << "PLAYER 2 WON!!!\n";
-				break;
-			}
-		}
-	} while (true);
-};
+//void Game::play() {
+//	Cords gen_cord;
+//	do {
+//		do {
+//			mapPol();
+//			std::cout << "Player 1's move:\n";
+//			gen_cord = setMove(plr1);
+//			menu->clrscr();
+//			plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);
+//
+//		} while (plr1->isMove() && plr2->ShipCount());
+//		if (!plr2->ShipCount()) {
+//			std::cout << "PLAYER 1 WON!!!\n";
+//			break;
+//		}
+//		if (multplr) {
+//			do {
+//				mapPol();
+//				std::cout << "Player 2's move:\n";
+//				gen_cord = setMove(plr2);
+//				menu->clrscr();
+//				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
+//
+//			} while (plr2->isMove() && plr1->ShipCount());
+//			if (!plr1->ShipCount()) {
+//				std::cout << "PLAYER 2 WON!!!\n";
+//				break;
+//			}
+//		}
+//		else {
+//			do {
+//				gen_cord.first = autoSet(pol);
+//				gen_cord.second = autoSet(pol);
+//				mapPol();
+//				std::cout << "Player 2's move:\n";
+//				menu->clrscr();
+//				plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
+//			} while (plr2->isMove() && plr1->ShipCount());
+//			if (!plr1->ShipCount()) {
+//				std::cout << "PLAYER 2 WON!!!\n";
+//				break;
+//			}
+//		}
+//	} while (true);
+//};
 
 void Game::numberOfPlayers() {
 	int val;
