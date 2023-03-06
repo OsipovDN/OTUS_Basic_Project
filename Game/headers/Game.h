@@ -42,21 +42,19 @@ public:
 
 
 
-	void Game::play() {
+	void play() {
 		Cords gen_cord;
 		char pos;
-		int pl;
 		do {
 			do {
+				menu->clrscr();
 				mapPol();
 				std::cout << "Player 1's move:\n";
-				pl = 1;
 				gen_cord = setMove(plr1);
-				menu->clrscr();
 				/*plr2 = plr1->setShot(std::move(plr2), gen_cord, pol);*/
-				pos = setShot(pl, gen_cord);
+				pos = setShot(plr1, plr2, gen_cord);
 				plr1->setPoint(gen_cord, pol, pos);
-
+				
 			} while (plr1->isMove() && plr2->ShipCount());
 			if (!plr2->ShipCount()) {
 				std::cout << "PLAYER 1 WON!!!\n";
@@ -64,15 +62,13 @@ public:
 			}
 			if (multplr) {
 				do {
+					menu->clrscr();
 					mapPol();
 					std::cout << "Player 2's move:\n";
-					pl = 2;
-					gen_cord = setMove(plr2);
-					menu->clrscr();
+					gen_cord = setMove(plr1);
 					//plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
-					pos = setShot(pl, gen_cord);
+					pos = setShot(plr1, plr2, gen_cord);
 					plr2->setPoint(gen_cord, pol, pos);
-
 				} while (plr2->isMove() && plr1->ShipCount());
 				if (!plr1->ShipCount()) {
 					std::cout << "PLAYER 2 WON!!!\n";
@@ -83,13 +79,12 @@ public:
 				do {
 					gen_cord.first = autoSet(pol);
 					gen_cord.second = autoSet(pol);
-					mapPol();
-					std::cout << "Player 2's move:\n";
-					pl = 2;
 					menu->clrscr();
+					mapPol();
+					//std::cout << "Player 2's move:\n";
 					//plr1 = plr2->setShot(std::move(plr1), gen_cord, pol);
-					pos = setShot(pl, gen_cord);
-					plr1->setPoint(gen_cord, pol, pos);
+					pos = setShot(plr2, plr1, gen_cord);
+					plr2->setPoint(gen_cord, pol, pos);
 				} while (plr2->isMove() && plr1->ShipCount());
 				if (!plr1->ShipCount()) {
 					std::cout << "PLAYER 2 WON!!!\n";
@@ -99,35 +94,20 @@ public:
 		} while (true);
 	};
 
-	char setShot(int& pl, Cords& crd)noexcept {
+	char setShot(const std::unique_ptr<Player>& pl1, const std::unique_ptr<Player>& pl2, Cords& crd)noexcept {
 		bool flag;
-		if (pl == 1) {
-			flag = plr2->getShot(crd);
-			if (flag) {
-				plr1->moveStat(true);
-				plr2->moveStat(false);
-				return 'X';
-			}
-			else {
-				plr1->moveStat(false);
-				plr2->moveStat(true);
-				return '+';
-			}
+		flag = pl2->getShot(crd);
+		if (flag) {
+			pl1->moveStat(true);
+			pl2->moveStat(false);
+			return 'X';
 		}
 		else {
-			flag = plr1->getShot(crd);
-			if (flag) {
-				plr2->moveStat(true);
-				plr1->moveStat(false);
-				return 'X';
-			}
-			else {
-				plr2->moveStat(false);
-				plr1->moveStat(true);
-				return '+';
-			}
+			pl1->moveStat(false);
+			pl2->moveStat(true);
+			return '+';
 		}
-	};
+	}
 
 };
 
