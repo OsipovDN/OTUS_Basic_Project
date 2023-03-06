@@ -272,10 +272,9 @@ void Game::mapPol() {
 	int s = 1;
 	auto temp_map_pl1 = plr1->getMap();
 	auto temp_map_pl2 = plr2->getMap();
-	std::cout << std::setw(pol / 2) << "\tPlayer 1";
-	std::cout << std::setw(pol) << "\tPlayer 2" << std::endl;
+	std::cout << "\tPlayer 1" << "\t\t\tPlayer 2" << std::endl;
 	for (int i = 0; i < 2; ++i) {
-		std::cout << std::setw(3);
+		std::cout << "   ";
 		for (int j = 1; j <= pol; ++j) {
 			std::cout << j << " ";
 		}
@@ -286,15 +285,15 @@ void Game::mapPol() {
 	auto it_start2 = temp_map_pl2.cbegin();
 	do {
 		if (s >= 10)
-			std::cout << s << "";
+			std::cout << s << " ";
 		else
-			std::cout << s << std::setw(2);
+			std::cout << s << "  ";
 		it_start2 = colorOutput(it_start2);
-		std::cout << std::setw(4); //"\t\t";
+		std::cout << "\t\t";
 		if (s >= 10)
 			std::cout << s << " ";
 		else
-			std::cout << s << std::setw(2);
+			std::cout << s << "  ";
 		it_start1 = colorOutput(it_start1);
 		std::cout << "\n";
 		s++;
