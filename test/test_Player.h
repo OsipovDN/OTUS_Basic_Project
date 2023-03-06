@@ -6,34 +6,49 @@
 
 
 struct PlayerFixture : public testing::Test {
-    int s_count_test = 10;
-    size_t size_pol=10;
-    size_t size_pol_expect = 100;
-    std::vector <char> map_shot;
+	std::pair <int, int> cords{ 5,4 };
+	std::vector<std::pair<int, int>> expect_cords{ {5,4},{5,3},{5,2} };
+	size_t size_pol = 10;
+	const int dir = 1;
+	const int dec = 3;
 
-    std::unique_ptr<Player> obj;
+	static void SetUpTestSuite() {}
 
-    static void SetUpTestSuite() {}
-
-    static void TearDownTestSuite() {}
-    void SetUp() override {
-        obj = std::make_unique<Player>(size_pol);
-    }
-    void TearDown() override {}
+	static void TearDownTestSuite() {}
+	void SetUp() override {
+		Player obj(size_pol);
+	}
+	void TearDown() override {}
 
 };
 
 TEST(Player, initializationPlayerObject) {
-    size_t size_pol = 10;
-    size_t size_pol_expect = 100;
-    std::vector<char> map;
+	size_t size_pol = 10;
+	size_t size_pol_expect = 100;
+	std::vector<char> map;
 
-    Player obj (size_pol);
-    map = obj.getMap();
+	Player obj(size_pol);
+	map = obj.getMap();
 
-    ASSERT_EQ(size_pol_expect, map.size());
-    for (const auto& it : map) {
-        ASSERT_EQ(it, static_cast <char>(149));
-    }
+	ASSERT_EQ(size_pol_expect, map.size());
+	for (const auto& it : map) {
+		ASSERT_EQ(it, static_cast <char>(149));
+	}
 
+}
+
+TESTF(PlayerFixture, testSetShipMeth) {
+	bool intersec_flag;
+	bool shot_flag;
+	std::pair<int, int> c;
+
+	intersec_flag = obj.setShip(cords, dir, dec);
+
+	EXPECT_FALSE(intersec_flag);
+	for (int i = 0; i < 2; ++i) {
+		shot_flag = false;
+		c = { cords.first ,(cords.second - i) };
+		shot_flag = obj.getShot(c);
+		EXPECT_TRUE(shot_flag);
+	}
 }
