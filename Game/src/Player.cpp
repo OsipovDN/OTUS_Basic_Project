@@ -21,19 +21,19 @@ bool Player::setShip(const Cords& crd, const int& _dir, const int& _deck)noexcep
 	return true;
 };
 
-std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr, Cords& crd, const int& pol)noexcept {
-	int count = 0;
-	count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
-	if (plr->getShot(crd)) {
-		map_shot[count] = 'X';
-		move = true;
-	}
-	else {
-		map_shot[count] = '+';
-		move = false;
-	}
-	return std::move(plr);
-};
+//std::unique_ptr<Player>&& Player::setShot(std::unique_ptr<Player>&& plr, Cords& crd, const int& pol)noexcept {
+//	int count = 0;
+//	count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
+//	if (plr->getShot(crd)) {
+//		map_shot[count] = 'X';
+//		move = true;
+//	}
+//	else {
+//		map_shot[count] = '+';
+//		move = false;
+//	}
+//	return std::move(plr);
+//};
 
 bool Player::getShot(Cords& crd) {
 	bool flag = false;
