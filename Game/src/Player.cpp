@@ -15,7 +15,7 @@ Player::Player(const size_t& pol_count) {
 
 bool Player::setShip(const Cords& crd, const int& _dir, const int& _deck)noexcept {
 	bool flag = isIntersecShip(crd, _dir, _deck);
-	if (!flag)
+	if (flag)
 		return false;
 	navy.emplace_back(Ship(crd, _dir, _deck));
 	return true;
@@ -48,16 +48,37 @@ bool Player::getShot(Cords& crd) {
 
 };
 
-bool Player::isIntersecShip(const Cords& crd, const int& _dir, const int& _deck)const noexcept {
-	bool flag = true;
-	Ship temp{ crd,_dir,_deck };
-	auto temp_vec = temp.getCord();
+//bool Player::isIntersecShip(const Cords& crd, const int& _dir, const int& _deck) noexcept {
+//	bool flag = false;
+//	Ship temp{ crd,_dir,_deck };
+//	auto temp_vec = temp.getCord();
+//	std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s) {
+//		auto compar = s.getCord();
+//		for (const auto it : temp_vec) {
+//			for (const auto it_compar : compar) {
+//				if (it.first == it_compar.first && it.second == it_compar.second)
+//					flag = true;
+//			}
+//		}
+//		});
+//	return flag;
+//};
+
+bool Player::isIntersecShip(const Cords& crd, const int& _dir, const int& _deck) noexcept {
+	bool flag = false;
+	std::vector<Ship> obj_ship;
+	obj_ship = shipPerim(crd, _dir, _deck);
+	//Ship temp{ crd,_dir,_deck };
+	//auto temp_vec = temp.getCord();
 	std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s) {
 		auto compar = s.getCord();
-		for (const auto it : temp_vec) {
-			for (const auto it_compar : compar) {
-				if (it.first == it_compar.first && it.second == it_compar.second)
-					flag = false;
+		for (const auto it : compar) {
+			for (const auto it_obj_ship : obj_ship) {
+				auto compar_obj_ship = it_obj_ship.getCord();
+				for (const auto it_cords : compar_obj_ship) {
+					if (it_cords.first == it.first && it_cords.second == it.second)
+						flag = true;
+				}
 			}
 		}
 		});
@@ -88,6 +109,8 @@ void Player::print()const {
 		});
 	std::cout << std::endl;
 };
+
+
 
 
 

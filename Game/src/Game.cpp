@@ -24,9 +24,6 @@ Game::Game() :menu(std::make_unique<Menu>()) {
 
 	plr1->print();
 	plr2->print();
-	int val1 = plr1->ShipCount();
-	int val2 = plr2->ShipCount();
-	std::cout << val1 << " " << val2 << std::endl;
 };
 
 void Game::play() {
@@ -138,7 +135,7 @@ void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 							<< std::endl;
 						continue;
 					}
-					if (pl->setShip(crd, d, i)) {
+					if (!pl->setShip(crd, d, i)) {
 						std::cout << "There is an intersection with another ship! Try again."
 							<< std::endl;
 						continue;
@@ -218,7 +215,7 @@ char Game::setShot(const std::unique_ptr<Player>& pl1, const std::unique_ptr<Pla
 	}
 };
 
-inline int Game::autoSet(int& p)const {
+inline int Game::autoSet(int p)const {
 	int val = std::rand() % p + 1;
 	return val;
 };
@@ -227,13 +224,13 @@ bool Game::outOfBounds(Cords& crd, int& _dir, int& _deck)const noexcept {
 	if (crd.first <= 0 || crd.second <= 0 || crd.first > pol || crd.second > pol)
 		return true;
 	if (_dir == 1)
-		return ((crd.second - _deck) <= 0);
+		return ((crd.second - _deck) < 0);
 	else if (_dir == 2)
 		return ((crd.first + _deck) > pol);
 	else if (_dir == 3)
 		return ((crd.second + _deck) > pol);
 	else
-		return ((crd.first - _deck) <= 0);
+		return ((crd.first - _deck) < 0);
 };
 
 void Game::mapPol() {

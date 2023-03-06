@@ -34,7 +34,7 @@ public:
 	//Сделать выстрел
 	char setShot(const std::unique_ptr<Player>& pl1, const std::unique_ptr<Player>& pl2, Cords& crd)noexcept;
 	//Автоматический расчет координат
-	inline int autoSet(int& p)const;
+	inline int autoSet(int p)const;
 	//Проверка выхода за границу поля
 	bool outOfBounds(Cords& crd, int& _dir, int& _deck)const noexcept;
 	//Вывод ироков на экран
