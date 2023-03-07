@@ -68,6 +68,7 @@ bool Player::isIntersecShip(const Cords& crd, const int& _dir, const int& _deck)
 	bool flag = false;
 	std::vector<Ship> obj_ship;
 	obj_ship = shipPerim(crd, _dir, _deck);
+	printTemp(obj_ship);
 	//Ship temp{ crd,_dir,_deck };
 	//auto temp_vec = temp.getCord();
 	std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s) {

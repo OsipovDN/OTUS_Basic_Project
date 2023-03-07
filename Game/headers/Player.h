@@ -35,7 +35,7 @@ public:
 	//Для проверки работы
 	void print()const;
 
-	std::vector<Ship>&& shipPerim(Cords crd, const int& _dir, const int& _deck) {
+	std::vector<Ship> shipPerim(Cords crd, const int& _dir, const int& _deck) {
 		std::vector<Ship> temp;
 		Cords temp_cords;
 		Cords cords;
@@ -76,7 +76,6 @@ public:
 				temp_cords = cords;
 			}
 		}
-		printTemp(temp);
 		return std::move(temp);
 	}
 

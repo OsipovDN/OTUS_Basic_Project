@@ -142,6 +142,7 @@ void Game::setNavy(std::unique_ptr<Player>& pl, bool st) {
 					}
 					else
 						break;
+
 				}
 			}
 		}
