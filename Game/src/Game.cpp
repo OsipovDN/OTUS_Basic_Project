@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <memory>
 #include <ctime>
 #include <iomanip>
 
@@ -22,8 +21,8 @@ Game::Game() :menu(std::make_unique<Menu>()) {
 	//¬вод способа расстановки
 	placementMode();
 
-	plr1->print();
-	plr2->print();
+	/*plr1->print();
+	plr2->print();*/
 };
 
 void Game::play() {

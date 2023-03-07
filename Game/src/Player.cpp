@@ -1,8 +1,8 @@
 #include "Player.h"
-#include "Ship.h"
 #include <iostream>
 #include <algorithm>
 #include <execution>
+#include <memory>
 
 Player::Player(const size_t& pol_count) {
 	size_t pol_size = pol_count * pol_count;
@@ -48,29 +48,10 @@ bool Player::getShot(Cords& crd) {
 
 };
 
-//bool Player::isIntersecShip(const Cords& crd, const int& _dir, const int& _deck) noexcept {
-//	bool flag = false;
-//	Ship temp{ crd,_dir,_deck };
-//	auto temp_vec = temp.getCord();
-//	std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s) {
-//		auto compar = s.getCord();
-//		for (const auto it : temp_vec) {
-//			for (const auto it_compar : compar) {
-//				if (it.first == it_compar.first && it.second == it_compar.second)
-//					flag = true;
-//			}
-//		}
-//		});
-//	return flag;
-//};
-
 bool Player::isIntersecShip(const Cords& crd, const int& _dir, const int& _deck) noexcept {
 	bool flag = false;
 	std::vector<Ship> obj_ship;
 	obj_ship = shipPerim(crd, _dir, _deck);
-	printTemp(obj_ship);
-	//Ship temp{ crd,_dir,_deck };
-	//auto temp_vec = temp.getCord();
 	std::for_each(std::execution::par, navy.cbegin(), navy.cend(), [&](Ship s) {
 		auto compar = s.getCord();
 		for (const auto it : compar) {
@@ -85,6 +66,50 @@ bool Player::isIntersecShip(const Cords& crd, const int& _dir, const int& _deck)
 		});
 	return flag;
 };
+
+std::vector<Ship>  Player::shipPerim(Cords crd, const int& _dir, const int& _deck) {
+	std::vector<Ship> temp;
+	Cords temp_cords;
+	Cords cords;
+	int new_deck = _deck + 2;
+	temp.reserve(_deck);
+	if (_dir == 1) {
+		temp_cords = std::make_pair((crd.first - 1), crd.second + 1);
+		for (int i = 1; i <= 3; ++i) {
+			temp.emplace_back(Ship(temp_cords, _dir, new_deck));
+			cords = std::make_pair((temp_cords.first + 1), temp_cords.second);
+			temp_cords = cords;
+		}
+	}
+
+	else if (_dir == 2) {
+		temp_cords = std::make_pair((crd.first - 1), crd.second - 1);
+		for (int i = 1; i <= 3; ++i) {
+			temp.emplace_back(Ship(temp_cords, _dir, new_deck));
+			cords = std::make_pair(temp_cords.first, (temp_cords.second + 1));
+			temp_cords = cords;
+		}
+	}
+
+	else if (_dir == 3) {
+		temp_cords = std::make_pair((crd.first - 1), crd.second - 1);
+		for (int i = 1; i <= 3; ++i) {
+			temp.emplace_back(Ship(temp_cords, _dir, new_deck));
+			cords = std::make_pair((temp_cords.first + 1), temp_cords.second);
+			temp_cords = cords;
+		}
+	}
+
+	else if (_dir == 4) {
+		temp_cords = std::make_pair((crd.first + 1), crd.second - 1);
+		for (int i = 1; i <= 3; ++i) {
+			temp.emplace_back(Ship(temp_cords, _dir, new_deck));
+			cords = std::make_pair((temp_cords.first), (temp_cords.second + 1));
+			temp_cords = cords;
+		}
+	}
+	return std::move(temp);
+}
 
 bool Player::isRepeat(Cords& crd, int pol)const noexcept {
 	int pos = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;

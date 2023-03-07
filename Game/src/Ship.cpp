@@ -1,5 +1,4 @@
 #include "Ship.h"
-#include <iostream>
 #include <algorithm>
 #include <execution>
 
@@ -25,10 +24,8 @@ Ship::Ship(const Cords& crd, const int& _dir, const int& _deck) :hp(_deck) {
 				cord.emplace_back(std::make_pair(i, crd.second));
 		}
 	}
-	else {
-		std::cerr << "Incorrect direction value" << std::endl;
+	else
 		EXIT_SUCCESS;
-	}
 
 };
 

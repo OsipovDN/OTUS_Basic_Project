@@ -1,8 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Menu.h"
-#include <iostream>
-//#include <Windows.h>
+#include <memory>
 
 class Game {
 private:
@@ -12,9 +11,7 @@ private:
 	std::unique_ptr<Player> plr2;
 	std::unique_ptr<Menu> menu;
 	int pol = 10;				//–азмер игрового пол€
-	//bool gm_over = false;	//ѕроверка конца игры
 	bool multplr = false;		//true-два игрока, false- один игрок
-
 
 public:
 	// онструктор (задает способ расстановки и размер пол€)
