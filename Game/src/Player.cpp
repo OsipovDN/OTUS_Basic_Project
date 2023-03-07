@@ -108,7 +108,7 @@ std::vector<Ship>  Player::shipPerim(Cords crd, const int& _dir, const int& _dec
 			temp_cords = cords;
 		}
 	}
-	return std::move(temp);
+	return temp;
 }
 
 bool Player::isRepeat(Cords& crd, int pol)const noexcept {

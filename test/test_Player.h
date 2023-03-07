@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <algorithm>
 
 
 struct PlayerFixture : public testing::Test {
@@ -18,7 +19,8 @@ struct PlayerFixture : public testing::Test {
 
 	static void TearDownTestSuite() {}
 	void SetUp() override {
-		obj=std::make_shared<Player>(size_pol);
+		obj = std::make_shared<Player>(size_pol);
+		obj->setShip(cords, dir, dec);
 	}
 	void TearDown() override {}
 
@@ -44,9 +46,6 @@ TEST_F(PlayerFixture, testSetShipMeth) {
 	bool shot_flag;
 	std::pair<int, int> c;
 
-	//Проверка результата метода при введении первого корабля
-	intersec_flag = obj->setShip(cords, dir, dec);
-	EXPECT_TRUE(intersec_flag);
 	//Проверка результата метода при введении второго корабля с такими же координатами
 	intersec_flag = obj->setShip(cords, dir, dec);
 	EXPECT_FALSE(intersec_flag);
@@ -64,8 +63,6 @@ TEST_F(PlayerFixture, testGetShotMethod) {
 	bool shot_flag;
 	std::pair <int, int > test_cords;
 
-	obj->setShip(cords, dir, dec);
-
 	shot_flag = obj->getShot(cords);
 	ASSERT_TRUE(shot_flag);
 	for (int i = 4; i <= 6; ++i) {
@@ -81,4 +78,48 @@ TEST_F(PlayerFixture, testGetShotMethod) {
 
 }
 
+TEST_F(PlayerFixture, testIsIntersecShip) {
+	bool flag_res;
+	std::pair<int, int> test_cords_perim{ 5,5 };
+	std::pair<int, int> test_cords{ 5,6 };
+	int dir_test;
 
+	flag_res = obj->isIntersecShip(cords, dir, dec);
+	ASSERT_TRUE(flag_res);
+	dir_test = 2;
+	flag_res = obj->isIntersecShip(test_cords_perim, dir_test, dec);
+	ASSERT_TRUE(flag_res);
+	dir_test = 4;
+	flag_res = obj->isIntersecShip(test_cords, dir_test, dec);
+	ASSERT_FALSE(flag_res);
+}
+
+
+TEST_F(PlayerFixture, testShipPerim) {
+	std::pair<int, int> test_cord = { 4,5 };
+	std::vector<Ship> res_vec_ship;
+	std::vector<Ship> vec_ship_expect;
+	int exp_num_cord = 15;
+	int res_num_cord=0;
+
+	int dec_test = dec + 2;
+	for (int i = 0; i <= 2; ++i) {
+		vec_ship_expect.emplace_back(Ship(test_cord, dir, dec_test));
+		test_cord.first += 1;
+	}
+
+	res_vec_ship = obj->shipPerim(cords, dir, dec);
+
+
+	std::for_each(vec_ship_expect.cbegin(), vec_ship_expect.cend(), [&](Ship exp) {
+		auto exp_ship = exp.getCord();
+		for (const auto it_exp_cord : exp_ship) {
+			std::for_each(res_vec_ship.cbegin(), res_vec_ship.cend(), [&](Ship res) {
+				auto res_ship = res.getCord();
+				for (const auto it_res_cord : res_ship) {
+					if (it_exp_cord.first == it_res_cord.first && it_exp_cord.second == it_res_cord.second)
+						res_num_cord++;
+				}});
+		}});
+	ASSERT_EQ(res_num_cord, exp_num_cord);
+}
