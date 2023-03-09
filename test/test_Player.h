@@ -31,6 +31,7 @@ TEST(Player, initializationPlayerObject) {
 	size_t size_pol = 10;
 	size_t size_pol_expect = 100;
 	std::vector<char> map;
+	int expect_ship_count = 0,res_ship_count;
 
 	Player obj(size_pol);
 	map = obj.getMap();
@@ -41,6 +42,9 @@ TEST(Player, initializationPlayerObject) {
 	for (const auto& it : map) {
 		ASSERT_EQ(it, static_cast <char>(149));
 	}
+	std::cout << "Checking ship count" << std::endl;
+	res_ship_count = obj.shipCount();
+	ASSERT_EQ(res_ship_count, expect_ship_count);
 
 }
 
@@ -218,7 +222,8 @@ TEST_F(PlayerFixture, testSetPointMeth) {
 	ASSERT_EQ(res_map[pos_in_map], hit);
 
 	std::cout << "Checking the number of relevant fields (hit)" << std::endl;
-	count = count_if(res_map.cbegin(), res_map.cend(), [&](char sym) {return (sym == hit) ? true : false; });
+	count = count_if(res_map.cbegin(), res_map.cend(), [&](char sym){
+		return (sym == hit) ? true : false; });
 	ASSERT_EQ(expect_count_pos, count);
 
 	std::cout << "Checking the pos value (mis)" << std::endl;
@@ -227,7 +232,8 @@ TEST_F(PlayerFixture, testSetPointMeth) {
 	ASSERT_EQ(res_map[pos_in_map], mis);
 
 	std::cout << "Checking the number of relevant fields (mis)" << std::endl;
-	count = count_if(res_map.cbegin(), res_map.cend(), [&](char sym) {return (sym == mis) ? true : false; });
+	count = count_if(res_map.cbegin(), res_map.cend(), [&](char sym) {
+		return (sym == mis) ? true : false; });
 	ASSERT_EQ(expect_count_pos, count);
 
 }
@@ -243,3 +249,40 @@ TEST_F(PlayerFixture, testShipCountMeth) {
 
 }
 
+TEST_F(PlayerFixture, testGetMapMeth) {
+	size_t size_pol_expect = 100;
+	std::vector<char> map;
+
+	map = obj->getMap();
+
+	std::cout << "Checking the size of map" << std::endl;
+	ASSERT_EQ(size_pol_expect, map.size());
+	std::cout << "Checking map filling" << std::endl;
+	for (const auto& it : map) {
+		ASSERT_EQ(it, static_cast <char>(149));
+	}
+
+}
+
+TEST_F(PlayerFixture, testIsMoveMeth) {
+	std::cout << "Checking the player's progress" << std::endl;
+	bool res_flag = obj->isMove();
+	ASSERT_FALSE(res_flag);
+}
+
+TEST_F(PlayerFixture, testGetNavyMeth) {
+
+}
+
+TEST_F(PlayerFixture, testMoveStatMeth) {
+	std::cout << "Checking the change of the player's turn status" << std::endl;
+	bool flag_stat = true;
+	bool res_flag;
+
+	res_flag = obj->isMove();
+	ASSERT_FALSE(res_flag);
+
+	obj->moveStat(flag_stat);
+	res_flag = obj->isMove();
+	ASSERT_TRUE(res_flag);
+}
