@@ -15,7 +15,8 @@ add_executable (test_Game
     test/testGame.cpp
     Game/src/Ship.cpp
     Game/src/Player.cpp
-)
+    Game/src/Game.cpp
+    )
 
 target_include_directories(
     sea_battle 
