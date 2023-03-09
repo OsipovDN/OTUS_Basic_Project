@@ -23,18 +23,10 @@ public:
 	bool isRepeat(Cords& crd, size_t pol)const noexcept;
 	//Задает метку на карте для каждого игрока
 	void setPoint(Cords& crd, size_t pol, char& point)noexcept;
-	//задает размер игрового поля
-	void setSizeForPl(size_t num) {
-		size_t pol_size = num * num;
-		map_shot.reserve(pol_size);
-		for (size_t i = 0; i < pol_size; ++i) {
-			map_shot.emplace_back(static_cast <char>(149));
-		}
-	};
+	//Задает размер игрового поля
+	void setSizeForPl(size_t num);
 	//Задает размер флота
-	void setNavyPl(int count) {
-		navy.reserve(count);
-	}
+	void setNavyPl(int count) {navy.reserve(count);}
 	//Возвращает количество кораблей
 	int shipCount() const noexcept { return ship_count; };
 	//Передача карты игрока для печати
