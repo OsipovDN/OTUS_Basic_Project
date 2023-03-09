@@ -4,7 +4,7 @@
 #include <execution>
 #include <memory>
 
-Player::Player(const size_t& pol_count) {
+Player::Player(const size_t& pol_count):ship_count(0) {
 	size_t pol_size = pol_count * pol_count;
 	map_shot.reserve(pol_size);
 	navy.reserve(ship_count);
@@ -17,8 +17,11 @@ bool Player::setShip(const Cords& crd, const int& _dir, const int& _deck)noexcep
 	bool flag = isIntersecShip(crd, _dir, _deck);
 	if (flag)
 		return false;
-	navy.emplace_back(Ship(crd, _dir, _deck));
-	return true;
+	else {
+		navy.emplace_back(Ship(crd, _dir, _deck));
+		ship_count++;
+		return true;
+	}
 };
 
 bool Player::getShot(Cords& crd) {
@@ -111,7 +114,7 @@ std::vector<Ship>  Player::shipPerim(Cords crd, const int& _dir, const int& _dec
 	return temp;
 }
 
-bool Player::isRepeat(Cords& crd, int pol)const noexcept {
+bool Player::isRepeat(Cords& crd, size_t pol)const noexcept {
 	int pos = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
 	if (map_shot[pos] == 'X' || map_shot[pos] == '+')
 		return true;

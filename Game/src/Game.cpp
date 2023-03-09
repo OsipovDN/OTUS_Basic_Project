@@ -37,8 +37,8 @@ void Game::play() {
 			pos = setShot(plr1, plr2, gen_cord);
 			plr1->setPoint(gen_cord, pol, pos);
 
-		} while (plr1->isMove() && plr2->ShipCount());
-		if (!plr2->ShipCount()) {
+		} while (plr1->isMove() && plr2->shipCount());
+		if (!plr2->shipCount()) {
 			std::cout << "PLAYER 1 WON!!!\n";
 			break;
 		}
@@ -50,8 +50,8 @@ void Game::play() {
 				menu->clrscr();
 				pos = setShot(plr1, plr2, gen_cord);
 				plr2->setPoint(gen_cord, pol, pos);
-			} while (plr2->isMove() && plr1->ShipCount());
-			if (!plr1->ShipCount()) {
+			} while (plr2->isMove() && plr1->shipCount());
+			if (!plr1->shipCount()) {
 				std::cout << "PLAYER 2 WON!!!\n";
 				break;
 			}
@@ -64,8 +64,8 @@ void Game::play() {
 				menu->clrscr();
 				pos = setShot(plr2, plr1, gen_cord);
 				plr2->setPoint(gen_cord, pol, pos);
-			} while (plr2->isMove() && plr1->ShipCount());
-			if (!plr1->ShipCount()) {
+			} while (plr2->isMove() && plr1->shipCount());
+			if (!plr1->shipCount()) {
 				std::cout << "PLAYER 2 WON!!!\n";
 				break;
 			}

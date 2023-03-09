@@ -6,7 +6,7 @@ private:
 	using Cords = std::pair<int, int>;
 	std::vector <char> map_shot;//Карта сделанных выстрелов (Карта соперника?)
 	std::vector<Ship> navy;
-	int ship_count = 10;		//Количество оставшихся кораблей
+	int ship_count;		//Количество оставшихся кораблей
 	bool move = false;
 public:
 	explicit Player(const size_t& pol_count);
@@ -19,11 +19,11 @@ public:
 	//Проверка пересечения по периметру корабля
 	std::vector<Ship> shipPerim(Cords crd, const int& _dir, const int& _deck);
 	//Проверка повторного хода
-	bool isRepeat(Cords& crd, int pol)const noexcept;
+	bool isRepeat(Cords& crd, size_t pol)const noexcept;
 	//Задает метку на карте для каждого игрока
 	void setPoint(Cords& crd, size_t pol, char& point)noexcept;
 	//Возвращает количество кораблей
-	int ShipCount() const noexcept { return ship_count; };
+	int shipCount() const noexcept { return ship_count; };
 	//Передача карты игрока для печати
 	std::vector<char>& getMap()noexcept { return map_shot; }
 	//Проверка хода
