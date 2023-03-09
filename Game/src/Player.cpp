@@ -6,7 +6,7 @@
 
 
 Player::Player(const size_t& pol_count):Player() {
-	setSizeForPl(pol_count);
+	setSizePol(pol_count);
 	setNavyPl(ship_count);
 };
 
@@ -109,7 +109,7 @@ std::vector<Ship>  Player::shipPerim(Cords crd, const int& _dir, const int& _dec
 		}
 	}
 	return temp;
-}
+};
 
 bool Player::isRepeat(Cords& crd, size_t pol)const noexcept {
 	int pos = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
@@ -123,7 +123,15 @@ void Player::setPoint(Cords& crd, size_t pol, char& point)noexcept {
 	int count = 0;
 	count = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
 	map_shot[count] = point;
-}
+};
+
+void Player::setSizeForPl(size_t num) {
+	size_t pol_size = num * num;
+	map_shot.reserve(pol_size);
+	for (size_t i = 0; i < pol_size; ++i) {
+		map_shot.emplace_back(static_cast <char>(149));
+	}
+};
 
 void Player::print()const {
 	std::for_each(navy.cbegin(), navy.cend(), [](const Ship& p) {
