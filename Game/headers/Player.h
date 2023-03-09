@@ -19,7 +19,7 @@ public:
 	//Проверка пересечения по периметру корабля
 	std::vector<Ship> shipPerim(Cords crd, const int& _dir, const int& _deck);
 	//Проверка повторного хода
-	bool isRepeat(Cords& crd, int pol)const noexcept;
+	bool isRepeat(Cords& crd, size_t pol)const noexcept;
 	//Задает метку на карте для каждого игрока
 	void setPoint(Cords& crd, size_t pol, char& point)noexcept;
 	//Возвращает количество кораблей

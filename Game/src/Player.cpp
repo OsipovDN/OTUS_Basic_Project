@@ -111,7 +111,7 @@ std::vector<Ship>  Player::shipPerim(Cords crd, const int& _dir, const int& _dec
 	return temp;
 }
 
-bool Player::isRepeat(Cords& crd, int pol)const noexcept {
+bool Player::isRepeat(Cords& crd, size_t pol)const noexcept {
 	int pos = ((crd.second - 1) * static_cast<int>(pol) + crd.first) - 1;
 	if (map_shot[pos] == 'X' || map_shot[pos] == '+')
 		return true;
