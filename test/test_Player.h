@@ -27,6 +27,20 @@ struct PlayerFixture : public testing::Test {
 };
 
 TEST(Player, initializationPlayerObject) {
+	Player pl{};
+	int expect_ship_count = 0;
+	int res_ship_count;
+	bool res_move ;
+
+	std::cout << "Checking the number of ships during initialization" << std::endl;
+	res_ship_count = pl.shipCount();
+	ASSERT_EQ(res_ship_count, expect_ship_count);
+	std::cout << "Checking progress during initialization" << std::endl;
+	res_move = pl.isMove();
+	ASSERT_FALSE(res_move);
+}
+
+TEST(Player, initializationPlayer) {
 	std::cout << "Checking object initialization" << std::endl;
 	size_t size_pol = 10;
 	size_t size_pol_expect = 100;
