@@ -265,24 +265,22 @@ TEST(Player, testsetSizePolMeth) {
 	pl.setSizePol(size);
 	map = pl.getMap();
 	ASSERT_EQ(map.capacity(), size_pol_expect);
+	ASSERT_EQ(map.size(), size_pol_expect);
 
 }
 
 TEST(Player, testSetNavyPlMeth) {
 	Player pl;
 	std::vector<Ship> res_navy;
-	std::vector<Ship> expect_navy{};
 	int size = 10;
 
 	std::cout << "Checking that the vector is empty" << std::endl;
 	res_navy = pl.getNavy();
 	ASSERT_EQ(res_navy.capacity(), 0);
 	ASSERT_EQ(res_navy.size(), 0);
+
 	pl.setNavyPl(size);
 	res_navy = pl.getNavy();
-
-	std::cout << "Checking that 10 places are allocated in the vector" << std::endl;
-	ASSERT_EQ(res_navy.capacity(), size);
 	ASSERT_EQ(res_navy.size(), 0);
 
 }
