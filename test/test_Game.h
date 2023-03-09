@@ -7,7 +7,7 @@
 #include <algorithm>
 
 
-struct PlayerFixture : public testing::Test {
+struct GameFixture : public testing::Test {
 	std::unique_ptr <Player> plr1;
 	std::unique_ptr <Player> plr2;
 

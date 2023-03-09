@@ -125,7 +125,7 @@ void Player::setPoint(Cords& crd, size_t pol, char& point)noexcept {
 	map_shot[count] = point;
 };
 
-void Player::setSizeForPl(size_t num) {
+void Player::setSizePol(size_t num) {
 	size_t pol_size = num * num;
 	map_shot.reserve(pol_size);
 	for (size_t i = 0; i < pol_size; ++i) {

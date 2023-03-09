@@ -100,7 +100,6 @@ TEST_F(PlayerFixture, testGetShotMeth) {
 				ASSERT_FALSE(shot_flag);
 		}
 	}
-
 }
 
 TEST_F(PlayerFixture, testIsIntersecShipMeth) {
@@ -252,6 +251,24 @@ TEST_F(PlayerFixture, testSetPointMeth) {
 
 }
 
+TEST(Player, testsetSizePolMeth) {
+	Player pl;
+	int size=10;
+	size_t size_pol_expect = 100;
+	std::vector<char> map;
+
+	map = pl.getMap();
+	ASSERT_EQ(map.capacity(),0);
+
+	pl.setSizePol(size);
+	map = pl.getMap();
+	ASSERT_EQ(map.capacity(), size_pol_expect);
+
+	
+
+
+}
+
 TEST_F(PlayerFixture, testShipCountMeth) {
 	int expect_ship_count = 1;
 	int res_ship_count;
@@ -313,7 +330,6 @@ TEST_F(PlayerFixture, testGetNavyMeth) {
 		});
 	
 	ASSERT_TRUE(is_eq);
-
 }
 
 TEST_F(PlayerFixture, testMoveStatMeth) {
