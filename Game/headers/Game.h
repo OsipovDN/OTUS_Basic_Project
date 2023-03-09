@@ -18,11 +18,11 @@ public:
 	Game();
 	//Запуск игры
 	void play();
-	//Задает количество игроков
+	//Задает количество игроков (меню)
 	void numberOfPlayers();
-	//Задает размер игрового поля
+	//Задает размер игрового поля (меню)
 	void sizeOfTheField();
-	//Режим расстановки кораблей
+	//Режим расстановки кораблей (меню)
 	void placementMode();
 	//Расстановка флота
 	void setNavy(std::unique_ptr<Player>& pl, bool st);

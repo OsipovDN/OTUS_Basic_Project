@@ -4,13 +4,10 @@
 #include <execution>
 #include <memory>
 
-Player::Player(const size_t& pol_count):ship_count(0) {
-	size_t pol_size = pol_count * pol_count;
-	map_shot.reserve(pol_size);
-	navy.reserve(ship_count);
-	for (size_t i = 0; i < pol_size; ++i) {
-		map_shot.emplace_back(static_cast <char>(149));
-	}
+
+Player::Player(const size_t& pol_count):Player() {
+	setSizeForPl(pol_count);
+	setNavyPl(ship_count);
 };
 
 bool Player::setShip(const Cords& crd, const int& _dir, const int& _deck)noexcept {
