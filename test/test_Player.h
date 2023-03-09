@@ -271,30 +271,33 @@ TEST_F(PlayerFixture, testIsMoveMeth) {
 }
 
 TEST_F(PlayerFixture, testGetNavyMeth) {
-	std::vector<Ship> res_navy,expect_navy;
+	std::vector<Ship> res_navy, expect_navy;
 	std::pair<int, int> test_cord = { 10,10 };
 	int dec_test = 4;
 	bool is_eq;
 
 	expect_navy.emplace_back(Ship(cords, dir_up, dec));
-	expect_navy.emplace_back(Ship(test_cord, dir_up, dec_test));
-
 	std::cout << "Checking the ship count" << std::endl;
 	res_navy = obj->getNavy();
 	ASSERT_EQ(expect_navy.size(), res_navy.size());
 
+	expect_navy.emplace_back(Ship(test_cord, dir_up, dec_test));
 	obj->setShip(test_cord, dir_up, dec_test);
 	res_navy = obj->getNavy();
 	ASSERT_EQ(expect_navy.size(), res_navy.size());
 
-
-
 	std::cout << "Checking the equality of ship coordinates" << std::endl;
-	is_eq = std::equal(expect_navy.cbegin(), expect_navy.cend(), res_navy.cbegin(), res_navy.cend(), [](auto it_exp, auto it_res) {
+	is_eq = std::equal(expect_navy.cbegin(), expect_navy.cend(), res_navy.cbegin(), res_navy.cend(), [](Ship it_exp, Ship it_res)mutable {
+		std::vector <std::pair<int, int>> expect_cords_ship = it_exp.getCord();
+		std::vector <std::pair<int, int>> res_cords_ship = it_res.getCord();
+		for (auto i = 0, j = 0; i != expect_cords_ship.size(), j != res_cords_ship.size(); i++, j++) {
+			if (expect_cords_ship[i].first!= res_cords_ship[j].first && expect_cords_ship[i].second != res_cords_ship[j].second)
+				return false;
+		};
+		return true;
 		});
 	
 	ASSERT_TRUE(is_eq);
-
 
 }
 
