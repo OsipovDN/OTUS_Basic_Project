@@ -271,6 +271,31 @@ TEST_F(PlayerFixture, testIsMoveMeth) {
 }
 
 TEST_F(PlayerFixture, testGetNavyMeth) {
+
+}
+
+TEST_F(PlayerFixture, testGetMapMeth) {
+	size_t size_pol_expect = 100;
+	std::vector<char> map;
+
+	map = obj->getMap();
+
+	std::cout << "Checking the size of map" << std::endl;
+	ASSERT_EQ(size_pol_expect, map.size());
+	std::cout << "Checking map filling" << std::endl;
+	for (const auto& it : map) {
+		ASSERT_EQ(it, static_cast <char>(149));
+	}
+
+}
+
+TEST_F(PlayerFixture, testIsMoveMeth) {
+	std::cout << "Checking the player's progress" << std::endl;
+	bool res_flag = obj->isMove();
+	ASSERT_FALSE(res_flag);
+}
+
+TEST_F(PlayerFixture, testGetNavyMeth) {
 	std::vector<Ship> res_navy,expect_navy;
 	std::pair<int, int> test_cord = { 10,10 };
 	int dec_test = 4;
