@@ -1,11 +1,9 @@
 #include <iostream>
-//#include "Player.h"
-//#include "Ship.h"
 #include "Game.h"
 
 //int argc, char* argv[]
 int main() {
-	system("chcp 1251 >NUL");
+	//system("chcp 1251 >NUL");
 	//ѕроверка класса корабль
 	//–асстановка кораблей и проверка массива координат корабл¤
 	/*Ship A(6, 5, 1, 4);
