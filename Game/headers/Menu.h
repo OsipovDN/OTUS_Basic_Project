@@ -1,89 +1,26 @@
 #pragma once
-#include <iostream>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include<cstdio>
+#endif
 
 class Menu {
 private:
-	//bool mult_plr;	//true- два игрока, false-один игрок
-	//bool auto_set_pl1;	//true- автоматическая расстановка, false- ручная
-	//bool auto_set_pl2;	//true- автоматическая расстановка, false- ручная
+
+#ifdef _WIN32 
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+#endif
 
 public:
-	Menu() =default;
-	int mainMenu() {
-		int val;
-		system("cls");
-		for (;;) {
-			std::cout << "\tГлавное меню" << std::endl;
-			std::cout << "1. Играть\n3. Выход\n-> ";
-			std::cin >> val;
-			if (val != 1 && val != 3) {
-				system("cls");
-				std::cout << "Введено некорректное значение. Попробуйте еще раз!\n";
-				continue;
-			}
-			else
-				break;
-		}
-		return val;
-	};
-	int setPlrVal() {
-		int val;
-		system("cls");
-		for (;;) {
-			std::cout << "\tКоличество игроков:" << std::endl;
-			std::cout << "1. Один\n2. Два\n-> ";
-			std::cin >> val;
-			if (val != 1 && val != 2) {
-				system("cls");
-				std::cout << "Введено некорректное значение. Попробуйте еще раз!\n";
-				continue;
-			}
-			else
-				break;
-		}
-		return val;
-	};
-
-	int setPolVal() {
-		int val;
-		system("cls");
-		for (;;) {
-			std::cout << "\tВведите размер игрового поля (val x val)(min=10/max=30)." << std::endl;
-			std::cout << "val-> ";
-			std::cin >> val;
-			if (val < 10 || val > 30 && !isdigit(val)) {
-				system("cls");
-				std::cout << "Введено некорректное значение. Попробуйте еще раз!\n";
-				continue;
-			}
-			else 
-				break;
-		}
-		return val;
-	}
-
-	bool placement(int pl) {
-		int val;
-		system("cls");
-		for (;;) {
-			std::cout << "Игрок " << pl << std::endl;
-			std::cout << "\tВведите способ расстановки флота" << std::endl;
-			std::cout << "1. Ручной\n2. Автоматический\n-> ";
-			std::cin >> val;
-			if (val != 1 && val != 2) {
-				system("cls");
-				std::cout << "Введено некорректное значение. Попробуйте еще раз!";
-				continue;
-			}
-			else
-				break;
-		}
-		if (val == 1)
-			return true;
-		else 
-			return false;
-	};
+	Menu() = default;
+	int mainMenu();
+	void setPlrVal(int& v);
+	void setPolVal(int& p);
+	bool placement(int pl);
+	void clrscr();
+	void chengeColor(int atr);
 	void saveGame() {};
 	void loadGame() {};
-	
+
 };

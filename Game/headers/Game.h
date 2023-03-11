@@ -1,33 +1,48 @@
 #pragma once
 #include "Player.h"
 #include "Menu.h"
+#include <memory>
 
 class Game {
-
 private:
+
 	using Cords = std::pair<int, int>;
 	std::unique_ptr<Player> plr1;
 	std::unique_ptr<Player> plr2;
-	int pol;		//Размер игрового поля
-	bool gm_over = false;	//Проверка конца игры
-	//bool input_navy = false;	//Способ расстановки кораблей
-							//true-ручной, false- автоматический
-	bool multplr=false;		//true-два игрока, false- один игрок
+	std::unique_ptr<Menu> menu;
+	int pol = 10;				//Размер игрового поля
+	bool multplr = false;		//true-два игрока, false- один игрок
 
 public:
 	//Конструктор (задает способ расстановки и размер поля)
-	Game(); 
+	Game();
 	//Запуск игры
 	void play();
-	//Автоматический расчет координат
-	int autoSet(int p);
-	//Проверка выхода за границу поля
-	bool outOfBounds(Cords& crd, int& _dir, int& _deck);
-	//Вывод  ироков на экран
-	void mapPol();
-	//Проверка наличия кораблей
-	bool isOver();
+	//Задает количество игроков (меню)
+	void numberOfPlayers();
+	//Задает размер игрового поля (меню)
+	void sizeOfTheField();
+	//Режим расстановки кораблей (меню)
+	void placementMode();
 	//Расстановка флота
 	void setNavy(std::unique_ptr<Player>& pl, bool st);
+	//Ввод координат
+	Cords&& setMove(const std::unique_ptr<Player>& pl)const;
+	//Сделать выстрел
+	char setShot(const std::unique_ptr<Player>& pl1, const std::unique_ptr<Player>& pl2, Cords& crd)noexcept;
+	//Автоматический расчет координат
+	inline int autoSet(int p)const;
+	//Проверка выхода за границу поля
+	bool outOfBounds(Cords& crd, int& _dir, int& _deck)const noexcept;
+	//Вывод ироков на экран
+	void mapPol();
+	//Задает цвет клетке
+	std::vector<char>::const_iterator colorOutput(std::vector<char>::const_iterator it_begin);
+
+
+
+	
+	
+
 };
 

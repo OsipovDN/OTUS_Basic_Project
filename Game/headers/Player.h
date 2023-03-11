@@ -1,49 +1,53 @@
 #pragma once
 #include "Ship.h"
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <array>
-
 
 class Player {
 private:
 	using Cords = std::pair<int, int>;
 	std::vector <char> map_shot;//Карта сделанных выстрелов (Карта соперника?)
 	std::vector<Ship> navy;
-	int ship_count=10;		//Количество оставшихся кораблей
-	bool move=false;
+	int ship_count;		//Количество оставшихся кораблей
+	bool move;
 public:
-	explicit Player(size_t pol_count);
+	Player() :ship_count(0), move(false) {};
+	explicit Player(const size_t& pol_count);
 	//Размещение корабля на карте
-	bool setShip(Cords c, int _dir, int _deck);
-	//Проверка пересечения кораблей
-	bool isIntersecShip(Cords& c, int& _dir, int& _deck) noexcept;
-	//Проверка выстрела
-	std::unique_ptr<Player>&& setShot(std::unique_ptr<Player>&& plr, int& pol_count);
+	bool setShip(const Cords& c, const int& _dir, const int& _deck)noexcept;
 	//Проверка попадания
 	bool getShot(Cords& crd);
-	//Проверка наличия кораблей
-	int ShipCount()const { return ship_count; };
+	//Проверка пересечения кораблей
+	bool isIntersecShip(const Cords& c, const int& _dir, const int& _deck)noexcept;
+	//Проверка пересечения по периметру корабля
+	std::vector<Ship> shipPerim(Cords crd, const int& _dir, const int& _deck);
+	//Проверка повторного хода
+	bool isRepeat(Cords& crd, size_t pol)const noexcept;
+	//Задает метку на карте для каждого игрока
+	void setPoint(Cords& crd, size_t pol, char& point)noexcept;
+	//Задает размер игрового поля
+	void setSizePol(size_t num);
+	//Задает размер флота
+	void setNavyPl(int count) {navy.reserve(count);}
+	//Возвращает количество кораблей
+	int shipCount() const noexcept { return ship_count; };
 	//Передача карты игрока для печати
-	std::vector<char>& getMap() { return map_shot; }
-	//Проверка свободных клеток для хода
+	std::vector<char>& getMap()noexcept { return map_shot; }
 	//Проверка хода
-	bool isMove() { return move; }
+	bool isMove()const noexcept { return move; }
+	//Возвращает вектор с коодинатами всех кораблей
+	std::vector<Ship> getNavy()const noexcept { return navy; }
+	//Задает статус хода
+	void moveStat(bool m)noexcept { move = m; }
 	//Для проверки работы
-	void print();
+	void print()const;
 
-	//Массив периметра корабля
-	/*std::vector <std::pair<int, int>>&& shipPer(int& _x, int& _y, int& _dir, int& _deck) {
-		Ship temp(int& _x, int& _y, int& _dir, int& _deck);
-		auto temp_vec = temp.getCord();
-	}*/
+	
 
+	
 	
 
 	
 };
 
-	
 
-	
+
+
