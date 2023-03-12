@@ -79,7 +79,7 @@ void Game::numberOfPlayers() {
 	else
 		multplr = true;
 };
-
+	
 void Game::sizeOfTheField() {
 	menu->setPolVal(pol);
 	plr1 = std::make_unique<Player>(pol);

@@ -5,7 +5,7 @@
 #include <memory>
 
 
-Player::Player(const size_t& pol_count):Player() {
+Player::Player(const size_t& pol_count):Player(){
 	setSizePol(pol_count);
 	setNavyPl(ship_count);
 };
