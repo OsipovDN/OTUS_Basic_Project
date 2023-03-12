@@ -16,7 +16,7 @@ private:
 	int hp;	//Убит или нет
 
 public:
-	Ship(const Cords& crd, const int& _dir, const int& _deck);
+	Ship(const Cords& crd,int& _dir, int& _deck);
 	//Проверка попадания
 	bool isHit(Cords& crd)noexcept;
 	//Проверка на убит или нет
