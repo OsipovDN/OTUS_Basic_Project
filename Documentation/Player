@@ -1,0 +1,65 @@
+Player
+Поля класса:
+Объект класса обеспечивает взаимодействие игрока с объектами кораблей и хранит информацию о состоянии флота игрока и сделанных им ходов
+std::vector <char> map_shot -карта сделанных ходов
+std::vector<Ship> navy - контейнер объектов Ship
+int ship_count- количество оставшихся кораблей
+bool move- состояние хода (true- если игрок ходит)
+
+Методы класса:
+Конструктор:
+
+Player()
+Инициализирует пустой объект с параметрами по умолчанию:
+ship_count=0;
+move-false;
+
+Player(const size_t& pol_count);
+Приимаемое значения:
+const size_t& pol_count -размер игрового поля (Пример: pol_count=10- игровое поле 10 на 10)
+При инициализации
+ship_count=0;
+move-false;
+При испльзовании данного конструктора формируется контейнер карты сделанных ходов размером pol_count*pol_count с исходным значением '*'
+
+Размещение корабля на карте
+bool setShip(const Cords& c, const int& _dir, const int& _deck)noexcept
+
+Проверка попадания
+bool getShot(Cords& crd)
+
+Проверка пересечения кораблей
+bool isIntersecShip(const Cords& c, const int& _dir, const int& _deck)noexcept
+
+Проверка пересечения по периметру корабля
+std::vector<Ship> shipPerim(Cords crd, const int& _dir, const int& _deck)
+
+Проверка повторного хода
+bool isRepeat(Cords& crd, size_t pol)const noexcept
+
+Задает метку на карте для каждого игрока
+void setPoint(Cords& crd, size_t pol, char& point)noexcept
+
+Задает размер игрового поля
+void setSizePol(size_t num)
+
+Задает размер флота
+void setNavyPl(int count)
+
+Возвращает количество кораблей
+int shipCount() const noexcept
+
+Передача карты игрока для печати
+std::vector<char>& getMap()noexcept
+
+Проверка хода
+bool isMove()const noexcept
+
+Возвращает вектор с коодинатами всех кораблей
+std::vector<Ship> getNavy()const noexcept
+
+Задает статус хода
+void moveStat(bool m) noexcept 
+
+Для проверки работы
+void print()const
