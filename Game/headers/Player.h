@@ -39,12 +39,6 @@ public:
 	void moveStat(bool m)noexcept { move = m; }
 	//Для проверки работы
 	void print()const;
-
-	
-
-	
-	
-
 	
 };
 

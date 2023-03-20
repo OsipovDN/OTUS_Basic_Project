@@ -27,7 +27,7 @@ struct PlayerFixture : public testing::Test {
 };
 
 TEST(Player, initializationPlayerObject) {
-	Player pl{};
+	Player pl;
 	int expect_ship_count = 0;
 	int res_ship_count;
 	bool res_move ;
@@ -252,8 +252,9 @@ TEST_F(PlayerFixture, testSetPointMeth) {
 }
 
 TEST(Player, testsetSizePolMeth) {
+	
 	Player pl;
-	int size=10;
+	int size = 10;
 	size_t size_pol_expect = 100;
 	std::vector<char> map;
 
@@ -270,9 +271,9 @@ TEST(Player, testsetSizePolMeth) {
 }
 
 TEST(Player, testSetNavyPlMeth) {
+	int size = 10;
 	Player pl;
 	std::vector<Ship> res_navy;
-	int size = 10;
 
 	std::cout << "Checking that the vector is empty" << std::endl;
 	res_navy = pl.getNavy();

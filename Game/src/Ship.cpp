@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <execution>
 
-Ship::Ship(const Cords& crd, const int& _dir, const int& _deck) :hp(_deck) {
+Ship::Ship(const Cords& crd,const int& _dir,const int& _deck) :hp(_deck) {
 	cord.reserve(hp);
 	if (_dir == UP || _dir == DOWN) {
 		if (_dir == UP) {
