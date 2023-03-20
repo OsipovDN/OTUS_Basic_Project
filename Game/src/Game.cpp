@@ -87,9 +87,10 @@ void Game::sizeOfTheField() {
 };
 
 void Game::placementMode() {
+	bool flag;
 	if (multplr) {
 		for (int i = 1; i <= 2; ++i) {
-			bool flag = menu->placement(i);
+			flag = menu->placement(i);
 			if (i == 1)
 				setNavy(plr1, flag);
 			else
@@ -97,7 +98,7 @@ void Game::placementMode() {
 		}
 	}
 	else {
-		bool flag = menu->placement(1);
+		flag = menu->placement(1);
 		setNavy(plr1, flag);
 		setNavy(plr2, false);
 		menu->clrscr();
